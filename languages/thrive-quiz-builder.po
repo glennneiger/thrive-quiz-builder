@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thrive-quiz-builder 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-11 10:24+0000\n"
+"POT-Creation-Date: 2018-05-16 10:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: includes/admin/class-tqb-admin.php:82 includes/admin/class-tqb-admin.php:83
+#: includes/class-tqb-privacy.php:57 includes/class-tqb-privacy.php:73
 #: tcb-bridge/editor-elements/class-tcb-dynamic-content-element.php:89
 #: tcb-bridge/editor-elements/class-tcb-social-share-badge-element.php:98
 msgid "Thrive Quiz Builder"
@@ -38,62 +39,72 @@ msgstr ""
 msgid "Could not reset quiz statistics"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:148
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:152
 msgid "Could not save"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:171
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:175
 msgid "Could not delete"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:181
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:185
 msgid "Quiz not found"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:209
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:213
 msgid "Style could not be saved"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:267
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:295
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:323
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:271
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:299
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:327
 msgid "Something went wrong"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:348
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:352
 msgid "Structure could not be saved"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:395
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:399
 msgid ""
 "The list of results has changed. Your questions flow and results page might "
 "be affected by this change."
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:397
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:401
 msgid "Changes were saved!"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:403
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:407
 msgid ""
 "Type could not be saved. There was an error while saving the quiz type. "
 "Please contact the support team."
 msgstr ""
 
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:451
+msgid ""
+"An error occurred. The page id provided was invalid! Please contact Thrive "
+"Support!"
+msgstr ""
+
 #: includes/admin/classes/class-tqb-admin-ajax-controller.php:460
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:463
+msgid "The setting was saved for this quiz page!"
+msgstr ""
+
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:485
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:488
 msgid "Item not found"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:571
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:596
 msgid "Error while inserting a new variation"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:579
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:604
 msgid "Error while deleting the variation"
 msgstr ""
 
-#: includes/admin/classes/class-tqb-admin-ajax-controller.php:664
+#: includes/admin/classes/class-tqb-admin-ajax-controller.php:689
 msgid "Test not found"
 msgstr ""
 
@@ -495,6 +506,7 @@ msgstr ""
 
 #: includes/admin/i18n.php:88
 #: includes/admin/views/templates/modals/add-variation.phtml:13
+#: includes/admin/views/templates/modals/anonymize-quiz-results.phtml:23
 #: includes/admin/views/templates/modals/archive-last-variation.phtml:12
 #: includes/admin/views/templates/modals/archive-variation.phtml:9
 #: includes/admin/views/templates/modals/badge-templates.phtml:14
@@ -522,7 +534,7 @@ msgstr ""
 msgid "Manage plugins"
 msgstr ""
 
-#: includes/class-tqb-db.php:1611
+#: includes/class-tqb-db.php:1648
 msgid "Copy of "
 msgstr ""
 
@@ -536,6 +548,39 @@ msgstr ""
 
 #: includes/class-tqb-frontend-ajax-controller.php:176
 msgid "You have nothing"
+msgstr ""
+
+#: includes/class-tqb-privacy.php:97
+#: includes/frontend/views/templates/powered-by-thrive-themes.phtml:10
+msgid "Quiz Builder"
+msgstr ""
+
+#: includes/class-tqb-privacy.php:108
+msgid "Email"
+msgstr ""
+
+#: includes/class-tqb-privacy.php:112
+#: includes/admin/views/templates/reporting/users-list.phtml:33
+msgid "Date and Start Time"
+msgstr ""
+
+#: includes/class-tqb-privacy.php:116
+msgid "Result"
+msgstr ""
+
+#: includes/class-tqb-privacy.php:120
+#: includes/admin/views/templates/reporting/users-list.phtml:48
+msgid "Generated Social Badge"
+msgstr ""
+
+#: includes/class-tqb-privacy.php:125 includes/class-tqb-privacy.php:137
+msgid "Question"
+msgstr ""
+
+#: includes/class-tqb-privacy.php:128
+#: includes/admin/views/templates/reporting/questions-question.phtml:30
+#: includes/admin/views/templates/reporting/questions-question.phtml:32
+msgid "Answer"
 msgstr ""
 
 #: includes/class-tqb-template-manager.php:300
@@ -617,7 +662,7 @@ msgstr ""
 msgid "Your Results Page is empty! Make sure you have at least one variation."
 msgstr ""
 
-#: includes/tqb-data-functions.php:467
+#: includes/tqb-data-functions.php:462
 msgid "The quiz is no longer available!"
 msgstr ""
 
@@ -738,6 +783,22 @@ msgstr ""
 
 #: includes/admin/views/templates/modals/add-variation.phtml:6
 msgid "Variation Name"
+msgstr ""
+
+#: includes/admin/views/templates/modals/anonymize-quiz-results.phtml:12
+#, php-format
+msgid "Anonymize results for quiz %s"
+msgstr ""
+
+#: includes/admin/views/templates/modals/anonymize-quiz-results.phtml:15
+msgid ""
+"By anonymizing results you will no longer be able to associate answers and "
+"results to an email address. All the user profiles will appear anonymous."
+msgstr ""
+
+#: includes/admin/views/templates/modals/anonymize-quiz-results.phtml:29
+#: includes/admin/views/templates/reporting/main.phtml:88
+msgid "Anonymize Results"
 msgstr ""
 
 #: includes/admin/views/templates/modals/archive-last-variation.phtml:2
@@ -1109,7 +1170,7 @@ msgid "Step 1/4: Select a quiz type."
 msgstr ""
 
 #: includes/admin/views/templates/quiz/edit.phtml:73
-#: includes/admin/views/templates/variations/dashboard.phtml:51
+#: includes/admin/views/templates/variations/dashboard.phtml:52
 msgid "Back to Dashboard"
 msgstr ""
 
@@ -1386,8 +1447,8 @@ msgstr ""
 msgid "Reset Statistics"
 msgstr ""
 
-#: includes/admin/views/templates/reporting/main.phtml:98
-#: includes/admin/views/templates/reporting/main.phtml:99
+#: includes/admin/views/templates/reporting/main.phtml:100
+#: includes/admin/views/templates/reporting/main.phtml:101
 msgid "Back to Quiz Dashboard"
 msgstr ""
 
@@ -1398,11 +1459,6 @@ msgstr ""
 #: includes/admin/views/templates/reporting/questions-question.phtml:23
 #: includes/admin/views/templates/reporting/questions-question.phtml:25
 msgid "Color"
-msgstr ""
-
-#: includes/admin/views/templates/reporting/questions-question.phtml:30
-#: includes/admin/views/templates/reporting/questions-question.phtml:32
-msgid "Answer"
 msgstr ""
 
 #: includes/admin/views/templates/reporting/questions-question.phtml:37
@@ -1459,20 +1515,12 @@ msgstr ""
 msgid "Item"
 msgstr ""
 
-#: includes/admin/views/templates/reporting/users-list.phtml:33
-msgid "Date and Start Time"
-msgstr ""
-
 #: includes/admin/views/templates/reporting/users-list.phtml:38
 msgid "E-mail address"
 msgstr ""
 
 #: includes/admin/views/templates/reporting/users-list.phtml:43
 msgid "Quiz result"
-msgstr ""
-
-#: includes/admin/views/templates/reporting/users-list.phtml:48
-msgid "Generated Social Badge"
 msgstr ""
 
 #: includes/admin/views/templates/reporting/users-list.phtml:67
@@ -1514,7 +1562,7 @@ msgid "Delete"
 msgstr ""
 
 #: includes/admin/views/templates/tests/completed-tests.phtml:2
-#: includes/admin/views/templates/variations/dashboard.phtml:39
+#: includes/admin/views/templates/variations/dashboard.phtml:40
 msgid "Click to expand"
 msgstr ""
 
@@ -1617,21 +1665,31 @@ msgstr ""
 msgid "Add A/B Test Variation"
 msgstr ""
 
-#: includes/admin/views/templates/variations/dashboard.phtml:23
 #: includes/admin/views/templates/variations/dashboard.phtml:24
+#: includes/admin/views/templates/variations/dashboard.phtml:25
 msgid "Start A/B Test"
 msgstr ""
 
-#: includes/admin/views/templates/variations/dashboard.phtml:29
+#: includes/admin/views/templates/variations/dashboard.phtml:30
 msgid "You don't have any active variations"
 msgstr ""
 
-#: includes/admin/views/templates/variations/dashboard.phtml:31
+#: includes/admin/views/templates/variations/dashboard.phtml:32
 msgid "click here to create one"
 msgstr ""
 
-#: includes/admin/views/templates/variations/dashboard.phtml:41
+#: includes/admin/views/templates/variations/dashboard.phtml:42
 msgid "Archived Forms"
+msgstr ""
+
+#: includes/admin/views/templates/variations/gdpr-user-consent.phtml:13
+msgid ""
+"Creating user profiles in the Reporting Area by matching the answers and "
+"result to the email address entered by the user in this step."
+msgstr ""
+
+#: includes/admin/views/templates/variations/gdpr-user-consent.phtml:14
+msgid "Find out more about profiling in this article."
 msgstr ""
 
 #: includes/admin/views/templates/variations/item-archived.phtml:27
@@ -1687,10 +1745,6 @@ msgstr ""
 
 #: includes/frontend/views/templates/powered-by-thrive-themes.phtml:7
 msgid "Thrive"
-msgstr ""
-
-#: includes/frontend/views/templates/powered-by-thrive-themes.phtml:10
-msgid "Quiz Builder"
 msgstr ""
 
 #: tcb-bridge/class-tqb-next-step-event.php:12

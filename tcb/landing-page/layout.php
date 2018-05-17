@@ -34,6 +34,9 @@ if ( ! isset( $lp_template ) ) {
 	<?php $tcb_landing_page->head(); ?>
 
 	<style type="text/css">
+		html {
+			height: auto;
+		}
 		body:before, body:after {
 			height: 0 !important;
 		}

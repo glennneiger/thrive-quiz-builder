@@ -133,6 +133,12 @@ class TCB_Lead_Generation_Element extends TCB_Element_Abstract {
 						),
 						'extends' => 'Select',
 					),
+					'Consent'        => array(
+						'config'  => array(
+							'label' => __( 'Enable Checkbox for Explicit Content' ),
+						),
+						'extends' => 'Checkbox',
+					),
 				),
 			),
 			'typography'      => array(

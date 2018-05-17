@@ -61,4 +61,9 @@ class Thrive_Dash_Api_AWeber_EntryDataArray implements ArrayAccess, Countable, I
 
 		return true;
 	}
+
+	public function getData() {
+
+		return $this->data;
+	}
 }

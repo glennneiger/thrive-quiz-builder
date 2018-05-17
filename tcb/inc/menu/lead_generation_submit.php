@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="tve-control" data-icon="false"  data-view="ModalPicker"></div>
 		<hr>
-		<div class="tve-control" data-view="ButtonColor"></div>
+		<div class="tve-control" data-view="MasterColor"></div>
 		<hr>
 		<div class="tve-control" data-view="ButtonWidth"></div>
 		<hr>

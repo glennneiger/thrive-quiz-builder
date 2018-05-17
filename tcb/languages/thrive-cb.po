@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: inc/backbone/controls/font-manager.phtml:77
-#: inc/backbone/controls/font-manager.phtml:94
+#: inc/backbone/controls/font-manager.phtml:78
+#: inc/backbone/controls/font-manager.phtml:95
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: thrive-content-builder 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-11 10:24+0000\n"
+"POT-Creation-Date: 2018-05-16 10:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/class-tcb-admin.php:96 admin/class-tcb-admin.php:97
-#: admin/includes/class-tcb-product.php:54
+#: admin/class-tcb-admin.php:102 admin/class-tcb-admin.php:103
+#: admin/includes/views/templates/ct-symbols.phtml:4
 #: inc/views/modals/no-content-templates.php:1
 msgid "Content Templates"
 msgstr ""
@@ -35,68 +35,68 @@ msgid "Method %s not implemented"
 msgstr ""
 
 #: admin/includes/class-tcb-admin-ajax.php:92
-#: admin/includes/class-tcb-admin-ajax.php:206
-#: admin/includes/class-tcb-admin-ajax.php:256
+#: admin/includes/class-tcb-admin-ajax.php:210
+#: admin/includes/class-tcb-admin-ajax.php:260
 msgid "Invalid call"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:118
+#: admin/includes/class-tcb-admin-ajax.php:122
 msgid "Uncategorized templates"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:124
+#: admin/includes/class-tcb-admin-ajax.php:128
 msgid "Page Templates"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:144
+#: admin/includes/class-tcb-admin-ajax.php:148
 msgid "The template category list is empty!"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:149
-#: admin/includes/class-tcb-admin-ajax.php:284
+#: admin/includes/class-tcb-admin-ajax.php:153
+#: admin/includes/class-tcb-admin-ajax.php:288
 msgid "Invalid parameters"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:156
+#: admin/includes/class-tcb-admin-ajax.php:160
 msgid "The category name was modified!"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:164
-#: admin/includes/class-tcb-admin-ajax.php:304
-#: admin/includes/class-tcb-admin-ajax.php:330
+#: admin/includes/class-tcb-admin-ajax.php:168
+#: admin/includes/class-tcb-admin-ajax.php:308
+#: admin/includes/class-tcb-admin-ajax.php:334
 msgid "Undefined parameter: id"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:169
+#: admin/includes/class-tcb-admin-ajax.php:173
 msgid "Invalid category template"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:203
+#: admin/includes/class-tcb-admin-ajax.php:207
 msgid "The category was deleted!"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:225
+#: admin/includes/class-tcb-admin-ajax.php:229
 msgid "Category parameter could not be found!"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:252
-msgid "The category(s) was saved!"
+#: admin/includes/class-tcb-admin-ajax.php:256
+msgid "The category was saved!"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:279
+#: admin/includes/class-tcb-admin-ajax.php:283
 msgid "The template list is empty"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:297
+#: admin/includes/class-tcb-admin-ajax.php:301
 msgid "The template saved!"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:309
-#: admin/includes/class-tcb-admin-ajax.php:335
+#: admin/includes/class-tcb-admin-ajax.php:313
+#: admin/includes/class-tcb-admin-ajax.php:339
 msgid "Invalid template"
 msgstr ""
 
-#: admin/includes/class-tcb-admin-ajax.php:323
+#: admin/includes/class-tcb-admin-ajax.php:327
 msgid "The template was deleted!"
 msgstr ""
 
@@ -116,13 +116,21 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: admin/includes/i18n.php:16
-#: admin/includes/views/templates/user-templates/list.phtml:4
+#: admin/includes/class-tcb-symbols-rest-controller.php:97
+#: inc/classes/elements/class-tcb-symbol-element.php:311
+msgid "Sorry, you are not allowed to create symbols with the same title"
+msgstr ""
+
+#: admin/includes/class-tcb-symbols-rest-controller.php:143
+msgid "We were not able to copy the symbol"
+msgstr ""
+
+#: admin/includes/i18n.php:16 inc/views/modals/ct-symbols.php:29
 msgid "Templates"
 msgstr ""
 
 #: admin/includes/i18n.php:17
-msgid "Dashboard"
+msgid "Thrive Dashboard"
 msgstr ""
 
 #: admin/includes/i18n.php:18
@@ -140,14 +148,175 @@ msgid "Are you sure you want to delete the category \"%s\" ?"
 msgstr ""
 
 #: admin/includes/i18n.php:21
-msgid "Show more templates"
+#, php-format
+msgid "Are you sure you want to delete the symbol \"%s\" ?"
 msgstr ""
 
 #: admin/includes/i18n.php:22
+msgid "Show more templates"
+msgstr ""
+
+#: admin/includes/i18n.php:23
 msgid "Show less templates"
 msgstr ""
 
-#: admin/includes/views/header.phtml:4
+#: admin/includes/i18n.php:24
+#: admin/includes/views/templates/ct-symbols.phtml:3
+#: admin/includes/views/templates/symbols/categories.phtml:3
+#: inc/classes/symbols/class-tcb-symbols-dashboard.php:96
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:73
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:83
+#: inc/views/modals/ct-symbols.php:30
+#: inc/views/symbols/symbols-dashboard.php:2
+msgid "Symbols"
+msgstr ""
+
+#: admin/includes/i18n.php:25 admin/includes/views/templates/header.phtml:5
+#: inc/classes/elements/class-tcb-ct-symbol-element.php:32
+#: inc/classes/symbols/class-tcb-symbols-dashboard.php:70
+msgid "Templates & Symbols"
+msgstr ""
+
+#: admin/includes/i18n.php:26
+msgid "The category was saved successfully"
+msgstr ""
+
+#: admin/includes/i18n.php:27
+msgid "There was an error while trying to save your category"
+msgstr ""
+
+#: admin/includes/i18n.php:28
+msgid "The symbol was saved successfully"
+msgstr ""
+
+#: admin/includes/i18n.php:29
+msgid "There was an error while trying to save the symbol"
+msgstr ""
+
+#: admin/includes/i18n.php:30
+msgid "Uncategorized Symbols"
+msgstr ""
+
+#: admin/includes/i18n.php:31
+msgid "The category was deleted"
+msgstr ""
+
+#: admin/includes/i18n.php:32
+msgid "An error occurred and the category was not deleted"
+msgstr ""
+
+#: admin/includes/i18n.php:33
+msgid "The symbol was deleted"
+msgstr ""
+
+#: admin/includes/i18n.php:34
+msgid "An error occurred and the symbol was not deleted"
+msgstr ""
+
+#: admin/includes/i18n.php:35
+msgid "Create new Symbol"
+msgstr ""
+
+#: admin/includes/i18n.php:36
+msgid "Create a new Category"
+msgstr ""
+
+#: admin/includes/i18n.php:37
+msgid "Create new"
+msgstr ""
+
+#: admin/includes/i18n.php:38
+msgid "Organize your Symbols into categories for a better overview"
+msgstr ""
+
+#: admin/includes/i18n.php:39
+msgid "Create a new symbol and load it on any page by using Thrive Architect"
+msgstr ""
+
+#: admin/includes/i18n.php:40
+msgid "Save Category"
+msgstr ""
+
+#: admin/includes/i18n.php:41
+msgid "Save and edit with Architect"
+msgstr ""
+
+#: admin/includes/i18n.php:42
+msgid "Enter Category Name"
+msgstr ""
+
+#: admin/includes/i18n.php:43 inc/i18n.php:172
+msgid "Enter Symbol Name"
+msgstr ""
+
+#: admin/includes/i18n.php:44 inc/i18n.php:177
+msgid "Symbol name is required"
+msgstr ""
+
+#: admin/includes/i18n.php:45
+msgid "Category name is required"
+msgstr ""
+
+#: admin/includes/i18n.php:46 inc/i18n.php:181
+msgid "The Category was successfully created!"
+msgstr ""
+
+#: admin/includes/i18n.php:47
+msgid "There was an error while trying to create your category"
+msgstr ""
+
+#: admin/includes/i18n.php:48
+msgid "The Symbol was successfully created!"
+msgstr ""
+
+#: admin/includes/i18n.php:49
+msgid "There was an error while trying to create your symbol"
+msgstr ""
+
+#: admin/includes/i18n.php:50 inc/i18n.php:176
+msgid "Add as Category"
+msgstr ""
+
+#: admin/includes/i18n.php:51 inc/i18n.php:175
+msgid "Select Category..."
+msgstr ""
+
+#: admin/includes/i18n.php:52
+msgid "The symbol was duplicated"
+msgstr ""
+
+#: admin/includes/i18n.php:53
+msgid "The symbol could not be duplicated"
+msgstr ""
+
+#: admin/includes/i18n.php:54
+msgid "The symbol was moved successfully"
+msgstr ""
+
+#: admin/includes/i18n.php:55
+msgid "There was an error while trying to move the symbol"
+msgstr ""
+
+#: admin/includes/i18n.php:56
+msgid "Search symbols"
+msgstr ""
+
+#: admin/includes/i18n.php:57
+msgid "Search templates"
+msgstr ""
+
+#: admin/includes/i18n.php:58
+msgid "Symbol Name"
+msgstr ""
+
+#: admin/includes/i18n.php:59 inc/views/modals/export-lp.php:18
+#: inc/views/modals/save-template-lp.php:20
+#: inc/views/modals/save-template.php:20
+#: inc/backbone/controls/styles-templates.phtml:33
+msgid "Template Name"
+msgstr ""
+
+#: admin/includes/views/templates/header.phtml:10
 msgid "Thrive Architect Home"
 msgstr ""
 
@@ -156,34 +325,54 @@ msgid "Delete saved templates also"
 msgstr ""
 
 #: admin/includes/views/templates/modals/delete-confirmation.phtml:19
-msgid "NO, DON'T DELETE"
+#: admin/includes/views/templates/modals/modal-create.phtml:42
+#: admin/includes/views/templates/modals/move-category.phtml:32
+#: admin/includes/views/templates/modals/move-symbol.phtml:32
+#: admin/includes/views/templates/modals/new-category.phtml:18
+#: inc/i18n.php:105 inc/views/modals/lg-error-messages.php:38
+#: inc/views/modals/save-elements.php:51
+#: inc/backbone/controls/drop-panel.phtml:6
+#: inc/backbone/controls/position-from.phtml:39
+#: inc/backbone/controls/styles-templates.phtml:68
+#: inc/backbone/page-events/form.phtml:24
+msgid "Cancel"
 msgstr ""
 
 #: admin/includes/views/templates/modals/delete-confirmation.phtml:25
-#: inc/backbone/landing-pages/delete-confirmation.phtml:8
-msgid "YES, DELETE"
+#: inc/backbone/page-events/list.phtml:21
+msgid "Delete"
 msgstr ""
 
-#: admin/includes/views/templates/modals/move-category.phtml:2
-msgid "Move Template to Other Category"
+#: admin/includes/views/templates/modals/modal-create.phtml:27
+msgid "Add symbol to a category"
 msgstr ""
 
-#: admin/includes/views/templates/modals/move-category.phtml:3
+#: admin/includes/views/templates/modals/move-category.phtml:4
+#: admin/includes/views/templates/modals/move-symbol.phtml:4
+msgid "Move template to other category"
+msgstr ""
+
+#: admin/includes/views/templates/modals/move-category.phtml:8
+#: admin/includes/views/templates/modals/move-symbol.phtml:8
 msgid "Select from the dropdown bellow where do you want to move "
 msgstr ""
 
-#: admin/includes/views/templates/modals/move-category.phtml:6
+#: admin/includes/views/templates/modals/move-category.phtml:13
+#: admin/includes/views/templates/modals/move-symbol.phtml:13
 msgid "Current Category "
 msgstr ""
 
-#: admin/includes/views/templates/modals/move-category.phtml:10
+#: admin/includes/views/templates/modals/move-category.phtml:17
+#: admin/includes/views/templates/modals/move-symbol.phtml:17
 msgid "Select New Category "
 msgstr ""
 
-#: admin/includes/views/templates/modals/move-category.phtml:27
-#: admin/includes/views/templates/modals/new-category.phtml:17
+#: admin/includes/views/templates/modals/move-category.phtml:36
+#: admin/includes/views/templates/modals/move-symbol.phtml:36
+#: admin/includes/views/templates/modals/new-category.phtml:22
 #: inc/views/editor-settings.php:73 inc/views/modals/custom-html.php:16
 #: inc/views/modals/lg-error-messages.php:43
+#: inc/views/modals/save-elements.php:55
 #: inc/views/modals/wordpress-content.php:24
 #: inc/backbone/lead-generation/submit-options.phtml:32
 #: inc/backbone/page-events/actions/lightbox.phtml:22
@@ -192,22 +381,71 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: admin/includes/views/templates/modals/new-category.phtml:2
+#: admin/includes/views/templates/modals/new-category.phtml:3
 msgid "Add New Category"
 msgstr ""
 
-#: admin/includes/views/templates/modals/new-category.phtml:3
+#: admin/includes/views/templates/modals/new-category.phtml:5
 msgid "Here you can add one or more categories."
 msgstr ""
 
-#: admin/includes/views/templates/modals/new-category.phtml:8 inc/i18n.php:28
+#: admin/includes/views/templates/modals/new-category.phtml:11 inc/i18n.php:28
 #: inc/menu/numberedlist.php:38 inc/menu/styledlist.php:25
 #: inc/backbone/controls/text/typefocus-settings.phtml:28
 msgid "Add new"
 msgstr ""
 
-#: admin/includes/views/templates/modals/new-category.phtml:25
+#: admin/includes/views/templates/modals/new-category.phtml:30
 msgid "Enter the name of the new category"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/category.phtml:5
+#: admin/includes/views/templates/symbols/item.phtml:5
+msgid "Change Name"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/category.phtml:7
+#: admin/includes/views/templates/user-templates/c-item.phtml:12
+msgid "Delete Category"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/create.phtml:4
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:74
+#: inc/views/modals/save-elements.php:21
+msgid "Symbol"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/create.phtml:5
+msgid "Category"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/item.phtml:9
+#: admin/includes/views/templates/user-templates/t-item.phtml:9
+msgid "Move to another Category"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/item.phtml:12
+msgid "Make a Copy"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/item.phtml:15
+msgid "Delete Symbol"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/item.phtml:21
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:79
+msgid "Edit Symbol"
+msgstr ""
+
+#: admin/includes/views/templates/symbols/list.phtml:3
+msgid ""
+"You have no symbols added in this category. You can either create a new "
+"symbol or move an existing symbol to this category."
+msgstr ""
+
+#: admin/includes/views/templates/symbols/list.phtml:4
+#: admin/includes/views/templates/symbols/list.phtml:8
+msgid "Create New Symbol"
 msgstr ""
 
 #: admin/includes/views/templates/text-edit.phtml:2
@@ -215,20 +453,33 @@ msgstr ""
 msgid "%s is required"
 msgstr ""
 
-#: admin/includes/views/templates/user-templates/c-item.phtml:21
+#: admin/includes/views/templates/user-templates/c-item.phtml:7
+#: admin/includes/views/templates/user-templates/t-item.phtml:7
+msgid "Change Text"
+msgstr ""
+
+#: admin/includes/views/templates/user-templates/c-item.phtml:19
+msgid ""
+"You have no templates added in this category. You can either save elements "
+"in Architect as Content Templates or move existing templates to this category"
+msgstr ""
+
+#: admin/includes/views/templates/user-templates/c-item.phtml:26
 msgid "  Show more templates"
 msgstr ""
 
 #: admin/includes/views/templates/user-templates/item.phtml:16
-msgid "Back to templates"
+msgid "Back to templates & symbols"
 msgstr ""
 
-#: admin/includes/views/templates/user-templates/list.phtml:6
-msgid "Add new category"
+#: admin/includes/views/templates/user-templates/t-item.phtml:12
+msgid "Delete Template"
 msgstr ""
 
-#: admin/includes/views/templates/user-templates/t-item.phtml:16
-msgid "PREVIEW"
+#: admin/includes/views/templates/user-templates/t-item.phtml:18
+#: inc/menu/click-tweet.php:31 inc/views/editor-settings-elements.php:19
+#: inc/views/editor-settings.php:8
+msgid "Preview"
 msgstr ""
 
 #: event-manager/classes/actions/TCB_Thrive_CSS_Animation.php:41
@@ -348,7 +599,7 @@ msgid "Click on element"
 msgstr ""
 
 #: event-manager/classes/triggers/TCB_Event_Trigger_Click.php:21
-#: inc/menu/general.php:135
+#: inc/menu/general.php:136
 msgid "Click"
 msgstr ""
 
@@ -378,7 +629,7 @@ msgid "Timer"
 msgstr ""
 
 #: event-manager/classes/triggers/TCB_Event_Trigger_Viewport.php:16
-#: inc/menu/general.php:136
+#: inc/menu/general.php:137
 msgid "Comes into viewport"
 msgstr ""
 
@@ -440,68 +691,94 @@ msgstr ""
 msgid "That template name already exists, please use another name"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:262
+#: inc/classes/class-tcb-editor-ajax.php:261
 msgid "Template could not be generated"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:274
+#: inc/classes/class-tcb-editor-ajax.php:273
 msgid "Template saved!"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:284
+#: inc/classes/class-tcb-editor-ajax.php:283
 msgid "Invalid parameters!"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:306
+#: inc/classes/class-tcb-editor-ajax.php:305
 msgid "Category saved!"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:315 inc/i18n.php:130
+#: inc/classes/class-tcb-editor-ajax.php:314 inc/i18n.php:130
 msgid "The content is empty. Please input some content."
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:320
+#: inc/classes/class-tcb-editor-ajax.php:319
 msgid "Success! Your content was added."
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:336
+#: inc/classes/class-tcb-editor-ajax.php:335
 msgid "You do not have the required permission for this action"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:367
-#: inc/classes/class-tcb-editor-ajax.php:368
+#: inc/classes/class-tcb-editor-ajax.php:365
+#: inc/classes/class-tcb-editor-ajax.php:366
 msgid ""
 "Some of the required files were not found. Please try re-downloading this "
 "template"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:373
-#: inc/classes/class-tcb-editor-ajax.php:383
+#: inc/classes/class-tcb-editor-ajax.php:371
+#: inc/classes/class-tcb-editor-ajax.php:381
 msgid "All changes saved."
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:647
+#: inc/classes/class-tcb-editor-ajax.php:645
 msgid "Content template deleted"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:657
-#: inc/classes/class-tcb-editor-ajax.php:673
+#: inc/classes/class-tcb-editor-ajax.php:655
+#: inc/classes/class-tcb-editor-ajax.php:671
 msgid "Invalid Post Parameter"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:789
+#: inc/classes/class-tcb-editor-ajax.php:787
 msgid "Lightbox created"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:832
-#: inc/classes/class-tcb-editor-ajax.php:837
-#: inc/classes/class-tcb-editor-ajax.php:859
-#: inc/classes/class-tcb-editor-ajax.php:868
+#: inc/classes/class-tcb-editor-ajax.php:830
+#: inc/classes/class-tcb-editor-ajax.php:835
+#: inc/classes/class-tcb-editor-ajax.php:857
+#: inc/classes/class-tcb-editor-ajax.php:866
+#: inc/classes/class-tcb-editor-ajax.php:896
+#: inc/classes/class-tcb-editor-ajax.php:922
+#: inc/classes/class-tcb-editor-ajax.php:966
+#: inc/classes/class-tcb-editor-ajax.php:1003
 msgid "Invalid element type"
 msgstr ""
 
-#: inc/classes/class-tcb-editor-ajax.php:863
+#: inc/classes/class-tcb-editor-ajax.php:861
 msgid "Missing template id"
+msgstr ""
+
+#: inc/classes/class-tcb-editor-ajax.php:904
+#: inc/classes/elements/class-tcb-ct-symbol-element.php:210
+#: inc/classes/elements/class-tcb-symbol-element.php:131
+msgid "Error when retrieving symbols"
+msgstr ""
+
+#: inc/classes/class-tcb-editor-ajax.php:935
+msgid "Missing symbol title"
+msgstr ""
+
+#: inc/classes/class-tcb-editor-ajax.php:961
+#: inc/classes/elements/class-tcb-ct-symbol-element.php:312
+#: inc/classes/elements/class-tcb-ct-symbol-element.php:393
+#: inc/classes/elements/class-tcb-symbol-element.php:233
+#: inc/classes/elements/class-tcb-symbol-element.php:345
+msgid "Missing symbol id"
+msgstr ""
+
+#: inc/classes/class-tcb-editor-ajax.php:998
+msgid "Missing preview file"
 msgstr ""
 
 #: inc/classes/class-tcb-element-abstract.php:146
@@ -594,8 +871,8 @@ msgid "Edit Thrive Lightbox"
 msgstr ""
 
 #: inc/classes/class-tcb-post-grid.php:34
-#: inc/classes/elements/class-tcb-postgrid-element.php:239
-#: inc/classes/elements/class-tcb-postgrid-element.php:393
+#: inc/classes/elements/class-tcb-postgrid-element.php:246
+#: inc/classes/elements/class-tcb-postgrid-element.php:400
 msgid "Read More"
 msgstr ""
 
@@ -661,12 +938,13 @@ msgstr ""
 msgid "No Follow"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:99
+#: inc/classes/elements/class-tcb-button-element.php:100
+#: inc/classes/elements/class-tcb-contentbox-element.php:91
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:62
-msgid "Button Color"
+msgid "Master Color"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:107
+#: inc/classes/elements/class-tcb-button-element.php:108
 #: inc/classes/elements/class-tcb-lead-generation-input-element.php:72
 #: inc/classes/elements/class-tcb-lead-generation-select-element.php:72
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:37
@@ -675,11 +953,11 @@ msgstr ""
 msgid "Add Icon"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:115
+#: inc/classes/elements/class-tcb-button-element.php:116
 msgid "Secondary button text"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:123
+#: inc/classes/elements/class-tcb-button-element.php:125
 #: inc/classes/elements/class-tcb-credit-element.php:76
 #: inc/classes/elements/class-tcb-lead-generation-element.php:121
 #: inc/classes/elements/class-tcb-rating-element.php:93
@@ -687,16 +965,16 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:139
+#: inc/classes/elements/class-tcb-button-element.php:181
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:73
 msgid "Button width"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:148
+#: inc/classes/elements/class-tcb-button-element.php:190
 msgid "Full Width"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:156
+#: inc/classes/elements/class-tcb-button-element.php:198
 #: inc/classes/elements/class-tcb-countdown-element.php:76
 #: inc/classes/elements/class-tcb-countdownevergreen-element.php:73
 #: inc/classes/elements/class-tcb-credit-element.php:89
@@ -709,7 +987,7 @@ msgstr ""
 msgid "Style"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:158
+#: inc/classes/elements/class-tcb-button-element.php:200
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:114
 #: inc/i18n.php:140 inc/backbone/controls/background-image.phtml:7
 #: inc/backbone/controls/text/typefocus-settings.phtml:5
@@ -717,45 +995,45 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:159
+#: inc/classes/elements/class-tcb-button-element.php:201
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:115
 msgid "Ghost"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:160
+#: inc/classes/elements/class-tcb-button-element.php:202
 #: inc/classes/elements/class-tcb-countdown-element.php:83
 #: inc/classes/elements/class-tcb-countdownevergreen-element.php:80
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:116
 msgid "Rounded"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:161
+#: inc/classes/elements/class-tcb-button-element.php:203
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:117
 msgid "Full Rounded"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:162
+#: inc/classes/elements/class-tcb-button-element.php:204
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:118
 #: inc/i18n.php:34
 msgid "Gradient"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:163
+#: inc/classes/elements/class-tcb-button-element.php:205
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:119
 msgid "Elevated"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:164
+#: inc/classes/elements/class-tcb-button-element.php:206
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:120
 msgid "Border 1"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:165
+#: inc/classes/elements/class-tcb-button-element.php:207
 #: inc/classes/elements/class-tcb-lead-generation-submit-element.php:121
 msgid "Border 2"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-button-element.php:167
+#: inc/classes/elements/class-tcb-button-element.php:209
 msgid "Template Button"
 msgstr ""
 
@@ -785,7 +1063,7 @@ msgid "Column"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-columns-element.php:23
-#: inc/classes/elements/class-tcb-postgrid-element.php:291
+#: inc/classes/elements/class-tcb-postgrid-element.php:298
 msgid "Columns"
 msgstr ""
 
@@ -798,13 +1076,13 @@ msgid "Reverse Column Order"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-columns-element.php:90
-#: inc/classes/elements/class-tcb-contentbox-element.php:90
+#: inc/classes/elements/class-tcb-contentbox-element.php:98
 #: inc/classes/elements/class-tcb-section-element.php:114
 msgid "Vertical Position"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-columns-element.php:113
-msgid "Wrap columns on "
+msgid "Wrap columns"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-columns-element.php:124
@@ -861,7 +1139,7 @@ msgid "Color Scheme"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-commentsfacebook-element.php:110
-#: inc/classes/elements/class-tcb-postgrid-element.php:414
+#: inc/classes/elements/class-tcb-postgrid-element.php:421
 msgid "Order By"
 msgstr ""
 
@@ -965,6 +1243,11 @@ msgstr ""
 
 #: inc/classes/elements/class-tcb-ct-element.php:25
 msgid "Content Template"
+msgstr ""
+
+#: inc/classes/elements/class-tcb-ct-symbol-element.php:422
+#: inc/classes/elements/class-tcb-symbol-element.php:374
+msgid "The file could not be saved"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-divider-element.php:24 inc/i18n.php:61
@@ -1132,8 +1415,8 @@ msgid "Caption Overlay"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-image-element.php:99
-#: inc/classes/elements/class-tcb-postgrid-element.php:344
-#: inc/classes/elements/class-tcb-postgrid-element.php:391
+#: inc/classes/elements/class-tcb-postgrid-element.php:351
+#: inc/classes/elements/class-tcb-postgrid-element.php:398
 msgid "Title"
 msgstr ""
 
@@ -1221,11 +1504,28 @@ msgstr ""
 msgid "%d column"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-lead-generation-checkbox-element.php:56
+#: inc/classes/elements/class-tcb-lead-generation-checkbox-element.php:58
+msgid "Only when the checkbox is ticked"
+msgstr ""
+
+#: inc/classes/elements/class-tcb-lead-generation-checkbox-element.php:62
+msgid "Always on form submission"
+msgstr ""
+
+#: inc/classes/elements/class-tcb-lead-generation-checkbox-element.php:66
+msgid "Create Wordpress account"
+msgstr ""
+
+#: inc/classes/elements/class-tcb-lead-generation-checkbox-element.php:67
+msgid "Send lead data to {service}"
+msgstr ""
+
+#: inc/classes/elements/class-tcb-lead-generation-checkbox-element.php:74
 #: inc/classes/elements/class-tcb-lead-generation-input-element.php:67
 #: inc/classes/elements/class-tcb-lead-generation-radio-element.php:56
 #: inc/classes/elements/class-tcb-lead-generation-select-element.php:67
 #: inc/classes/elements/class-tcb-lead-generation-textarea-element.php:72
+#: inc/backbone/lead-generation/consent.phtml:7
 msgid "Required field"
 msgstr ""
 
@@ -1264,6 +1564,10 @@ msgstr ""
 
 #: inc/classes/elements/class-tcb-lead-generation-element.php:130
 msgid "Compact"
+msgstr ""
+
+#: inc/classes/elements/class-tcb-lead-generation-element.php:138
+msgid "Enable Checkbox for Explicit Content"
 msgstr ""
 
 #: inc/classes/elements/class-tcb-lead-generation-input-element.php:15
@@ -1389,7 +1693,7 @@ msgstr ""
 
 #: inc/classes/elements/class-tcb-numberedlist-element.php:215
 #: inc/classes/elements/class-tcb-styledlist-element.php:141
-#: inc/menu/general.php:263
+#: inc/menu/general.php:264
 msgid "Exit Group Styling"
 msgstr ""
 
@@ -1428,116 +1732,116 @@ msgstr ""
 msgid "Post Grid"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:248
+#: inc/classes/elements/class-tcb-postgrid-element.php:255
 msgid "Text Color"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:258
+#: inc/classes/elements/class-tcb-postgrid-element.php:265
 msgid "Image Height"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:269
+#: inc/classes/elements/class-tcb-postgrid-element.php:276
 msgid "Title Font Size"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:280
+#: inc/classes/elements/class-tcb-postgrid-element.php:287
 msgid "Title Line Height"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:301
+#: inc/classes/elements/class-tcb-postgrid-element.php:308
 msgid "Display"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:318
+#: inc/classes/elements/class-tcb-postgrid-element.php:325
 msgid "Grid Layout"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:336
+#: inc/classes/elements/class-tcb-postgrid-element.php:343
 msgid "Featured image"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:352
+#: inc/classes/elements/class-tcb-postgrid-element.php:359
 msgid "Read more link"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:360
-#: inc/classes/elements/class-tcb-postgrid-element.php:392 inc/i18n.php:29
+#: inc/classes/elements/class-tcb-postgrid-element.php:367
+#: inc/classes/elements/class-tcb-postgrid-element.php:399 inc/i18n.php:29
 #: inc/backbone/controls/text/typefocus-settings.phtml:14
 msgid "Text"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:367
+#: inc/classes/elements/class-tcb-postgrid-element.php:374
 msgid "Text type"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:390
+#: inc/classes/elements/class-tcb-postgrid-element.php:397
 msgid "Featured Image"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:403
+#: inc/classes/elements/class-tcb-postgrid-element.php:410
 msgid "Content"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:408
+#: inc/classes/elements/class-tcb-postgrid-element.php:415
 msgid "No posts were found satisfying your Query"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:443
+#: inc/classes/elements/class-tcb-postgrid-element.php:450
 msgid "Order"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:460
+#: inc/classes/elements/class-tcb-postgrid-element.php:467
 msgid "Number of posts"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:468
+#: inc/classes/elements/class-tcb-postgrid-element.php:475
 msgid "Show Items More recent than"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:478
+#: inc/classes/elements/class-tcb-postgrid-element.php:485
 msgid "Start"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:492
+#: inc/classes/elements/class-tcb-postgrid-element.php:499
 msgid "Categories"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:497
+#: inc/classes/elements/class-tcb-postgrid-element.php:504
 msgid "No categories were found satisfying your Query"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:503
+#: inc/classes/elements/class-tcb-postgrid-element.php:510
 #: inc/views/modals/save-template-lp.php:24
 #: inc/backbone/lead-generation/apis/activecampaign.phtml:40
 #: inc/backbone/lead-generation/apis/aweber.phtml:26
 msgid "Tags"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:508
+#: inc/classes/elements/class-tcb-postgrid-element.php:515
 msgid "No tags were found satisfying your Query"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:514
+#: inc/classes/elements/class-tcb-postgrid-element.php:521
 msgid "Authors"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:519
+#: inc/classes/elements/class-tcb-postgrid-element.php:526
 msgid "No authors were found satisfying your Query"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:525
+#: inc/classes/elements/class-tcb-postgrid-element.php:532
 msgid "Custom Taxonomies"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:530
+#: inc/classes/elements/class-tcb-postgrid-element.php:537
 msgid "No taxonomies were found satisfying your Query"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:536
+#: inc/classes/elements/class-tcb-postgrid-element.php:543
 msgid "Individual Posts / Pages"
 msgstr ""
 
-#: inc/classes/elements/class-tcb-postgrid-element.php:541
+#: inc/classes/elements/class-tcb-postgrid-element.php:548
 msgid "No post / pages were found satisfying your Query"
 msgstr ""
 
@@ -1721,6 +2025,16 @@ msgstr ""
 msgid "List Item"
 msgstr ""
 
+#: inc/classes/elements/class-tcb-symbol-element.php:30
+#: inc/classes/symbols/class-tcb-symbols-post-type.php:56
+#: inc/classes/symbols/class-tcb-symbols-post-type.php:60
+msgid "Thrive Symbol"
+msgstr ""
+
+#: inc/classes/elements/class-tcb-symbol-element.php:305
+msgid "Sorry, you are not allowed to create symbols without title"
+msgstr ""
+
 #: inc/classes/elements/class-tcb-table-element.php:23
 msgid "Table"
 msgstr ""
@@ -1875,6 +2189,53 @@ msgstr ""
 msgid "Wordpress Content"
 msgstr ""
 
+#: inc/classes/symbols/class-tcb-symbols-dashboard.php:71
+msgid ""
+"Save time designing pages by using templates and symbols. Manage these saved "
+"elements from a single dashboard."
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-dashboard.php:73
+msgid "Manage Saved Elements"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-post-type.php:59
+msgid "Thrive Symbols"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-post-type.php:61
+msgid "Add New Thrive Symbol"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-post-type.php:62
+msgid "Edit Thrive Symbol"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:75
+msgid "Search Symbols"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:76
+msgid "All Symbols"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:77
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:78
+msgid "Parent Symbol"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:80
+msgid "Update Symbol"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:81
+msgid "Add New Symbol"
+msgstr ""
+
+#: inc/classes/symbols/class-tcb-symbols-taxonomy.php:82
+msgid "New Symbol Name"
+msgstr ""
+
 #: inc/compat.php:72
 msgid "Wordpress SEO settings"
 msgstr ""
@@ -1888,8 +2249,7 @@ msgid ""
 msgstr ""
 
 #: inc/functions.php:246 inc/functions.php:417
-#: inc/views/admin/post-edit-button.php:32
-#: inc/views/admin/post-edit-button.php:47
+#: inc/views/admin/post-edit-button.php:55
 msgid "Edit with Thrive Architect"
 msgstr ""
 
@@ -1897,63 +2257,67 @@ msgstr ""
 msgid "Close Thrive Architect"
 msgstr ""
 
-#: inc/functions.php:540 inc/functions.php:594
+#: inc/functions.php:542 inc/functions.php:596
 msgid "Continue Reading"
 msgstr ""
 
-#: inc/functions.php:1807
+#: inc/functions.php:1854
 msgid ""
 "Thrive Leads Shortcode could not be rendered, please check it in Thrive "
 "Leads Section!"
 msgstr ""
 
-#: inc/functions.php:2503
+#: inc/functions.php:2550
 msgid "Thrive Architect Content"
 msgstr ""
 
-#: inc/functions.php:2504
+#: inc/functions.php:2551
 msgid "Thrive Architect Custom CSS"
 msgstr ""
 
-#: inc/functions.php:2505
+#: inc/functions.php:2552
 msgid "Landing Page"
 msgstr ""
 
-#: inc/functions.php:2789
+#: inc/functions.php:2836
 #, php-format
 msgid "Only %s files are accepted"
 msgstr ""
 
-#: inc/functions.php:2858
+#: inc/functions.php:2905
 msgid "Please prove us that you are not a robot!!!"
 msgstr ""
 
-#: inc/functions.php:2865
+#: inc/functions.php:2912
 msgid "The email address is required"
 msgstr ""
 
-#: inc/functions.php:2871
+#: inc/functions.php:2918
 msgid "The email address is invalid"
 msgstr ""
 
-#: inc/functions.php:2888
+#: inc/functions.php:2943
+msgid "User consent is required"
+msgstr ""
+
+#: inc/functions.php:2961
 msgid "No connection for this form"
 msgstr ""
 
-#: inc/functions.php:3029
+#: inc/functions.php:3112
 msgid "All categories"
 msgstr ""
 
-#: inc/functions.php:3158
+#: inc/functions.php:3241
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: inc/functions.php:3160
+#: inc/functions.php:3243
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: inc/functions.php:3435
+#: inc/functions.php:3518
 msgid "Copy"
 msgstr ""
 
@@ -2065,7 +2429,7 @@ msgstr ""
 msgid "Please choose a video"
 msgstr ""
 
-#: inc/i18n.php:44 inc/views/modals/export-lp.php:30
+#: inc/i18n.php:44 inc/views/modals/export-lp.php:31
 msgid "Choose Image"
 msgstr ""
 
@@ -2294,14 +2658,6 @@ msgstr ""
 msgid ""
 "Are you sure you want to remove this Content Template? This action cannot be "
 "undone"
-msgstr ""
-
-#: inc/i18n.php:105 inc/views/modals/lg-error-messages.php:38
-#: inc/backbone/controls/drop-panel.phtml:6
-#: inc/backbone/controls/position-from.phtml:39
-#: inc/backbone/controls/styles-templates.phtml:71
-#: inc/backbone/page-events/form.phtml:24
-msgid "Cancel"
 msgstr ""
 
 #: inc/i18n.php:106 inc/backbone/page-events/actions/lightbox.phtml:16
@@ -2558,6 +2914,68 @@ msgstr ""
 msgid "Inside"
 msgstr ""
 
+#: inc/i18n.php:169
+msgid "The symbol could not be saved"
+msgstr ""
+
+#: inc/i18n.php:170
+msgid "The symbol saved successfully"
+msgstr ""
+
+#: inc/i18n.php:171
+msgid "Enter Template Name"
+msgstr ""
+
+#: inc/i18n.php:173
+msgid "Element that can be reused on any page across your website."
+msgstr ""
+
+#: inc/i18n.php:174
+msgid ""
+"Element that automatically updates other instances of the symbol when "
+"changes are made to it."
+msgstr ""
+
+#: inc/i18n.php:178
+msgid "The element for generating the thumb is missing"
+msgstr ""
+
+#: inc/i18n.php:179
+msgid "Something went wrong when getting image source"
+msgstr ""
+
+#: inc/i18n.php:180
+msgid "The thumb for the content wasn't save"
+msgstr ""
+
+#: inc/i18n.php:182
+msgid ""
+"All the symbols inside this element will be automatically unlinked. It's not "
+"possible to save a symbol or a template that contain another symbol."
+msgstr ""
+
+#: inc/i18n.php:183
+msgid ""
+"All the symbols inside the page will be unlinked so you don't loose their "
+"content."
+msgstr ""
+
+#: inc/i18n.php:184
+msgid "Search"
+msgstr ""
+
+#: inc/i18n.php:185
+msgid "Choose"
+msgstr ""
+
+#: inc/i18n.php:186
+msgid "Add template to category"
+msgstr ""
+
+#: inc/i18n.php:187
+msgid "Add symbol to category"
+msgstr ""
+
 #: inc/license_notice.php:11
 #, php-format
 msgid "You need to %s before you can use the editor!"
@@ -2579,13 +2997,12 @@ msgstr ""
 msgid "Click to Tweet Options"
 msgstr ""
 
-#: inc/menu/click-tweet.php:31 inc/views/editor-settings-elements.php:19
-#: inc/views/editor-settings.php:8
-msgid "Preview"
-msgstr ""
-
 #: inc/menu/columns.php:16
 msgid "Column Options"
+msgstr ""
+
+#: inc/menu/columns.php:43
+msgid "If you enable wrapping, the columns will not be resizable anymore"
 msgstr ""
 
 #: inc/menu/commentsdisqus.php:15
@@ -2636,6 +3053,25 @@ msgstr ""
 msgid "Credit Card Icons"
 msgstr ""
 
+#: inc/menu/ct_symbol.php:11 inc/menu/symbol.php:11
+msgid "Symbol Options"
+msgstr ""
+
+#: inc/menu/ct_symbol.php:16 inc/menu/symbol.php:16
+msgid ""
+"This is a symbol. You can edit it as a global element( it updates "
+"simultaneously all over the places you used it) or unlink it and you edit it "
+"as a regular element"
+msgstr ""
+
+#: inc/menu/ct_symbol.php:22 inc/menu/symbol.php:22
+msgid "Edit as Symbol"
+msgstr ""
+
+#: inc/menu/ct_symbol.php:28 inc/menu/symbol.php:28
+msgid "Unlink"
+msgstr ""
+
 #: inc/menu/decoration.php:5
 msgid "Decorations"
 msgstr ""
@@ -2648,7 +3084,7 @@ msgstr ""
 msgid "Fill Counter Options"
 msgstr ""
 
-#: inc/menu/general.php:10 inc/menu/lp-text.php:66
+#: inc/menu/general.php:10 inc/menu/lp-text.php:67
 msgid "Background Style"
 msgstr ""
 
@@ -2656,67 +3092,67 @@ msgstr ""
 msgid "Typography"
 msgstr ""
 
-#: inc/menu/general.php:49 inc/menu/lp-text.php:44 inc/menu/text.php:38
+#: inc/menu/general.php:50 inc/menu/lp-text.php:45 inc/menu/text.php:38
 #: inc/backbone/landing-pages/font-settings.phtml:3
 msgid "Font Face"
 msgstr ""
 
-#: inc/menu/general.php:60 inc/menu/lead_generation.php:54
+#: inc/menu/general.php:61 inc/menu/lead_generation.php:57
 #: inc/menu/menu.php:46 inc/menu/table.php:46 inc/menu/tabs.php:36
 #: inc/menu/text.php:56 inc/backbone/controls/layout.phtml:31
 #: inc/backbone/controls/responsive-video-settings.phtml:52
 msgid "Advanced"
 msgstr ""
 
-#: inc/menu/general.php:81 inc/menu/lp-text.php:83
+#: inc/menu/general.php:82 inc/menu/lp-text.php:84
 msgid "Borders & Corners"
 msgstr ""
 
-#: inc/menu/general.php:133
+#: inc/menu/general.php:134
 msgid "Trigger"
 msgstr ""
 
-#: inc/menu/general.php:173 inc/menu/lp-text.php:99
+#: inc/menu/general.php:174 inc/menu/lp-text.php:100
 msgid "Shadow"
 msgstr ""
 
-#: inc/menu/general.php:188
+#: inc/menu/general.php:189
 msgid "Advanced Options"
 msgstr ""
 
-#: inc/menu/general.php:205
+#: inc/menu/general.php:206
 msgid "Custom Scripts"
 msgstr ""
 
-#: inc/menu/general.php:212
+#: inc/menu/general.php:213
 msgid "Header Scripts"
 msgstr ""
 
-#: inc/menu/general.php:215
+#: inc/menu/general.php:216
 msgid "Body Scripts"
 msgstr ""
 
-#: inc/menu/general.php:218
+#: inc/menu/general.php:219
 msgid "Footer Scripts"
 msgstr ""
 
-#: inc/menu/general.php:224
+#: inc/menu/general.php:225
 msgid "Landing Page Text Options"
 msgstr ""
 
-#: inc/menu/general.php:229
+#: inc/menu/general.php:230
 msgid "EDIT PAGE TEXTS"
 msgstr ""
 
-#: inc/menu/general.php:236
+#: inc/menu/general.php:237
 msgid "Template Options"
 msgstr ""
 
-#: inc/menu/general.php:241
+#: inc/menu/general.php:242
 msgid "Change Template"
 msgstr ""
 
-#: inc/menu/general.php:249
+#: inc/menu/general.php:250
 msgid "Currently styling"
 msgstr ""
 
@@ -2763,15 +3199,15 @@ msgstr ""
 msgid "Edit Form Elements"
 msgstr ""
 
-#: inc/menu/lead_generation.php:32
+#: inc/menu/lead_generation.php:33
 msgid "Requires integration with Google ReCaptcha"
 msgstr ""
 
-#: inc/menu/lead_generation.php:61
+#: inc/menu/lead_generation.php:64
 msgid "Edit error messages"
 msgstr ""
 
-#: inc/menu/lead_generation.php:64
+#: inc/menu/lead_generation.php:68
 msgid "Connect to multiple services"
 msgstr ""
 
@@ -2783,7 +3219,7 @@ msgstr ""
 msgid "Landing Page Options"
 msgstr ""
 
-#: inc/menu/lp-text.php:56
+#: inc/menu/lp-text.php:57
 msgid "Clear formatting"
 msgstr ""
 
@@ -3043,41 +3479,48 @@ msgstr ""
 msgid "Upgrade to Thrive Architect"
 msgstr ""
 
-#: inc/views/admin/post-edit-button.php:25
-msgid ""
-"You are currently using Thrive Architect to edit this content. You can "
-"continue editing with Thrive Architect or return to the default Wordpress "
-"editor"
+#: inc/views/admin/post-edit-button.php:26
+msgid "You are currently using Thrive Architect to edit this content."
 msgstr ""
 
-#: inc/views/admin/post-edit-button.php:35
+#: inc/views/admin/post-edit-button.php:29
+msgid ""
+"You can continue editing with Thrive Architect or return to the default "
+"Wordpress editor."
+msgstr ""
+
+#: inc/views/admin/post-edit-button.php:37
+msgid "Launch Thrive Architect"
+msgstr ""
+
+#: inc/views/admin/post-edit-button.php:41
 msgid "or"
 msgstr ""
 
-#: inc/views/admin/post-edit-button.php:35
+#: inc/views/admin/post-edit-button.php:43
 msgid "Return to the WP editor"
 msgstr ""
 
-#: inc/views/admin/post-edit-button.php:55
+#: inc/views/admin/post-edit-button.php:63
 msgid ""
 "Are you sure you want to DELETE all of the content that was created in this "
 "landing page and revert to the theme page?\\nIf you click OK, any custom "
 "content you added to the landing page will be deleted."
 msgstr ""
 
-#: inc/views/admin/post-edit-button.php:63
+#: inc/views/admin/post-edit-button.php:72
 msgid ""
 "You are currently using a Thrive Architect landing page to display this "
 "piece of content."
 msgstr ""
 
-#: inc/views/admin/post-edit-button.php:65
+#: inc/views/admin/post-edit-button.php:75
 msgid ""
-"If you'd like to revert back to your theme template then click the button "
+"If you'd like to revert back to your theme template then click the link "
 "below:"
 msgstr ""
 
-#: inc/views/admin/post-edit-button.php:68
+#: inc/views/admin/post-edit-button.php:78
 msgid "Revert to theme template"
 msgstr ""
 
@@ -3162,6 +3605,10 @@ msgstr ""
 msgid "Page Setup"
 msgstr ""
 
+#: inc/views/elements/ct_symbol.php:16
+msgid "Insert Symbol or Content Template"
+msgstr ""
+
 #: inc/views/elements/ct.php:2
 msgid "Select Content Template"
 msgstr ""
@@ -3214,6 +3661,10 @@ msgstr ""
 msgid "Insert Video"
 msgstr ""
 
+#: inc/views/elements/symbol.php:15
+msgid "Insert Symbol"
+msgstr ""
+
 #: inc/views/elements/table.php:2
 msgid "Insert table"
 msgstr ""
@@ -3250,47 +3701,47 @@ msgstr ""
 msgid "Insert WordPress Content"
 msgstr ""
 
-#: inc/views/inner.php:28
+#: inc/views/inner.php:18
 msgid "Add column"
 msgstr ""
 
-#: inc/views/inner.php:29
+#: inc/views/inner.php:19
 msgid "Add row"
 msgstr ""
 
-#: inc/views/inner.php:30
+#: inc/views/inner.php:20
 msgid "Split"
 msgstr ""
 
-#: inc/views/inner.php:31
+#: inc/views/inner.php:21
 msgid "Merge"
 msgstr ""
 
-#: inc/views/inner.php:34
+#: inc/views/inner.php:24
 msgid "Remove column"
 msgstr ""
 
-#: inc/views/inner.php:36
+#: inc/views/inner.php:26
 msgid "Remove row"
 msgstr ""
 
-#: inc/views/inner.php:40
+#: inc/views/inner.php:30
 msgid "Insert column after"
 msgstr ""
 
-#: inc/views/inner.php:41
+#: inc/views/inner.php:31
 msgid "Insert column before"
 msgstr ""
 
-#: inc/views/inner.php:42
+#: inc/views/inner.php:32
 msgid "Insert row after"
 msgstr ""
 
-#: inc/views/inner.php:43
+#: inc/views/inner.php:33
 msgid "Insert row before"
 msgstr ""
 
-#: inc/views/inner.php:45 inc/views/inner.php:61
+#: inc/views/inner.php:35 inc/views/inner.php:54
 #: inc/views/modals/revision-manager.php:20
 #: inc/views/sidebars/table-edit-state.php:3
 #: inc/views/sidebars/toggle-edit-state.php:3
@@ -3298,13 +3749,17 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: inc/views/inner.php:52 inc/views/modals/no-content-templates.php:9
+#: inc/views/inner.php:42 inc/views/modals/no-content-templates.php:9
 #: inc/views/sidebars/post-grid-edit-grid-options.php:11
 msgid "Done"
 msgstr ""
 
-#: inc/views/inner.php:57
+#: inc/views/inner.php:47
 msgid "Save & Close"
+msgstr ""
+
+#: inc/views/inner.php:50
+msgid "Save & Close Symbol"
 msgstr ""
 
 #: inc/views/layouts/editor.php:19
@@ -3320,9 +3775,31 @@ msgstr ""
 msgid "Choose %s Template"
 msgstr ""
 
-#: inc/views/modals/cloud-templates.php:26
+#: inc/views/modals/cloud-templates.php:26 inc/views/modals/ct-symbols.php:56
 #: inc/views/modals/lp-templates.php:64
 msgid "Choose Template"
+msgstr ""
+
+#: inc/views/modals/ct-symbols.php:15
+msgid "Insert Template or Symbol"
+msgstr ""
+
+#: inc/views/modals/ct-symbols.php:19 inc/views/modals/symbols.php:19
+msgid "Fetching data"
+msgstr ""
+
+#: inc/views/modals/ct-symbols.php:23
+msgid "Search Templates..."
+msgstr ""
+
+#: inc/views/modals/ct-symbols.php:37 inc/views/modals/ct-symbols.php:45
+#: inc/views/modals/symbols.php:29
+msgid "Oups! We couldn't find anything called "
+msgstr ""
+
+#: inc/views/modals/ct-symbols.php:37 inc/views/modals/ct-symbols.php:45
+#: inc/views/modals/symbols.php:29
+msgid ". Maybe search for something else ?"
 msgstr ""
 
 #: inc/views/modals/custom-html.php:1
@@ -3337,23 +3814,17 @@ msgstr ""
 msgid "Export Template"
 msgstr ""
 
-#: inc/views/modals/export-lp.php:17 inc/views/modals/save-template-lp.php:20
-#: inc/views/modals/save-template.php:20
-#: inc/backbone/controls/styles-templates.phtml:36
-msgid "Template Name"
-msgstr ""
-
-#: inc/views/modals/export-lp.php:22
+#: inc/views/modals/export-lp.php:23
 msgid ""
 "Recommended image size: 166x140px. If you do not choose a picture, the "
 "default template thumbnail will be used."
 msgstr ""
 
-#: inc/views/modals/export-lp.php:31
+#: inc/views/modals/export-lp.php:32
 msgid "Remove Image"
 msgstr ""
 
-#: inc/views/modals/export-lp.php:39
+#: inc/views/modals/export-lp.php:40
 msgid "Download File"
 msgstr ""
 
@@ -3462,6 +3933,33 @@ msgstr ""
 msgid "Show the default Wordpress Revision Manager"
 msgstr ""
 
+#: inc/views/modals/save-elements.php:7
+msgid "Save your element for later use"
+msgstr ""
+
+#: inc/views/modals/save-elements.php:12
+msgid "Save your content and use it on other pages across your website"
+msgstr ""
+
+#: inc/views/modals/save-elements.php:18
+msgid "Template"
+msgstr ""
+
+#: inc/views/modals/save-elements.php:26
+msgid ""
+"Content templates can be used across your website but they are edited only "
+"locally."
+msgstr ""
+
+#: inc/views/modals/save-elements.php:29
+msgid "Enter template name"
+msgstr ""
+
+#: inc/views/modals/save-elements.php:36
+#: inc/backbone/controls/styles-templates.phtml:45
+msgid "Add template to a category"
+msgstr ""
+
 #: inc/views/modals/save-template-lp.php:13
 msgid "Save Page Template"
 msgstr ""
@@ -3478,8 +3976,7 @@ msgstr ""
 
 #: inc/views/modals/save-template-lp.php:37
 #: inc/views/modals/save-template.php:26
-#: inc/backbone/controls/styles-templates.phtml:29
-#: inc/backbone/controls/styles-templates.phtml:74
+#: inc/backbone/controls/styles-templates.phtml:71
 msgid "Save Template"
 msgstr ""
 
@@ -3491,6 +3988,18 @@ msgstr ""
 msgid ""
 "You can save your work as a template for use on another post/page on your "
 "site."
+msgstr ""
+
+#: inc/views/modals/symbols.php:15
+msgid "Choose symbol"
+msgstr ""
+
+#: inc/views/modals/symbols.php:23
+msgid "Search symbols..."
+msgstr ""
+
+#: inc/views/modals/symbols.php:36
+msgid "Choose Symbol"
 msgstr ""
 
 #: inc/views/modals/wordpress-content.php:1
@@ -3594,6 +4103,12 @@ msgid ""
 "the element."
 msgstr ""
 
+#: inc/views/symbols/symbol-content.php:19
+msgid ""
+"Note that this symbol doesn't have any width settings. <br />It will expand "
+"to the full width of the content area of your theme."
+msgstr ""
+
 #: inc/backbone/cloud-error.phtml:9
 #, php-format
 msgid ""
@@ -3653,29 +4168,29 @@ msgid "Show recommended fonts only"
 msgstr ""
 
 #: inc/backbone/controls/font-manager.phtml:21
-#: inc/backbone/controls/font-manager.phtml:75
-#: inc/backbone/controls/font-manager.phtml:92
+#: inc/backbone/controls/font-manager.phtml:76
+#: inc/backbone/controls/font-manager.phtml:93
 msgid "Font"
 msgstr ""
 
-#: inc/backbone/controls/font-manager.phtml:30
+#: inc/backbone/controls/font-manager.phtml:31
 msgid "Regular"
 msgstr ""
 
-#: inc/backbone/controls/font-manager.phtml:39
+#: inc/backbone/controls/font-manager.phtml:40
 msgid "Bold"
 msgstr ""
 
-#: inc/backbone/controls/font-manager.phtml:50
+#: inc/backbone/controls/font-manager.phtml:51
 #, php-format
 msgid "Also include the %sItalic%s version"
 msgstr ""
 
-#: inc/backbone/controls/font-manager.phtml:55
+#: inc/backbone/controls/font-manager.phtml:56
 msgid "Including the Italic styles may result in slower loading"
 msgstr ""
 
-#: inc/backbone/controls/font-manager.phtml:63
+#: inc/backbone/controls/font-manager.phtml:64
 msgid "Charset"
 msgstr ""
 
@@ -3828,22 +4343,18 @@ msgid "Tweet text:"
 msgstr ""
 
 #: inc/backbone/controls/styles-templates.phtml:16
-msgid "Styles & Templates"
+msgid "Styles"
 msgstr ""
 
 #: inc/backbone/controls/styles-templates.phtml:26
 msgid "Clear Styles"
 msgstr ""
 
-#: inc/backbone/controls/styles-templates.phtml:48
-msgid "Add template to a category"
-msgstr ""
-
-#: inc/backbone/controls/styles-templates.phtml:53
+#: inc/backbone/controls/styles-templates.phtml:50
 msgid "Select a category"
 msgstr ""
 
-#: inc/backbone/controls/styles-templates.phtml:65
+#: inc/backbone/controls/styles-templates.phtml:62
 msgid "Manage content templates"
 msgstr ""
 
@@ -3924,6 +4435,10 @@ msgstr ""
 
 #: inc/backbone/landing-pages/delete-confirmation.phtml:3
 msgid "Are you sure?"
+msgstr ""
+
+#: inc/backbone/landing-pages/delete-confirmation.phtml:8
+msgid "YES, DELETE"
 msgstr ""
 
 #: inc/backbone/landing-pages/delete-confirmation.phtml:11
@@ -4133,6 +4648,18 @@ msgid ""
 "unfortunately that isn't possible with Sendy."
 msgstr ""
 
+#: inc/backbone/lead-generation/consent.phtml:3
+msgid ""
+"Your checkbox has no action assigned to it so it has no effect on how data "
+"is being submitted!"
+msgstr ""
+
+#: inc/backbone/lead-generation/consent.phtml:10
+msgid ""
+"Your checkbox is mandatory because it blocks sending data to all the "
+"services above when unticked."
+msgstr ""
+
 #: inc/backbone/lead-generation/custom-field.phtml:20
 #: inc/backbone/lead-generation/fields.phtml:16
 msgid "Required"
@@ -4251,10 +4778,6 @@ msgstr ""
 msgid "Existing Events"
 msgstr ""
 
-#: inc/backbone/page-events/list.phtml:21
-msgid "Delete"
-msgstr ""
-
 #: inc/backbone/page-events/no-events.phtml:1
 msgid ""
 "There are no events setup for this page. Use the options below to create a "
@@ -4294,6 +4817,14 @@ msgstr ""
 
 #: inc/backbone/shadow/shadow-entry.phtml:31
 msgid "Drop Shadow"
+msgstr ""
+
+#: inc/backbone/symbols/get-symbols-error.phtml:9
+#: inc/backbone/symbols/save-templates-symbols-error.phtml:10
+#, php-format
+msgid ""
+"An error was encountered while fetching data for the symbols. Please contact "
+"our %s and provide the following error message:"
 msgstr ""
 
 #: inc/backbone/util/favorite-colors.phtml:9

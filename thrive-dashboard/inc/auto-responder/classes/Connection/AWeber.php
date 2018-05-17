@@ -196,7 +196,7 @@ class Thrive_Dash_List_Connection_AWeber extends Thrive_Dash_List_Connection_Abs
 			}
 
 			if ( ! empty( $arguments['aweber_tags'] ) ) {
-				$params['tags'] = array( $arguments['aweber_tags'] );
+				$params['tags'] = explode( ',', trim( $arguments['aweber_tags'], ' ,' ) );
 			}
 
 			if ( ( $existing_subscribers = $list->subscribers->find( array( 'email' => $params['email'] ) ) ) && $existing_subscribers->count() === 1 ) {
@@ -206,7 +206,8 @@ class Thrive_Dash_List_Connection_AWeber extends Thrive_Dash_List_Connection_Abs
 				if ( ! empty( $params['custom_fields'] ) ) {
 					$subscriber->custom_fields = $params['custom_fields'];
 				}
-				$new_subscriber = $subscriber->save() == 209;
+				$subscriber->tags = array_merge( $subscriber->tags->getData(), $params['tags'] );
+				$new_subscriber   = $subscriber->save() == 209;
 			} else {
 				$new_subscriber = $list->subscribers->create( $params );
 			}

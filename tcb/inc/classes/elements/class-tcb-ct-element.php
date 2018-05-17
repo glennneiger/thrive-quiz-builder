@@ -63,6 +63,15 @@ class TCB_Ct_Element extends TCB_Element_Abstract {
 	}
 
 	/**
+	 * Either to display or not the element in the sidebar menu
+	 *
+	 * @return bool
+	 */
+	public function hide() {
+		return true;
+	}
+
+	/**
 	 * Get all information about all saved templates
 	 *
 	 * @return mixed|array
@@ -90,6 +99,7 @@ class TCB_Ct_Element extends TCB_Element_Abstract {
 				'id'    => $key,
 				'label' => rawurldecode( $tpl['name'] ),
 				'type'  => ! empty( $tpl['type'] ) ? $tpl['type'] : '',
+				'image_url' => isset( $tpl['image_url'] ) ? $tpl['image_url'] : '',
 			);
 
 			if ( in_array( $temp_array['type'], array( 'button' ) ) ) {

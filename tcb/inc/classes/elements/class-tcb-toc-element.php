@@ -174,6 +174,9 @@ class TCB_TOC_Element extends TCB_Element_Abstract {
 					'LineHeight' => array(
 						'css_suffix' => ' .ct_column a',
 					),
+					'FontFace'   => array(
+						'css_suffix' => ' .ct_column a',
+					),
 				),
 			),
 			'shadow'     => array(

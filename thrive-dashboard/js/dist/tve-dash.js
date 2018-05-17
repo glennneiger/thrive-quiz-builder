@@ -5578,7 +5578,13 @@ if (jQuery) {
 					}
 				} );
 
-				$container.on( 'mouseleave.tooltip', '.tvd-tooltipped', function () {
+				$container.on( 'mouseleave.tooltip', '.tvd-tooltipped', function ( e ) {
+
+					//added to solve a firefox bug, the mouseleave event was fired even at mouseenter when the last element from the container was a svg
+					if ( e.relatedTarget && e.relatedTarget.tagName.toLowerCase() === 'path' ) {
+						return;
+					}
+
 					var $element = $( this ),
 						newTooltip = $element.data( 'tvd-new-tooltip' ),
 						backdrop = $element.data( 'tvd-backdrop' );
@@ -16604,6 +16610,89 @@ if (typeof jQuery !== 'undefined') {
 		}
 	};
 
+	TVE_Dash.AffiliateLinks = {
+		aff_id: null,
+		saveOptions: function ( element ) {
+			var product = element.currentTarget.getAttribute( 'data-product' ),
+				checked = element.currentTarget.checked ? 1 : 0,
+				$this = $( this ),
+				data = {
+					action: TVE_Dash_Const.actions.backend_ajax,
+					route: TVE_Dash_Const.routes.affiliate_links,
+					product_tag: product,
+					value: checked
+				};
+
+			if ( data.field === '' ) {
+				return;
+			}
+			TVE_Dash.settings.showLoading( $this );
+			$.ajax( {
+				url: ajaxurl,
+				dataType: 'json',
+				type: 'POST',
+				data: data
+			} ).done( function ( response ) {
+				if ( response ) {
+					//@todo do we need to do something here?
+				}
+			} ).always( function () {
+				TVE_Dash.settings.hideLoading( $this );
+			} );
+		},
+		saveAffiliateId: function ( element ) {
+			var aff_id = $( '#affiliate-id' ).val(),
+				regex = /^\d+$/,
+				valid = regex.test( aff_id ),
+				$this = $( this );
+
+			if ( (aff_id != '') && ! valid ) {
+				$( '#affiliate-id' ).addClass( 'tvd-invalid' );
+				$( '#aff-invalid' ).show();
+
+				return;
+			}
+
+			$( '#aff-invalid' ).hide();
+
+			var data = {
+				affiliate_id: aff_id,
+				action: TVE_Dash_Const.actions.backend_ajax,
+				route: TVE_Dash_Const.routes.add_aff_id
+			};
+			$.ajax( {
+				url: ajaxurl,
+				dataType: 'json',
+				type: 'POST',
+				data: data
+			} ).done( function ( response ) {
+				TVE_Dash.success( 'ID saved successfully' );
+			} ).always( function () {
+				$( '.tvd-modal-close' ).click();
+				TVE_Dash.settings.hideLoading( $this );
+			} );
+		},
+		getAffiliateId: function () {
+			var data = {
+					action: TVE_Dash_Const.actions.backend_ajax,
+					route: TVE_Dash_Const.routes.get_aff_id
+				},
+				self = TVE_Dash.AffiliateLinks;
+
+			console.log( self );
+
+			$.ajax( {
+				url: ajaxurl,
+				dataType: 'json',
+				type: 'GET',
+				data: data
+			} ).done( function ( response ) {
+				$( '#affiliate-id' ).val( response );
+				TVE_Dash.materialize( $( '#affiliate-id' ) );
+			} );
+		}
+	};
+
 	TVE_Dash.LicenseManager = {
 		init: function () {
 			var self = this;
@@ -16680,10 +16769,10 @@ if (typeof jQuery !== 'undefined') {
 				for ( var i = 0; i < response.products.length; i ++ ) {
 					var tag = response.products[i];
 					$name.html( $name.html() + (
-							TVE_Dash_Const.products[tag] ? TVE_Dash_Const.products[tag] : (
-							    tag.charAt( 0 ).toUpperCase() + tag.slice( 1 )
-							)
-						) + " " );
+						TVE_Dash_Const.products[tag] ? TVE_Dash_Const.products[tag] : (
+						        tag.charAt( 0 ).toUpperCase() + tag.slice( 1 )
+						)
+					) + " " );
 				}
 				$type.html( TVE_Dash_Const.license_types.individual );
 			}
@@ -16701,6 +16790,15 @@ if (typeof jQuery !== 'undefined') {
 		$( ".tve-dash-show-license-form" ).click( TVE_Dash.product.showLicenceForm );
 		$( ".tve-dash-show-inactive-state" ).click( TVE_Dash.product.cancelLicense );
 		$( 'form.tve-dash-item-license-form' ).submit( TVE_Dash.product.submitLicenseForm );
+		$( ".tve-checked" ).click( TVE_Dash.AffiliateLinks.saveOptions );
+		$( ".tvd-save-aff-id" ).click( TVE_Dash.AffiliateLinks.saveAffiliateId );
+
+		$( document ).on( 'keypress', function ( e ) {
+			if ( e.which == 13 ) {
+				TVE_Dash.AffiliateLinks.saveAffiliateId();
+			}
+
+		} );
 
 		$( document ).on( 'click', '.tvd-save-option:not(.tvd-disabled)', TVE_Dash.settings.saveOptions );
 		$( document ).on( 'click', '.tvd-add-option', TVE_Dash.settings.addOption );
@@ -16716,6 +16814,24 @@ if (typeof jQuery !== 'undefined') {
 			options.starting_top = ($( this ).offset().top - $( window ).scrollTop()) / 1.15;
 			var modal_id = $this.attr( "href" ) || '#' + $this.data( 'target' );
 			$( modal_id ).openModal( options );
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		} );
+
+		$body.on( 'click', '.tvd-add-affiliate-url', function ( e ) {
+			var defaults = {
+					starting_top: '4%'
+				},
+				$this = $( this ),
+				options = $.extend( defaults, {}, $this.data() );
+			options.starting_top = ($( this ).offset().top - $( window ).scrollTop()) / 1.15;
+			var modal_id = $this.attr( "href" ) || '#' + $this.data( 'target' );
+			$( '#aff-invalid' ).hide();
+			$( '#affiliate-id' ).removeClass( 'tvd-invalid' );
+			$( modal_id ).openModal( options );
+			$( '#affiliate-id' ).val( '' );
+			TVE_Dash.AffiliateLinks.getAffiliateId();
 			e.preventDefault();
 			e.stopPropagation();
 			return false;

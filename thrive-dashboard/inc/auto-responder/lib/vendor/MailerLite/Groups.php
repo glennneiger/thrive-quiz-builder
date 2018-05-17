@@ -39,7 +39,7 @@ class Thrive_Dash_Api_MailerLite_Groups extends Thrive_Dash_Api_MailerLite_ApiAb
 
 		$response = $this->restClient->post( $endpoint, $subscriberData );
 
-		return $response['body'];
+		return $response;
 	}
 
 	/**

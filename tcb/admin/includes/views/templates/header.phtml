@@ -1,8 +1,14 @@
-<div class="tcb-header">
+<div class="tcb-header <#= header.class #>">
 	<nav id="tcb-nav">
+		<# if ( header.class !== '' ) { #>
+			<div class="tcb-sym-left">
+				<span><?php echo __( 'Templates & Symbols', 'thrive-cb' ) ?></span>
+			</div>
+		<# } #>
+
 		<div class="tvd-left">
 			<a href="<?php echo admin_url( 'admin.php?page=tcb_admin_dashboard' ) ?>" title="<?php echo __( 'Thrive Architect Home', 'thrive-cb' ) ?>">
-				<img src="<?php echo tcb_admin()->admin_url('assets/images/admin-logo.png'); ?>"/>
+				<img src="<#= header.admin_logo_url #>"/>
 			</a>
 		</div>
 		<ul class="tvd-right">

@@ -62,7 +62,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="tve-control" data-key="typefocus" data-initializer="typefocus_control"></div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

@@ -46,13 +46,6 @@ class TCB_Product extends TVE_Dash_Product_Abstract {
 				'target'     => '_blank',
 				'text'       => __( 'Support', 'thrive-cb' ),
 			),
-			'content_templates' => array(
-				'class'      => 'tve-content-templates',
-				'icon_class' => 'tvd-icon-content_templates',
-				'href'       => admin_url( 'admin.php?page=tcb_admin_dashboard' ),
-				'target'     => '_blank',
-				'text'       => __( 'Content Templates', 'thrive-cb' ),
-			),
 		);
 	}
 }

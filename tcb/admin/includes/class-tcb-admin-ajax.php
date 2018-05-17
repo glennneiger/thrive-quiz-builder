@@ -30,7 +30,7 @@ class TCB_Admin_Ajax {
 	 * Sets the request's body with specified $message
 	 *
 	 * @param string $message the error message.
-	 * @param string $status  the error status.
+	 * @param string $status the error status.
 	 */
 	protected function error( $message, $status = '404 Not Found' ) {
 		header( $_SERVER['SERVER_PROTOCOL'] . ' ' . $status );
@@ -41,7 +41,7 @@ class TCB_Admin_Ajax {
 	/**
 	 * Returns the params from $_POST or $_REQUEST
 	 *
-	 * @param int  $key     the parameter kew.
+	 * @param int $key the parameter kew.
 	 * @param null $default the default value.
 	 *
 	 * @return mixed|null|$default
@@ -97,6 +97,10 @@ class TCB_Admin_Ajax {
 					$templates = array();
 				}
 				$templates = array_reverse( $templates );
+
+				if ( $search = $this->param( 'search' ) ) {
+					$templates = tcb_filter_templates( $templates, $search );
+				}
 
 				$tpl_categs = get_option( self::USER_TEMPLATES_CATEGORIES, array() );
 				if ( empty( $tpl_categs ) ) {
@@ -249,7 +253,7 @@ class TCB_Admin_Ajax {
 
 				update_option( 'tve_user_templates_categories', $template_categories );
 
-				return array( 'text' => __( 'The category(s) was saved!', 'thrive-cb' ) );
+				return array( 'text' => __( 'The category was saved!', 'thrive-cb' ) );
 				break;
 			case 'DELETE':
 			case 'GET':

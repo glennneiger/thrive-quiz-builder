@@ -16,6 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class TCB_Admin {
 
 	/**
+	 * Define namespace for the rest endpoints
+	 */
+	const TCB_REST_NAMESPACE = 'tcb/v1';
+
+
+	/**
 	 * The single instance of the class.
 	 *
 	 * @var TCB_Admin singleton instance.
@@ -318,6 +324,30 @@ class TCB_Admin {
 		if ( ! empty( $_POST['tcb_disable_editor'] ) && wp_verify_nonce( $_POST['tcb_disable_editor'], 'tcb_disable_editor' ) && (int) $tcb_post->meta( 'tcb2_ready' ) ) {
 			$tcb_post->disable_editor();
 		}
+	}
+
+	/**
+	 * Return complete url for route endpoint
+	 *
+	 * @param string $endpoint Rest endpoint.
+	 * @param int $id Specific endpoint.
+	 * @param array $args Additional arguments.
+	 *
+	 * @return string
+	 */
+	public function tcm_get_route_url( $endpoint, $id = 0, $args = array() ) {
+
+		$url = get_rest_url() . self::TCB_REST_NAMESPACE . '/' . $endpoint;
+
+		if ( ! empty( $id ) && is_numeric( $id ) ) {
+			$url .= '/' . $id;
+		}
+
+		if ( ! empty( $args ) ) {
+			add_query_arg( $args, $url );
+		}
+
+		return $url;
 	}
 }
 

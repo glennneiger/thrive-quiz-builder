@@ -50,6 +50,24 @@ class TCB_Lead_Generation_Checkbox_Element extends TCB_Element_Abstract {
 						),
 						'extends' => 'Select',
 					),
+					'consent'        => array(
+						'config' => array(
+							'options' => array(
+								array(
+									'value' => 'when_checked',
+									'name'  => __( 'Only when the checkbox is ticked', 'thrive-cb' ),
+								),
+								array(
+									'value' => 'always',
+									'name'  => __( 'Always on form submission', 'thrive-cb' ),
+								),
+							),
+							'labels'  => array(
+								'wordpress' => __( 'Create Wordpress account', 'thrive-cb' ),
+								'default'   => __( 'Send lead data to {service}', 'thrive-cb' ),
+							),
+						),
+					),
 					'required'       => array(
 						'config' => array(
 							'default' => false,
@@ -61,6 +79,7 @@ class TCB_Lead_Generation_Checkbox_Element extends TCB_Element_Abstract {
 			'typography'               => array(
 				'disabled_controls' => array(
 					'TextAlign',
+					'.tve-advanced-controls',
 				),
 				'config'            => array(
 					'FontSize'      => $controls_default_config,
@@ -90,9 +109,6 @@ class TCB_Lead_Generation_Checkbox_Element extends TCB_Element_Abstract {
 			),
 			'background'               => array(
 				'config' => array(),
-			),
-			'shadow'                   => array(
-				'hidden' => true,
 			),
 			'styles-templates'         => array(
 				'config' => array(),

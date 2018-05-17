@@ -13,16 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 ?>
 <div id="tcb-inner-actions">
-	<div id="tcb-el-icons">
-		<?php tcb_icon( 'trash', false, 'editor', 'no-blur' ); ?>
-		<?php tcb_icon( 'copy', false, 'editor', 'no-blur' ); ?>
-	</div>
-	<div id="tcb-el-group-editing-icons" style="display: none;">
-		<?php tcb_icon( 'lock-outline', false, 'editor', 'no-blur' ); ?>
-		<?php tcb_icon( 'lock-open-outline', false, 'editor', 'no-blur' ); ?>
-	</div>
-	<span id="tcb-el-name" class="no-blur"></span>
-
 	<div id="tcb-table-panel">
 		<div class="tcb-btn-row above-element">
 			<button class="tcb-table-btn" data-fn="addColumn"><?php tcb_icon( 'add', false, 'editor' ) ?><?php echo __( 'Add column', 'thrive-cb' ) ?></button>
@@ -55,6 +45,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	<div id="tcb-lg-close" style="display: none;position:absolute">
 		<button class="tcb-table-btn tcb-btn-green"><?php echo __( 'Save & Close', 'thrive-cb' ) ?></button>
+	</div>
+	<div id="tcb-symbol-close" style="display: none;">
+		<button class="tcb-table-btn tcb-btn-green"><?php echo __( 'Save & Close Symbol', 'thrive-cb' ) ?></button>
 	</div>
 	<div id="tcb-postgrid-panel">
 		<div class="tcb-panel-right">

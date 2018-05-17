@@ -15,9 +15,9 @@
             <?php foreach ($thrive_features as $key => $thrive_feature) : ?>
                 <div class="tvd-col tvd-s6 tvd-ms6 tvd-m4 tvd-l3">
                     <div class="tvd-card tvd-white tvd-medium">
-                        <div class="tvd-card-content">
-                            <div class="tvd-center-align">
-                                <i class="<?php echo $thrive_feature['icon'] ?> tvd-icon-large tvd-icon-fix"></i>
+                        <div class="tvd-card-content tvd-new-cc">
+                            <div class="tvd-center-align tvd-w-svg">
+	                            <span><?php echo dashboard_icon( $thrive_feature['icon'] ) ?></span>
                             </div>
                             <h2 class="tvd-card-title"><?php echo $thrive_feature['title'] ?></h2>
                             <p class="tvd-center"><?php echo $thrive_feature['description'] ?></p>
@@ -94,3 +94,4 @@
     </div>
     END: examples of the current feature set */ ?>
 </div>
+<?php include TVE_DASH_PATH . '/css/font/dashboard-icons.svg' ?>

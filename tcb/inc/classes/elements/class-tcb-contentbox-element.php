@@ -85,6 +85,14 @@ class TCB_ContentBox_Element extends TCB_Element_Abstract {
 						),
 						'extends' => 'Slider',
 					),
+					'MasterColor'   => array(
+						'config'  => array(
+							'default'   => '000',
+							'label'     => __( 'Master Color', 'thrive-cb' ),
+							'important' => true,
+							'affected_components' => array( 'shadow', 'background', 'borders' ),
+						),
+					),
 					'VerticalPosition' => array(
 						'config'  => array(
 							'name'    => __( 'Vertical Position', 'thrive-cb' ),

@@ -10,10 +10,23 @@
  * @return array
  */
 function tcb_admin_get_localization() {
+	/** @var TCB_Symbols_Taxonomy $tcb_symbol_taxonomy */
+	global $tcb_symbol_taxonomy;
+
 	return array(
-		'admin_nonce' => wp_create_nonce( TCB_Admin_Ajax::NONCE ),
-		'dash_url'    => admin_url( 'admin.php?page=tve_dash_section' ),
-		't'           => include tcb_admin()->admin_path( 'includes/i18n.php' ),
+		'admin_nonce'       => wp_create_nonce( TCB_Admin_Ajax::NONCE ),
+		'dash_url'          => admin_url( 'admin.php?page=tve_dash_section' ),
+		't'                 => include tcb_admin()->admin_path( 'includes/i18n.php' ),
+		'architect_logo'    => tcb_admin()->admin_url( 'assets/images/admin-logo.png' ),
+		'symbols_logo'      => tcb_admin()->admin_url( 'assets/images/admin-logo.png' ),
+		'rest_routes'       => array(
+			'symbols'       => tcb_admin()->tcm_get_route_url( 'symbols' ),
+			'symbols_terms' => rest_url( sprintf( '%s/%s', 'wp/v2', TCB_Symbols_Taxonomy::SYMBOLS_TAXONOMY ) ),
+		),
+		'nonce'             => wp_create_nonce( 'wp_rest' ),
+		'symbols_tax'       => TCB_Symbols_Taxonomy::SYMBOLS_TAXONOMY,
+		'symbols_tax_terms' => $tcb_symbol_taxonomy->get_symbols_tax_terms(),
+		'default_terms'     => $tcb_symbol_taxonomy->get_default_terms()
 	);
 }
 
@@ -48,10 +61,30 @@ function tcb_admin_get_category_templates( $templates = array() ) {
 }
 
 /**
+ * Filter content templates by their name
+ *
+ * @param array $templates
+ * @param string $search
+ *
+ * @return array
+ */
+function tcb_filter_templates( $templates, $search ) {
+	$result = array();
+
+	foreach ( $templates as $template ) {
+		if ( stripos( $template['name'], $search ) !== false ) {
+			$result[] = $template;
+		}
+	}
+
+	return $result;
+}
+
+/**
  * Displays an icon using svg format
  *
  * @param string $icon
- * @param bool   $return whether to return the icon as a string or to output it directly
+ * @param bool $return whether to return the icon as a string or to output it directly
  *
  * @return string|void
  */

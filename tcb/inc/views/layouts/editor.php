@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php $data->render_menu(); ?>
 	<?php do_action( 'tcb_editor_iframe_before' ); ?>
 	<div id="tcb-frame-container">
-		<iframe tabindex="-1" id="tve-editor-frame" src="<?php echo $data->inner_frame_url() ?>"></iframe>
+		<iframe tabindex="-1" id="tve-editor-frame" data-src="<?php echo $data->inner_frame_url() ?>"></iframe>
 	</div>
 	<?php do_action( 'tcb_editor_iframe_after' ); ?>
 	<?php include TVE_TCB_ROOT_PATH . 'editor/css/fonts/control-panel.svg' ?>

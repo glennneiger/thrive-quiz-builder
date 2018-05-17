@@ -111,9 +111,9 @@ class TCB_Landing_Page_Text_Element extends TCB_Element_Abstract {
 					),
 					'FontColor'      => array(
 						'config'  => array(
-							'default' => '000',
-							'icon'    => true,
-							'options' => array(
+							'default'    => '000',
+							'label_icon' => 'format-color-text',
+							'options'    => array(
 								'output' => 'object',
 							),
 						),

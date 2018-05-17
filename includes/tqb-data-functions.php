@@ -425,13 +425,11 @@ function tqb_render_shortcode( $arguments = array() ) {
 			$data = TQB_Quiz_Manager::get_shortcode_content( $arguments['quiz_id'] );
 
 			$html = '';
-//			$html .= '<div class="thrv_wrapper thrive-quiz-builder-shortcode tve_draggable" data-tve-style="1">';
 			$html .= '<div class="thrive-shortcode-config" style="display: none !important">';
 			$html .= '__CONFIG_quiz_shortcode__' . json_encode( array( 'quiz_id' => $arguments['quiz_id'] ) ) . '__CONFIG_quiz_shortcode__';
 			$html .= '</div>';
 			$html .= '<div class="thrive-shortcode-html">';
 			$html .= '<div>';
-//			$html .= '<div class="tqb-shortcode-wrapper" id="tqb-shortcode-wrapper-' . $arguments['quiz_id'] . '-' . $unique_id . '" data-quiz-id="' . $arguments['quiz_id'] . '" data-unique="' . $unique_id . '" >';
 			$html .= '<div class="tqb-loading-overlay tqb-template-overlay-style-' . $style . '"><div class="tqb-loading-bullets"></div></div><div class="tqb-frontend-error-message"></div>';
 			$html .= '<div class="tqb-shortcode-old-content"></div>';
 			$html .= '<div class="tqb-shortcode-new-content tqb-template-style-' . $style . '">';
@@ -447,12 +445,9 @@ function tqb_render_shortcode( $arguments = array() ) {
 				$question_manager = new TGE_Question_Manager( $arguments['quiz_id'] );
 				$html             .= $question_manager->get_first_question_preview( $data['question'] );
 			}
-//			$html .= '</div>';
 			$html .= '</div>';
 
 			$html .= '</div>';
-
-//			$html .= '</div>';
 
 			return $html;
 		}
@@ -504,4 +499,3 @@ function tqb_render_shortcode( $arguments = array() ) {
 
 	return '';
 }
-

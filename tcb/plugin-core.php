@@ -1,6 +1,6 @@
 <?php
 /* global constants */
-defined( 'TVE_VERSION' ) || DEFINE( "TVE_VERSION", '2.0.29' );
+defined( 'TVE_VERSION' ) || DEFINE( "TVE_VERSION", '2.0.31' );
 defined( 'TVE_TCB_DB_VERSION' ) || define( 'TVE_TCB_DB_VERSION', '1.1' );
 defined( 'TVE_LANDING_PAGE_TEMPLATE' ) || DEFINE( "TVE_LANDING_PAGE_TEMPLATE", plugins_url() . '/thrive-visual-editor/landing-page/templates' );
 defined( 'TVE_LANDING_PAGE_TEMPLATE_DOWNLOADED' ) || DEFINE( "TVE_LANDING_PAGE_TEMPLATE_DOWNLOADED", plugins_url() . '/../uploads/tcb_lp_templates/templates' );
@@ -44,6 +44,7 @@ $tve_thrive_shortcodes = array(
 	'tvo_shortcode'                       => 'tvo_render_shortcode',
 	'ultimatum_shortcode'                 => 'tve_ult_render_shortcode',
 	'quiz_shortcode'                      => 'tqb_render_shortcode',
+	'post_symbol'                         => 'tcb_symbol_shortcode',
 );
 
 require_once plugin_dir_path( __FILE__ ) . 'inc/compat.php';
@@ -55,6 +56,10 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/classes/class-tcb-elements.php';
 require_once plugin_dir_path( __FILE__ ) . 'inc/classes/class-tcb-font-manager.php';
 require_once plugin_dir_path( __FILE__ ) . 'inc/classes/class-tcb-icon-manager.php';
 require_once plugin_dir_path( __FILE__ ) . 'inc/classes/class-tcb-post.php';
+require_once plugin_dir_path( __FILE__ ) . 'inc/classes/symbols/class-tcb-symbols-post-type.php';
+require_once plugin_dir_path( __FILE__ ) . 'inc/classes/symbols/class-tcb-symbol-template.php';
+require_once plugin_dir_path( __FILE__ ) . 'inc/classes/symbols/class-tcb-symbols-dashboard.php';
+require_once plugin_dir_path( __FILE__ ) . 'inc/classes/symbols/class-tcb-symbols-taxonomy.php';
 
 /* init the Event Manager */
 require_once plugin_dir_path( __FILE__ ) . 'event-manager/init.php';

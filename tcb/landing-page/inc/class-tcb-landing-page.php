@@ -852,6 +852,11 @@ if ( ! class_exists( 'TCB_Landing_Page' ) ) {
 
 				$key = '_' . $landing_page_template;
 
+				if ( empty( $meta[ $template_index ]['theme_dependency'] ) ) {
+					$meta[ $template_index ]['theme_dependency'] = 0;
+				}
+
+				$this->meta( 'tve_disable_theme_dependency', $meta[ $template_index ]['theme_dependency'] );
 				$this->meta( "tve_content_before_more{$key}", $content['before_more'] );
 				$this->meta( "tve_content_more_found{$key}", $content['more_found'] );
 				$this->meta( "tve_custom_css{$key}", $content['inline_css'] );

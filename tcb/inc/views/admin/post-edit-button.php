@@ -21,18 +21,26 @@
 <br/>
 <?php if ( ! $data['landing_page'] && ! empty( $data['tcb_enabled'] ) ) : ?>
 	<div class="postbox" style="text-align: center;">
-		<div class="inside">
-			<?php echo __( 'You are currently using Thrive Architect to edit this content. You can continue editing with Thrive Architect or return to the default Wordpress editor', 'thrive-cb' ) ?>
-			<br><br>
+		<div class="inside thrive-architect">
+			<p>
+				<?php echo __( 'You are currently using Thrive Architect to edit this content.', 'thrive-cb' ) ?>
+			</p>
+			<p>
+				<?php echo __( 'You can continue editing with Thrive Architect or return to the default Wordpress editor.', 'thrive-cb' ) ?>
+			</p>
+			<br>
 			<a class="thrive-architect-edit-link tcb-enable-editor" data-id="<?php echo $data['post_id'] ?>" href="<?php echo $data['edit_url'] ?>" id="thrive_preview_button" target="_blank">
 				<div class="thrive-architect-admin-icon-holder">
 					<div class="thrive-architect-admin-icon"></div>
 				</div>
 				<div class="thrive-architect-admin-text">
-					<?php echo __( 'Edit with Thrive Architect', 'thrive-cb' ) ?>
+					<?php echo __( 'Launch Thrive Architect', 'thrive-cb' ) ?>
 				</div>
 			</a>
-			<?php echo __( 'or', 'thrive-cb' ) ?> <a href="javascript:void(0)" class="tcb-disable" id="tcb2-show-wp-editor"><?php echo __( 'Return to the WP editor', 'thrive-cb' ) ?></a>
+			<p>
+				<?php echo __( 'or', 'thrive-cb' ) ?>
+			</p>
+			<a href="javascript:void(0)" class="tcb-disable" id="tcb2-show-wp-editor"><?php echo __( 'Return to the WP editor', 'thrive-cb' ) ?></a>
 		</div>
 	</div>
 	<div class="tcb-flags">
@@ -59,13 +67,15 @@
 		}
 	</script>
 	<div class="postbox" style="text-align: center;">
-		<div class="inside">
-			<?php echo __( 'You are currently using a Thrive Architect landing page to display this piece of content.', 'thrive-cb' ) ?>
+		<div class="inside thrive-architect">
+			<p>
+				<?php echo __( 'You are currently using a Thrive Architect landing page to display this piece of content.', 'thrive-cb' ) ?>
+			</p>
+			<p>
+				<?php echo __( "If you'd like to revert back to your theme template then click the link below:", 'thrive-cb' ) ?>
+			</p>
 			<br/>
-			<?php echo __( "If you'd like to revert back to your theme template then click the button below:", 'thrive-cb' ) ?>
-			<br/><br/>
-			<a href="javascript:void(0)" onclick="tve_confirm_revert_to_theme()"
-			   class="button"><?php echo __( 'Revert to theme template', 'thrive-cb' ) ?></a>
+			<a href="javascript:void(0)" onclick="tve_confirm_revert_to_theme()" class="button tcb-revert"><?php echo __( 'Revert to theme template', 'thrive-cb' ) ?></a>
 		</div>
 	</div>
 <?php endif ?>

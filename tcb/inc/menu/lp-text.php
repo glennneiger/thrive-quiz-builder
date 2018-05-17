@@ -19,15 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="dropdown-content">
 		<div class="tve-control tcb-hidden" data-view="ButtonGroup" data-key="LinkStates"></div>
 
-		<div class="tve-control lp-text-hide-states" data-view="ToggleControls"></div>
-		<div class="lp-text-hide-states">
-			<div class="tve-control tcb-lp-text-toggle-element tcb-lp-text-font-size" data-view="FontSize"></div>
-			<div class="tve-control tcb-lp-text-toggle-element tcb-lp-text-line-height" data-view="LineHeight"></div>
-			<div class="tve-control tcb-lp-text-toggle-element tcb-lp-text-letter-spacing" data-view="LetterSpacing"></div>
-		</div>
-
-		<hr class="lp-text-hide-states">
-
 		<div class="tve-control" data-view="FontColor"></div>
 		<hr>
 		<div class="row">
@@ -39,6 +30,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="tve-control col-xs-12 " data-view="TextStyle"></div>
 		</div>
 		<hr class="lp-text-hide-states">
+
+		<div class="tve-control lp-text-hide-states" data-view="ToggleControls"></div>
+		<div class="lp-text-hide-states">
+			<div class="tve-control tcb-lp-text-toggle-element tcb-lp-text-font-size" data-view="FontSize"></div>
+			<div class="tve-control tcb-lp-text-toggle-element tcb-lp-text-line-height" data-view="LineHeight"></div>
+			<div class="tve-control tcb-lp-text-toggle-element tcb-lp-text-letter-spacing" data-view="LetterSpacing"></div>
+		</div>
+
+		<hr class="lp-text-hide-states">
+
 		<div class="row tve-control lp-text-hide-states" data-view="FontFace">
 			<div class="col-xs-12">
 				<span class="input-label"><?php echo __( 'Font Face', 'thrive-cb' ); ?></span>
@@ -49,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php tcb_icon( 'edit', false, 'sidebar', 'tcb-input-button click', array( 'data-fn' => 'openFonts' ) ) ?>
 			</div>
 		</div>
-		<hr class="lp-text-hide-states">
+		<hr>
 
 		<div class="tcb-text-center margin-top-10">
 			<span class="click tcb-text-uppercase clear-format" data-fn="clear_landing_page_text_formatting">

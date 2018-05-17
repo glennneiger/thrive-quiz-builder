@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <h2 class="tcb-modal-title"><?php echo __( 'Export Template', 'thrive-cb' ) ?></h2>
+<div class="error-container" style="display: none;"></div>
 
 <div class="tvd-input-field margin-bottom-5 margin-top-25">
 	<input type="text" id="tve-template-name" required>

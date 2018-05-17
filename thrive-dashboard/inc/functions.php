@@ -120,7 +120,8 @@ function tve_dash_update_option( $name, $value ) {
  * @includes general_settings.phtml template
  */
 function tve_dash_general_settings_section() {
-	$settings = tve_dash_get_general_settings();
+	$affiliate_links = tve_dash_get_affiliate_links();
+	$settings        = tve_dash_get_general_settings();
 	/* text, radio, checkbox, password */
 	$accepted_settings = array( 'text' );
 	require_once TVE_DASH_PATH . '/templates/settings/general_settings.phtml';
@@ -458,6 +459,133 @@ function tve_dash_check_secret( $secret ) {
 }
 
 /**
+ * Get affiliate options for each allowed product
+ * @return array
+ */
+function tve_dash_get_affiliate_links() {
+	$menus = apply_filters( 'tve_dash_admin_product_menu', array() );
+
+	$available_products = array(
+		'tva'                        => array(
+			'label'   => __( 'Display "Powered by Thrive Apprentice"' ),
+			'checked' => false,
+			'tag'     => 'tva',
+		),
+		'tcm'                        => array(
+			'label'   => __( 'Display "Powered by Thrive Comments"' ),
+			'checked' => false,
+			'tag'     => 'tcm',
+		),
+		'thrive_theme_admin_options' => array(
+			'label'   => __( 'Display "Powered by Thrive Themes"' ),
+			'checked' => false,
+			'tag'     => 'thrive_theme_admin_options',
+		),
+		'tqb'                        => array(
+			'label'   => __( 'Display "Powered by Thrive Quiz Builder"' ),
+			'checked' => false,
+			'tag'     => 'tqb',
+		),
+	);
+	$allowed_products   = array();
+
+	foreach ( $available_products as $key => $product ) {
+		if ( array_key_exists( $key, $menus ) ) {
+			$option                   = tve_dash_get_product_option( $key );
+			$product['checked']       = $option;
+			$allowed_products[ $key ] = $product;
+		}
+	}
+
+
+	return $allowed_products;
+}
+
+/**
+ * Set affiliate options for each allowed product
+ *
+ * @param $product_tag
+ *
+ * @return string
+ */
+function tve_dash_get_product_option( $product_tag ) {
+
+	$option = '';
+	switch ( $product_tag ) {
+		case 'tqb':
+			$tqb_settings = tqb_get_option( Thrive_Quiz_Builder::PLUGIN_SETTINGS, tqb_get_default_values( Thrive_Quiz_Builder::PLUGIN_SETTINGS ) );
+
+			$option = $tqb_settings['tqb_promotion_badge'];
+
+			break;
+
+		case 'tcm':
+			$tcm_settings = tcms()->tcm_get_settings();
+			$option       = $tcm_settings['powered_by'];
+
+			break;
+
+		case 'tva':
+			$tva_settings  = TVA_Settings::instance();
+			$user_settings = $tva_settings->get_settings();
+			$option        = $user_settings['apprentice_label'];
+
+			break;
+
+		case 'thrive_theme_admin_options':
+			$theme_options = thrive_get_theme_options();
+			$option        = $theme_options['footer_copyright_links'];
+
+			break;
+	}
+
+	return $option;
+}
+
+/**
+ * Update affiliate options for each allowed product
+ *
+ * @param $product_tag
+ * @param $option
+ *
+ * @return mixed
+ */
+function tve_dash_update_product_option( $product_tag, $option ) {
+	$option = (int) $option === 1 ? true : false;
+
+	switch ( $product_tag ) {
+		case 'tqb':
+			$data = array( 'tqb_promotion_badge' => $option );
+			tqb_update_option( 'tqb_settings', $data, true );
+
+			break;
+
+		case 'tcm':
+			tcah()->tcm_update_option( 'powered_by', $option );
+
+			break;
+
+		case 'tva':
+			$tva_settings = tve_dash_get_option( 'tva_template_general_settings', '' );
+
+			$tva_settings['apprentice_label'] = $option;
+			update_option( 'tva_template_general_settings', $tva_settings );
+
+			break;
+
+		case 'thrive_theme_admin_options':
+			$theme_options = thrive_get_theme_options();
+
+			$theme_options['footer_copyright_links'] = $option;
+			update_option( 'thrive_theme_options', $theme_options );
+
+			break;
+	}
+
+	return $option;
+}
+
+/**
  * Display debug panel
  */
 function tve_debug() {
@@ -465,4 +593,34 @@ function tve_debug() {
 	echo '<pre>';
 	print_r( $data );
 	echo '</pre>';
+}
+
+/**
+ * Displays an icon using svg format
+ *
+ * @param string $icon
+ * @param bool $return whether to return the icon as a string or to output it directly
+ * @param string $namespace (where this icon is used - for 'editor' it will add another prefix to it)
+ * @param string $extra_class classes to be added to the svg
+ * @param array $svg_attr array with extra attributes to add to the <svg> tag
+ *
+ * @return mixed
+ */
+function dashboard_icon( $icon, $return = false, $namespace = 'sidebar', $extra_class = '', $svg_attr = array() ) {
+	$use = $namespace !== 'sidebar' ? 'tcb-icon-' : 'icon-';
+
+	$extra_attr = '';
+	if ( ! empty( $svg_attr ) ) {
+		foreach ( $svg_attr as $attr_name => $attr_value ) {
+			$extra_attr .= ( $extra_attr ? ' ' : '' ) . $attr_name . '="' . esc_attr( $attr_value ) . '"';
+		}
+	}
+
+	$html = '<svg class="tcb-icon tcb-icon-' . $icon . ( empty( $extra_class ) ? '' : ' ' . $extra_class ) . '"' . $extra_attr . '><use xlink:href="#' . $use . $icon . '"></use></svg>';
+
+	if ( false !== $return ) {
+		return $html;
+	}
+
+	echo $html;
 }

@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="row padding-top-5 middle-xs">
 			<div class="col-xs-12 tcb-input-button-wrapper">
 				<div class="col-sep click" data-fn="open_style_picker"></div>
-				<input type="text" id="tcb-image-style-name" class="style-change-input click" data-fn="open_style_picker" readonly value="<?php esc_attr_e( 'None', 'thrive-cb' ) ?>" data-default="<?php esc_attr_e( 'None', 'thrive-cb' ) ?>">
+				<input type="text" id="tcb-image-style-name" class="style-change-input click" onfocus="this.blur()" data-fn="open_style_picker" readonly value="<?php esc_attr_e( 'None', 'thrive-cb' ) ?>" data-default="<?php esc_attr_e( 'None', 'thrive-cb' ) ?>">
 				<?php tcb_icon( 'edit', false, 'sidebar', 'tcb-input-button click', array( 'data-fn' => 'open_style_picker' ) ) ?>
 			</div>
 

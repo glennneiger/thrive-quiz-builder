@@ -101,6 +101,14 @@ class Thrive_Dash_List_Connection_Ontraport extends Thrive_Dash_List_Connection_
 			$lists = array();
 
 			$data = $op->getSequences();
+
+			/**
+			 * Try to get the campaigns if the user has no sequences
+			 */
+			if(empty($data)) {
+				$data = $op->getCampaigns();
+			}
+
 			if ( ! empty( $data ) ) {
 				foreach ( $data as $id => $list ) {
 					$lists[] = array(
@@ -148,7 +156,6 @@ class Thrive_Dash_List_Connection_Ontraport extends Thrive_Dash_List_Connection_
 			$api->addContact( $list_identifier, $data );
 
 		} catch ( Exception $e ) {
-
 			return $e->getMessage();
 		}
 

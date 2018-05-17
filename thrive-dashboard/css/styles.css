@@ -3712,6 +3712,78 @@ html body #wpbody, html body .tvd-modal {
     html body #wpbody, html body .tvd-modal {
       font-size: 16px; } }
 
+#aff_modal {
+  padding: 40px 30px 30px; }
+  #aff_modal #aff-invalid {
+    display: inline;
+    font-size: 12px;
+    color: #ef3131;
+    font-weight: 300; }
+  #aff_modal p {
+    font-size: 12px !important;
+    margin: 5px 0 30px !important;
+    color: rgba(0, 0, 0, 0.6); }
+  #aff_modal label {
+    left: 0; }
+  #aff_modal .tvd-modal-close {
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    position: relative;
+    top: 1px;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0 15px 0 0; }
+
+#tve_affiliate_links {
+  margin: 35px 0 25px;
+  /* The container */ }
+  #tve_affiliate_links label input {
+    position: relative;
+    left: 0;
+    visibility: visible; }
+  #tve_affiliate_links .affiliate-link-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: #393939;
+    font-size: 14px;
+    user-select: none; }
+    #tve_affiliate_links .affiliate-link-container:hover input ~ .checkmark {
+      background-color: #ccc;
+      opacity: 1; }
+    #tve_affiliate_links .affiliate-link-container input:checked ~ .checkmark {
+      background-color: #2196f3; }
+    #tve_affiliate_links .affiliate-link-container input:checked ~ .checkmark:after {
+      opacity: 1; }
+    #tve_affiliate_links .affiliate-link-container input {
+      visibility: hidden;
+      opacity: 0; }
+    #tve_affiliate_links .affiliate-link-container .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background-color: #ccc;
+      opacity: .8;
+      transition: opacity .3s, background .3s;
+      border-radius: 2px; }
+      #tve_affiliate_links .affiliate-link-container .checkmark:after {
+        content: "";
+        position: absolute;
+        opacity: 0;
+        left: 7px;
+        top: 3px;
+        width: 6px;
+        height: 11px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        transition: opacity .3s; }
+
 #wpbody h1, #wpbody h2, #wpbody h3, #wpbody h4, #wpbody h5, #wpbody h6, .tvd-modal h1, .tvd-modal h2, .tvd-modal h3, .tvd-modal h4, .tvd-modal h5, .tvd-modal h6 {
   color: #393939;
   font-weight: 500;
@@ -3743,6 +3815,11 @@ html body #wpbody, html body .tvd-modal {
     letter-spacing: .5px;
     text-transform: uppercase;
     margin-bottom: 2rem; }
+    #wpbody h3.tvd-section-title.tvd-thrive-links, .tvd-modal h3.tvd-section-title.tvd-thrive-links {
+      margin: 30px 0 10px; }
+      #wpbody h3.tvd-section-title.tvd-thrive-links a, .tvd-modal h3.tvd-section-title.tvd-thrive-links a {
+        float: right;
+        color: rgba(0, 0, 0, 0.25); }
 
 #wpbody h4, .tvd-modal h4 {
   font-size: 1rem;
@@ -3930,6 +4007,10 @@ html body #wpbody, html body .tvd-modal {
       overflow: hidden; }
     .tvd-card.tvd-medium .tvd-card-content, .tvd-card.tvd-large .tvd-card-content {
       overflow: hidden; }
+      .tvd-card.tvd-medium .tvd-card-content.tvd-new-cc .tvd-w-svg svg, .tvd-card.tvd-large .tvd-card-content.tvd-new-cc .tvd-w-svg svg {
+        width: 80px;
+        margin: 22px auto;
+        height: 80px; }
     .tvd-card.tvd-medium .tvd-card-action, .tvd-card.tvd-large .tvd-card-action {
       bottom: 0;
       left: 0;
@@ -3956,7 +4037,7 @@ html body #wpbody, html body .tvd-modal {
     .tvd-card.tvd-small {
       height: 140px; }
     .tvd-card.tvd-medium {
-      height: 350px; }
+      height: 420px; }
     .tvd-card.tvd-medium-xsmall {
       height: 200px; }
     .tvd-card.tvd-medium-xxsmall {

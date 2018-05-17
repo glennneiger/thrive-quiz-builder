@@ -1,0 +1,12 @@
+<div class="api-list"></div>
+<div class="api-list-warning red-text"
+     style="font-size: 12px;display:none"><?php echo __( 'Your checkbox has no action assigned to it so it has no effect on how data is being submitted!', 'thrive-cb' ) ?></div>
+<label class="tcb-checkbox req-control tcb-disabled" style="display: none">
+	<?php /** this is always checked, disabled and shown only when the field is required */ ?>
+    <input class="tve-checkbox change" type="checkbox" data-fn="required_change" value="1" checked>
+    <span class="grey-text"><?php echo __( 'Required field', 'thrive-cb' ) ?></span>
+</label>
+<i class="default-info" style="display: none"
+   data-tooltip="<?php echo __( 'Your checkbox is mandatory because it blocks sending data to all the services above when unticked.', 'thrive-cb' ) ?>">
+	<?php tcb_icon( 'info' ) ?>
+</i>

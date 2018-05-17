@@ -109,7 +109,7 @@
 			     $( 'body' ).removeClass( 'tcb-hide-wp-editor' );
 		     } )
 		     .on( 'click', '.tcb-enable-editor', function () {
-			     $( 'body' ).removeClass( 'tcb-hide-wp-editor' );
+			     $( 'body' ).addClass( 'tcb-hide-wp-editor' );
 			     $.ajax( {
 				     type: 'post',
 				     url: ajaxurl,

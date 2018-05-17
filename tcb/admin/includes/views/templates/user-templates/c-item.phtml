@@ -4,15 +4,20 @@
 			<#= model.get('name') #>
 		</span>
 		<# if(_.isNumber( model.get( 'id' ) )){ #>
-			<span class="tvd-icon-pencil tvd-pointer tcb-admin-edit-category-name" style="margin-left: 20px"></span>
+			<span data-tooltip="<?php _e( 'Change Text', 'thrive-cb' ); ?>" data-position="top" class="tvd-tooltipped tvd-icon-pencil tvd-pointer tcb-admin-edit-category-name"></span>
 			<# } #>
 	</div>
 	<div class="tvd-col tvd-s8">
 		<# if(_.isNumber( model.get( 'id' ) )){ #>
-			<span class="tvd-icon-trash-o tvd-pointer tcb-admin-delete-category-item tvd-right tcb-admin-red"></span>
+			<span data-tooltip="<?php _e( 'Delete Category', 'thrive-cb' ); ?>" data-position="left" class="tvd-tooltipped tcb-admin-delete-category-item">
+				<?php echo tcb_admin_icon( 'delete' ); ?>
+			</span>
 			<# } #>
 	</div>
 </div>
+<# if ( ! collection_length ) { #>
+	<p><?php echo __('You have no templates added in this category. You can either save elements in Architect as Content Templates or move existing templates to this category'); ?></p>
+<# } #>
 <div class="tvd-row tcb-admin-template-t-item"></div>
 
 

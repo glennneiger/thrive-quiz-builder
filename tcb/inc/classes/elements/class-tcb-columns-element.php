@@ -107,10 +107,10 @@ class TCB_Columns_Element extends TCB_Element_Abstract {
 						'to'      => ' > .tcb-flex-row',
 						'extends' => 'ButtonGroup',
 					),
-					'MediumWrap'       => array(
+					'Wrap'             => array(
 						'config'  => array(
 							'name'    => '',
-							'label'   => __( 'Wrap columns on ', 'thrive-cb' ),
+							'label'   => __( 'Wrap columns', 'thrive-cb' ),
 							'default' => true,
 						),
 						'to'      => ' > .tcb-flex-row',
@@ -119,8 +119,8 @@ class TCB_Columns_Element extends TCB_Element_Abstract {
 					'ColumnWidth'      => array(
 						'config'  => array(
 							'default' => '250',
-							'min'     => '10',
-							'max'     => '420',
+							'min'     => '40',
+							'max'     => '700',
 							'label'   => __( 'Minimum Column Width', 'thrive-cb' ),
 							'um'      => array( 'PX' ),
 						),
@@ -167,6 +167,7 @@ class TCB_Columns_Element extends TCB_Element_Abstract {
 
 	/**
 	 * Element category that will be displayed in the sidebar
+	 *
 	 * @return string
 	 */
 	public function category() {

@@ -133,6 +133,10 @@ class TQB_Admin_Ajax_Controller {
 					}
 
 					break;
+				case 'anonymize_results':
+					$quiz_manager = new TQB_Quiz_Manager( $this->param( 'ID', 0 ) );
+					$quiz_manager->anonymize_quiz_results();
+					break;
 				default:
 					return array();
 			}
@@ -434,6 +438,27 @@ class TQB_Admin_Ajax_Controller {
 						if ( empty( $page_variation['content'] ) ) {
 							$return[] = $page_variation['id'];
 						}
+					}
+
+					return $return;
+					break;
+				case 'gdpr_user_consent':
+					$page_id = $this->param( 'ID', 0 );
+					$checked = intval( $_POST['checked'] );
+
+					$return = array(
+						'ok'  => 0,
+						'msg' => __( 'An error occurred. The page id provided was invalid! Please contact Thrive Support!', Thrive_Quiz_Builder::T ),
+					);
+
+					if ( ! empty( $page_id ) ) {
+						$page_manager = new TQB_Page_Manager( $page_id );
+						$page_manager->update_user_consent( $checked );
+
+						$return = array(
+							'ok'  => 1,
+							'msg' => __( 'The setting was saved for this quiz page!', Thrive_Quiz_Builder::T ),
+						);
 					}
 
 					return $return;

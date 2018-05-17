@@ -66,7 +66,7 @@ if ( ! class_exists( 'TCB_Editor_Ajax' ) ) {
 
 		/**
 		 * @param string $key
-		 * @param mixed $default
+		 * @param mixed  $default
 		 *
 		 * @return mixed
 		 */
@@ -77,8 +77,8 @@ if ( ! class_exists( 'TCB_Editor_Ajax' ) ) {
 		/**
 		 *
 		 * @param string|WP_Error $message
-		 * @param int $code
-		 * @param string $str_code
+		 * @param int             $code
+		 * @param string          $str_code
 		 */
 		protected function error( $message, $code = 500, $str_code = '' ) {
 
@@ -243,7 +243,6 @@ if ( ! class_exists( 'TCB_Editor_Ajax' ) ) {
 			}
 
 			if ( isset( $_FILES['img_data'] ) ) {
-//				$this->error( __( 'Template image is not available', 'thrive-cb' ) );
 
 				if ( ! function_exists( 'wp_handle_upload' ) ) {
 					require_once( ABSPATH . 'wp-admin/includes/file.php' );
@@ -340,7 +339,6 @@ if ( ! class_exists( 'TCB_Editor_Ajax' ) ) {
 			$tcb_post = tcb_post( $post_id );
 
 			$landing_page_template = $this->param( 'tve_landing_page', 0 );
-
 
 			$inline_rules     = $this->param( 'inline_rules' );
 			$clippath_pattern = '/clip-path:(.+?);/';
@@ -461,10 +459,11 @@ if ( ! class_exists( 'TCB_Editor_Ajax' ) ) {
 						'tve_global_scripts' => empty( $_POST['tve_global_scripts'] ) ? array() : $_POST['tve_global_scripts'],
 					);
 					$template_meta    = array(
-						'name'     => $this->param( 'tve_landing_page_save' ),
-						'tags'     => $this->param( 'template_tags' ),
-						'template' => $landing_page_template,
-						'date'     => date( 'Y-m-d' ),
+						'name'             => $this->param( 'tve_landing_page_save' ),
+						'tags'             => $this->param( 'template_tags' ),
+						'template'         => $landing_page_template,
+						'theme_dependency' => get_post_meta( $post_id, 'tve_disable_theme_dependency', true ),
+						'date'             => date( 'Y-m-d' ),
 					);
 					/**
 					 * if this is a cloud template, we need to store the thumbnail separately, as it has a different location
@@ -595,7 +594,6 @@ if ( ! class_exists( 'TCB_Editor_Ajax' ) ) {
 			$api    = $this->param( 'api' );
 			$extra  = $this->param( 'extra' );
 			$params = $this->param( 'params' );
-
 
 			if ( ! $api || ! array_key_exists( $api, Thrive_Dash_List_Manager::available() ) ) {
 				return array();
@@ -886,6 +884,136 @@ if ( ! class_exists( 'TCB_Editor_Ajax' ) ) {
 		 */
 		public function replace_clip_path( $matches ) {
 			return $matches[0] . ' -webkit-clip-path:' . $matches[1] . '; ';
+		}
+
+		/**
+		 * Return all symbols
+		 */
+		public function action_get_symbols() {
+
+			/** @var TCB_Symbol_Element $element */
+			if ( ! ( $element = tcb_elements()->element_factory( 'symbol' ) ) || ! is_a( $element, 'TCB_Element_Abstract' ) ) {
+				$this->error( __( 'Invalid element type', 'thrive-cb' ), 500 );
+			}
+
+			$args = ( $this->param( 'args' ) ) ? $this->param( 'args' ) : array();
+
+			$symbols = $element->get_all( $args );
+
+			if ( is_wp_error( $symbols ) ) {
+				$this->error( __( 'Error when retrieving symbols', 'thrive-cb' ), 500 );
+			}
+
+			return array(
+				'success' => true,
+				'symbols' => $symbols,
+			);
+		}
+
+		/**
+		 * Save symbol when it gets edited from TAR
+		 *
+		 * @return array
+		 */
+		public function action_save_symbol() {
+
+			/** @var TCB_Symbol_Element $element */
+			if ( ! ( $element = tcb_elements()->element_factory( 'symbol' ) ) || ! is_a( $element, 'TCB_Element_Abstract' ) ) {
+				$this->error( __( 'Invalid element type', 'thrive-cb' ), 500 );
+			}
+
+			$symbol_data = array(
+				'id'      => $this->param( 'id' ),
+				'content' => $this->param( 'symbol_content' ),
+				'css'     => $this->param( 'symbol_css' ),
+				'term_id' => $this->param( 'tcb_symbols_tax' ),
+			);
+
+			if ( ! ( $id = $this->param( 'id' ) ) ) {
+				//if we don't have an id => we are creating a symbol, which needs to have a title
+				if ( ! ( $title = $this->param( 'symbol_title' ) ) ) {
+					$this->error( __( 'Missing symbol title', 'thrive-cb' ), 500 );
+				}
+
+				$symbol_data['symbol_title'] = $title;
+				$data                        = $element->create_symbol( $symbol_data );
+			} else {
+				$data = $element->edit_symbol( $symbol_data );
+			}
+
+			if ( is_wp_error( $data ) ) {
+				$this->error( $data );
+			}
+
+			return array(
+				'success' => true,
+				'data'    => $data,
+			);
+		}
+
+		/**
+		 * When elements have extra css we need to do an extra save after we process the css for the symbol.
+		 * i.e call to action element
+		 */
+		public function action_save_symbol_extra_css() {
+
+			if ( ! ( $id = $this->param( 'id' ) ) ) {
+				$this->error( __( 'Missing symbol id', 'thrive-cb' ), 500 );
+			}
+
+			/** @var TCB_Symbol_Element $element */
+			if ( ! ( $element = tcb_elements()->element_factory( 'symbol' ) ) || ! is_a( $element, 'TCB_Element_Abstract' ) ) {
+				$this->error( __( 'Invalid element type', 'thrive-cb' ), 500 );
+			}
+
+			$symbol_data = array(
+				'id'  => $id,
+				'css' => $this->param( 'css' ),
+			);
+
+			/**
+			 * Save updated css with the proper selectors after a symbol was created
+			 */
+			$response = $element->save_extra_css( $symbol_data );
+
+			if ( is_wp_error( $response ) ) {
+				$this->error( $response );
+			}
+
+			return array(
+				'success' => true,
+				'data'    => $response,
+			);
+
+		}
+
+		/**
+		 * Save the file resulted from the content of an html elemenet
+		 *
+		 * @return array
+		 */
+		public function action_save_content_thumb() {
+
+			if ( ! isset( $_FILES['preview_file'] ) ) {
+				$this->error( __( 'Missing preview file', 'thrive-cb' ), 500 );
+			}
+
+			/** @var TCB_Symbol_Element $element */
+			if ( ! ( $element = tcb_elements()->element_factory( 'symbol' ) ) || ! is_a( $element, 'TCB_Element_Abstract' ) ) {
+				$this->error( __( 'Invalid element type', 'thrive-cb' ), 500 );
+			}
+
+			$data = $element->generate_preview( $this->param( 'post_id' ) );
+
+			if ( is_wp_error( $data ) ) {
+				$this->error( $data );
+			}
+
+			return array(
+				'success' => true,
+				'data'    => $data,
+			);
+
 		}
 	}
 }

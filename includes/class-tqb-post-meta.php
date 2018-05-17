@@ -35,6 +35,11 @@ class TQB_Post_meta {
 	const META_NAME_FOR_WIZARD_COMPLETE = 'tqb_wizard_complete';
 
 	/**
+	 * GDPR User Consent Meta Key
+	 */
+	const META_NAME_FOR_GDPR_USER_CONSENT = 'tqb_quiz_page_gdpr_user_consent';
+
+	/**
 	 * Updates the quiz type meta
 	 *
 	 * @param $post_id
@@ -172,5 +177,29 @@ class TQB_Post_meta {
 	 */
 	public static function get_wizard_meta( $post_id ) {
 		return get_post_meta( $post_id, self::META_NAME_FOR_WIZARD_COMPLETE, true );
+	}
+
+	/**
+	 * Updates Quiz Page Meta with the user consent action
+	 *
+	 * @param $post_id
+	 * @param $consent - can be 1 or 0
+	 *
+	 * @return bool|int
+	 */
+	public static function update_quiz_page_gdpr_user_consent( $post_id, $consent ) {
+		return update_post_meta( $post_id, self::META_NAME_FOR_GDPR_USER_CONSENT, $consent );
+	}
+
+	/**
+	 * Returns the GDPR User Consent
+	 * The return can be 1 in case user give consent or 0
+	 *
+	 * @param $post_id
+	 *
+	 * @return int
+	 */
+	public static function get_quiz_page_gdpr_user_consent( $post_id ) {
+		return get_post_meta( $post_id, self::META_NAME_FOR_GDPR_USER_CONSENT, true );
 	}
 }

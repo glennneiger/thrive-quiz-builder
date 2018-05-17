@@ -205,6 +205,107 @@
 									}
 								} );
 							},
+							"symbols-categories.js": function (exports, module, require) {
+								var base = require( '../base' ),
+									SymbolCategoryModel = require( '../models/symbol-category' );
+
+								module.exports = base.base_collection.extend( {
+									model: SymbolCategoryModel,
+									default_category: {
+										count: 0,
+										description: TVE_Admin.t.uncategorized_symbols,
+										filter: 'raw',
+										name: TVE_Admin.t.uncategorized_symbols,
+										slug: 'uncategorized-symbols',
+										taxonomy: TVE_Admin.symbols_tax,
+										parent: null,
+										term_group: 0,
+										term_id: 0,
+										term_taxonomy_id: 0
+									},
+									/**
+									 * Set nonce header before every Backbone sync.
+									 *
+									 * @param {string} method.
+									 * @param {Backbone.Model} model.
+									 * @param {{beforeSend}, *} options.
+									 * @returns {*}.
+									 */
+									sync: function ( method, model, options ) {
+										var beforeSend;
+
+										options = options || {};
+
+										options.cache = false;
+
+										if ( model.has( 'id' ) && ( method === 'delete' || method === 'update' ) ) {
+											options.url = this.url() + '/' + model.get( 'id' );
+										}
+
+										if ( ! _.isUndefined( TVE_Admin.nonce ) && ! _.isNull( TVE_Admin.nonce ) ) {
+											beforeSend = options.beforeSend;
+
+											options.beforeSend = function ( xhr ) {
+												xhr.setRequestHeader( 'X-WP-Nonce', TVE_Admin.nonce );
+
+												if ( beforeSend ) {
+													return beforeSend.apply( this, arguments );
+												}
+											};
+										}
+
+										return Backbone.sync( method, model, options );
+									},
+									initialize: function ( models, options ) {
+										//add the default category, the uncategorized one
+										models.push( this.default_category );
+										return this.constructor.__super__.initialize.apply(this, arguments)
+									},
+									url: function () {
+										return TVE_Admin.rest_routes.symbols_terms
+									}
+								} );
+							},
+							"symbols.js": function (exports, module, require) {
+								var base = require( '../base' ),
+									SymbolModel = require( '../models/symbols' );
+
+								module.exports = base.base_collection.extend( {
+									model: SymbolModel,
+									/**
+									 * Set nonce header before every Backbone sync.
+									 *
+									 * @param {string} method.
+									 * @param {Backbone.Model} model.
+									 * @param {{beforeSend}, *} options.
+									 * @returns {*}.
+									 */
+									sync: function ( method, model, options ) {
+										var beforeSend;
+
+										options = options || {};
+										options.cache = false;
+										options.url = this.url();
+
+										if ( ! _.isUndefined( TVE_Admin.nonce ) && ! _.isNull( TVE_Admin.nonce ) ) {
+											beforeSend = options.beforeSend;
+
+											options.beforeSend = function ( xhr ) {
+												xhr.setRequestHeader( 'X-WP-Nonce', TVE_Admin.nonce );
+
+												if ( beforeSend ) {
+													return beforeSend.apply( this, arguments );
+												}
+											};
+										}
+
+										return Backbone.sync( method, model, options );
+									},
+									url: function () {
+										return TVE_Admin.rest_routes.symbols;
+									}
+								} );
+							},
 							"templates.js": function (exports, module, require) {
 								/**
 								 * Created by Ovidiu on 3/6/2017.
@@ -254,16 +355,21 @@
 
 							(function ( $ ) {
 								var TVE_Admin = window.TVE_Admin = window.TVE_Admin || {};
+
 								TVE_Admin.globals = TVE_Admin.globals || {};
 
 								$( function () {
+									var Symbols = require( './views/symbols' ),
+										CtSymbols = require( './views/ct-symbols' );
 
-									var Router = Backbone.Router.extend( {
+									Router = Backbone.Router.extend( {
 										view: null,
 										$el: $( '#tcb-admin-dashboard-wrapper' ),
 										routes: {
 											'templates': 'templates',
-											'template/:id': 'template_view'
+											'template/:id': 'template_view',
+											'symbols': 'symbols',
+											'templatessymbols': 'templatessymbols'
 										},
 										breadcrumbs: {
 											col: null,
@@ -278,6 +384,11 @@
 											this.breadcrumbs.view = new BreadcrumbsView( {
 												collection: this.breadcrumbs.col
 											} )
+										},
+										init_header: function ( data ) {
+											var HeaderView = require( './views/header' );
+											this.header_view = new HeaderView( data );
+
 										},
 										/**
 										 * set the current page - adds the structure to breadcrumbs and sets the new document title
@@ -307,6 +418,7 @@
 											$title.html( label + ' &lsaquo; ' + this.original_title )
 										},
 										templates: function () {
+											this.init_header( {url: TVE_Admin.architect_logo} )
 											this.set_page( 'templates', TVE_Admin.t.templates );
 											var self = this,
 												TemplateList = require( './views/template-list' );
@@ -316,7 +428,6 @@
 											}
 
 											TVE_Dash.showLoader();
-
 											TVE_Admin.globals.templates.fetch( {
 												update: true,
 												success: function ( model, response, options ) {
@@ -340,7 +451,7 @@
 												TVE_Dash.opened_modal_view.close();
 											}
 											if ( isNaN( parseInt( id ) ) ) {
-												TVE_Admin.router.navigate( '#templates', {trigger: true} );
+												TVE_Admin.router.navigate( '#templatessymbols', {trigger: true} );
 												return;
 											}
 
@@ -361,8 +472,8 @@
 
 													self.set_page( 'template/' + model.get( 'id' ), model.get( 'name' ), [
 														{
-															route: 'templates',
-															label: 'Templates'
+															route: 'templatessymbols',
+															label: 'Templates & Symbols'
 														},
 														{
 															route: 'template/' + model.get( 'id' ),
@@ -375,6 +486,46 @@
 												TVE_Dash.hideLoader();
 												TVE_Admin.router.navigate( '#templates', {trigger: true} );
 											} );
+										},
+										/**
+										 * Entry point for the symbols dashboard
+										 */
+										symbols: function () {
+											//set header
+											this.init_header( {url: TVE_Admin.symbols_logo, class: 'tcb-sym-header'} );
+
+											//set breadcrumbs
+											this.set_page( 'symbols', TVE_Admin.t.templates_symbols );
+
+
+											if ( this.view ) {
+												this.view.remove();
+											}
+
+											this.view = new Symbols.base();
+											this.$el.append( this.view.$el ).addClass( 'symbols-dashboard-wrapper' );
+										},
+										/**
+										 * Entry point for the templates and symbols dashboard
+										 */
+										templatessymbols: function ( args ) {
+											var tab_selected = ( args && args.tab_selected ) ? args.tab_selected : 'symbol';
+											//set header
+											this.init_header( {url: TVE_Admin.symbols_logo, class: 'tcb-sym-header'} );
+
+											//set breadcrumbs
+											this.set_page( 'symbols', TVE_Admin.t.templates_symbols );
+
+
+											if ( this.view ) {
+												this.view.remove();
+											}
+
+											this.view = new CtSymbols( {
+												main_view: this,
+												tab_selected: tab_selected
+											} );
+											this.$el.append( this.view.render().$el );
 										}
 									} );
 
@@ -382,6 +533,7 @@
 									TVE_Admin.globals.templates = new TemplatesCollection( {} );
 
 									TVE_Admin.router = new Router;
+
 									TVE_Admin.router.init_breadcrumbs();
 
 									Backbone.history.stop();
@@ -422,6 +574,145 @@
 									 */
 									get_url: function () {
 										return this.get( 'full_link' ) ? this.get( 'hash' ) : ( '#' + this.get( 'hash' ));
+									}
+								} );
+							},
+							"symbol-category.js": function (exports, module, require) {
+								/**
+								 * This model is used both in the admin dashboard to save / work with category and alos in tcb
+								 * For this to work we needed to send the nonce dynamically and also the url
+								 */
+								module.exports = Backbone.Model.extend( {
+									idAttribute: 'term_id',
+									/**
+									 * Set nonce header before every Backbone sync.
+									 *
+									 * @param {string} method.
+									 * @param {Backbone.Model} model.
+									 * @param {{beforeSend}, *} options.
+									 * @returns {*}.
+									 */
+									sync: function ( method, model, options ) {
+										var beforeSend,
+											nonce = ( ! this.get( 'rest_nonce' ) ) ? TVE_Admin.nonce : this.get( 'rest_nonce' );
+
+										options = options || {};
+
+										options.cache = false;
+
+										//for the update and delete methods we need to send the term id also
+										if ( model.has( 'term_id' ) && ( method === 'delete' || method === 'update' ) ) {
+											options.url = this.url() + '/' + model.get( 'term_id' );
+										}
+
+										if ( ! _.isUndefined( nonce ) && ! _.isNull( nonce ) ) {
+											beforeSend = options.beforeSend;
+
+											options.beforeSend = function ( xhr ) {
+												xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+
+												if ( beforeSend ) {
+													return beforeSend.apply( this, arguments );
+												}
+											};
+										}
+
+										return Backbone.sync( method, model, options );
+									},
+									url: function () {
+										var url = this.get( 'rest_symbol_terms' );
+
+										return ( ! url ) ? TVE_Admin.rest_routes.symbols_terms : url;
+									},
+									parse: function ( data ) {
+										//delete the parent field if this is equal to 0
+										//we are doing this due to a notice from wp rest api, when the term is saved. Could be a wp little issue
+										if ( data.parent === 0 ) {
+											delete data.parent;
+										}
+										return data;
+									}
+								} );
+							},
+							"symbols.js": function (exports, module, require) {
+								var base = require( '../base' );
+								SymbolCategory = require( '../collections/symbols-categories' );
+
+								module.exports = base.base_model.extend( {
+									idAttribute: 'id',
+									/**
+									 * Set nonce header before every Backbone sync.
+									 *
+									 * @param {string} method.
+									 * @param {Backbone.Model} model.
+									 * @param {{beforeSend}, *} options.
+									 * @returns {*}.
+									 */
+									sync: function ( method, model, options ) {
+										var beforeSend;
+
+										options = options || {};
+
+										options.cache = false;
+
+										if ( model.has( 'id' ) && ( method === 'delete' || method === 'update' ) ) {
+											options.url = this.url() + '/' + model.get( 'id' );
+										}
+
+										if ( ! _.isUndefined( TVE_Admin.nonce ) && ! _.isNull( TVE_Admin.nonce ) ) {
+											beforeSend = options.beforeSend;
+
+											options.beforeSend = function ( xhr ) {
+												xhr.setRequestHeader( 'X-WP-Nonce', TVE_Admin.nonce );
+
+												if ( beforeSend ) {
+													return beforeSend.apply( this, arguments );
+												}
+											};
+										}
+
+										return Backbone.sync( method, model, options );
+									},
+									url: function () {
+										return TVE_Admin.rest_routes.symbols
+									},
+									/**
+									 * Return the categories from which the symbol is being part of
+									 *
+									 * @returns {Array}
+									 */
+									get_terms: function () {
+										var terms = [],
+											symbol_terms = this.get( TVE_Admin.symbols_tax );
+
+										//if the symbol it's not in any category than add the id 0, to place it in an uncategorized
+										if ( _.isEmpty( symbol_terms ) ) {
+											terms.push( 0 );
+										}
+
+										_.forEach( this.get( TVE_Admin.symbols_tax ), function ( tax ) {
+											terms.push( tax.term_id );
+										} );
+
+										return terms;
+									},
+									/**
+									 * Get current category with all the information
+									 *
+									 * @returns {*}
+									 */
+									get_current_category: function () {
+										var current_terms = this.get_terms(),
+											categories = TVE_Admin.symbols_tax_terms;
+
+										for ( var i = 0; i < categories.length; i ++ ) {
+											if ( current_terms[0] === categories[i].term_id ) {
+												return categories[i];
+											}
+										}
+										var cat_collection = new SymbolCategory( TVE_Admin.symbols_tax_terms.slice( 0 ), {parse: true} );
+										return cat_collection.default_category;
+
 									}
 								} );
 							},
@@ -499,19 +790,6 @@
 
 							(function ( $ ) {
 								/**
-								 * Override Backbone ajax call and append wp security token
-								 *
-								 * @returns {*}
-								 */
-								Backbone.ajax = function () {
-									if ( arguments[0].url.indexOf( '_nonce' ) === - 1 ) {
-										arguments[0]['url'] += "&_nonce=" + TVE_Admin.admin_nonce;
-									}
-
-									return Backbone.$.ajax.apply( Backbone.$, arguments );
-								};
-
-								/**
 								 * pre-process the ajaxurl admin js variable and append a querystring to it
 								 * some plugins are adding an extra parameter to the admin-ajax.php url. Example: admin-ajax.php?lang=en
 								 *
@@ -558,6 +836,601 @@
 									}
 								} );
 							},
+							"create-search-ct-symbols.js": function (exports, module, require) {
+								var base = require( '../base' ),
+									NewCategModal = require( './modal-new-category' ),
+									TemplateCategoryModel = require( '../models/template-category' ),
+									ModalCreate = require( './modal-create' ),
+									CategoryModel = require( '../models/symbol-category' ),
+									CategoryView = require( './symbols' ).category,
+									content_template_tab = 'ct'; //with this we are identifying the content template tab
+
+								/**
+								 * The search symbols and create new symbol and category buttons
+								 */
+								module.exports = base.base_view.extend( {
+									template: TVE_Dash.tpl( 'symbols/search' ),
+									className: 'create-search-container',
+									initialize: function ( args ) {
+										this.searchView = new Search( args );
+										this.createView = new Create( args );
+									},
+									render: function ( args ) {
+										this.$el.append( this.createView.render( args ).$el );
+										this.$el.append( this.searchView.render( args ).$el );
+
+										return this;
+									}
+								} );
+
+								/**
+								 * Create button view. It renders the create button for both template and symbols
+								 */
+								var Create = base.base_view.extend( {
+									template: TVE_Dash.tpl( 'symbols/create' ),
+									className: 'create-container',
+									events: {
+										'click span.new-cat': 'create_category',
+										'click span.new-symbol': 'create_symbol',
+										'click .create-category': 'create_template_category'
+									},
+									initialize: function ( args ) {
+										this.symbols_view = args.symbols_view;
+									},
+									render: function ( args ) {
+										this.tab_selected = args.tab_selected;
+
+										this.$el.html( this.template( {
+											'create_text': args.tab_selected === content_template_tab ? TVE_Admin.t.create_category : TVE_Admin.t.create_new,
+											'ct_selected': args.tab_selected === content_template_tab
+										} ) );
+										return this;
+									},
+									/**
+									 * Create a category for templates
+									 *
+									 * @returns {boolean}
+									 */
+									create_template_category: function () {
+										if ( this.tab_selected !== content_template_tab ) {
+											return false;
+										}
+
+										this.modal( NewCategModal, {
+											model: new TemplateCategoryModel( {} )
+										} );
+
+									},
+									/**
+									 * Shows the modal for creating a category
+									 */
+									create_category: function () {
+										this.modal( ModalCreate, {
+											title: TVE_Admin.t.create_category,
+											description: TVE_Admin.t.description_category,
+											save_text: TVE_Admin.t.save_category_text,
+											placeholder: TVE_Admin.t.placeholder_category,
+											in_duration: 200,
+											is_symbol: 0,
+											out_duration: 300,
+											save_category: _.bind( this.save_category, this )
+										} );
+									},
+									/**
+									 * Show the modal for creating a symbol
+									 */
+									create_symbol: function () {
+										this.modal( ModalCreate, {
+											title: TVE_Admin.t.create_symbol,
+											description: TVE_Admin.t.description_symbol,
+											save_text: TVE_Admin.t.save_symbol_text,
+											placeholder: TVE_Admin.t.placeholder_symbol,
+											is_symbol: 1,
+											in_duration: 200,
+											out_duration: 300,
+											show_category: 1,
+											categories: this.symbols_view.$categories,
+											save_category: _.bind( this.save_category, this )
+										} );
+									},
+									/**
+									 * Saves the new category at click on save from within the modal
+									 * @param data
+									 */
+									save_category: function ( data ) {
+										var self = this, model_cat;
+
+										data['rest_symbol_terms'] = TVE_Admin.rest_routes.symbols_terms;
+										model_cat = new CategoryModel( data );
+
+										return model_cat.save( null, {
+											success: function ( response ) {
+												var category_view = new CategoryView( {category: response, collection: self.symbols_view.$collection} ), new_cat;
+
+												//add the new category in the list after a successful save
+												//update also the categories from localize
+												new_cat = response.toJSON();
+												new_cat['term_id'] = new_cat['id'];
+												new_cat['term_taxonomy_id'] = new_cat['id'];
+												TVE_Admin.symbols_tax_terms.unshift( new_cat );
+
+												response.set( 'term_id', new_cat['id'] );
+
+												self.symbols_view.$el.find( '.symbols-container' ).prepend( category_view.$el );
+												self.symbols_view.$categories.unshift( response );
+
+												TVE_Dash.success( TVE_Admin.t.category_created );
+											},
+											error: function ( response, xhr, status ) {
+
+												/* try to get a comprehensive error message */
+												var message = '';
+												if ( xhr.responseJSON ) {
+													message = xhr.responseJSON.message;
+												} else if ( xhr.responseText ) {
+													try {
+														if ( status === 'parsererror' ) {
+															message = 'Could not parse response: ' + xhr.responseText;
+														} else {
+															var data = JSON.parse( xhr.responseText );
+															message = data.message;
+														}
+													} catch ( e ) {
+													}
+												}
+
+												if ( ! message ) {
+													message = (xhr.statusText || status) + (xhr.status ? ' (' + xhr.status + ')' : '');
+												}
+
+												TVE_Dash.err( message );
+											}
+										} );
+									}
+								} );
+
+								/**
+								 * Renders the search input
+								 */
+								var Search = base.base_view.extend( {
+									template: TVE_Dash.tpl( 'symbols/search' ),
+									className: 'search-container',
+									events: {
+										'keyup input.search-symbols': 'search_items'
+									},
+									initialize: function ( args ) {
+										this.symbols_view = args.symbols_view;
+										this.templates_view = args.templates_view;
+										this.ct_symbols_view = args.ct_symbols_view;
+									},
+									render: function ( args ) {
+										this.tab_selected = args.tab_selected;
+
+										this.$el.html( this.template( {
+											'input_title': args.tab_selected === content_template_tab ? TVE_Admin.t.search_templates : TVE_Admin.t.search_symbols,
+											'input_placeholder': args.tab_selected === content_template_tab ? TVE_Admin.t.template_name : TVE_Admin.t.symbol_name
+										} ) );
+
+										return this;
+									},
+									/**
+									 * Search in symbols or templates based on the selected tab
+									 *
+									 * @param event
+									 */
+									search_items: function ( event ) {
+										var args = {
+											'search': event.currentTarget.value
+										};
+										if ( this.tab_selected === content_template_tab ) {
+											this.ct_symbols_view.render_templates( args );
+										} else {
+											this.symbols_view.fetchSymbols( args );
+										}
+									}
+								} );
+							},
+							"ct-symbols.js": function (exports, module, require) {
+								var base = require( '../base' ),
+									Symbols = require( './symbols' ),
+									CreateSearch = require( './create-search-ct-symbols' );
+
+								(function ( $ ) {
+									module.exports = base.base_view.extend( {
+										template: TVE_Dash.tpl( 'ct-symbols' ),
+										className: 'templates-symbols-tabs',
+										initialize: function ( args ) {
+											this.main_view = args.main_view;
+											this.tab_selected = args.tab_selected;
+										},
+										events: {
+											'click .tab-item': 'tab_click'
+										},
+										render: function () {
+											this.$el.html( this.template() );
+											this.render_templates();
+											this.render_symbols();
+											this.render_create_search();
+											this.after_render();
+											return this;
+										},
+										/**
+										 * Actions after the html was rendered
+										 */
+										after_render: function () {
+											//tabs related stuff
+											this.$tabs = this.$( '.tab-item' );
+											this.$content = this.$( '.tcb-tab-content' );
+											this.$tabs.filter( '[data-content="' + this.tab_selected + '"]' ).click();
+										},
+										/**
+										 * Change active tab
+										 *
+										 * @param event
+										 */
+										tab_click: function ( event ) {
+											var tab = event.currentTarget.dataset.content;
+
+											this.$tabs.removeClass( 'active' );
+											event.currentTarget.classList.add( 'active' );
+
+											this.$content.removeClass( 'active' );
+											this.$content.filter( '[data-content="' + tab + '"]' ).addClass( 'active' );
+											this.tab_selected = tab;
+
+											this.createSearchView.render( {tab_selected: tab} );
+										},
+										/**
+										 * Handles the content templates rendering
+										 */
+										render_templates: function ( args ) {
+											var self = this,
+												TemplateList = require( './template-list' ),
+												extraData = jQuery.extend( {}, {}, args );
+
+											if ( this.templates_view ) {
+												this.templates_view.remove();
+											}
+
+											TVE_Admin.globals.templates.fetch( {
+												data: $.param( extraData ),
+												update: true,
+												success: function ( model, response, options ) {
+													self.templates_view = new TemplateList( {
+														collection: TVE_Admin.globals.templates
+													} );
+													self.$( '.ct-content' ).html( self.templates_view.render().$el );
+												},
+												error: function ( collection, response, options ) {
+													TVE_Dash.err( response.responseText );
+												}
+											} );
+										},
+										/**
+										 * Show the create button and search input based on the selected tab
+										 */
+										render_create_search: function () {
+											this.createSearchView = new CreateSearch( {
+												symbols_view: this.symbols_view,
+												templates_view: this.templates_view,
+												ct_symbols_view: this
+											} );
+											this.createSearchView.render( {tab_selected: this.tab_selected} ).$el.insertAfter( this.$el.find( '.tcb-header-tabs' ) );
+										},
+										/**
+										 * Handles the symbols rendering
+										 */
+										render_symbols: function () {
+											this.symbols_view = new Symbols.base( {dashboard_view: this} );
+											this.$( '.symbols-content' ).append( this.symbols_view.$el ).addClass( 'symbols-dashboard-wrapper' );
+										}
+									} );
+								})( jQuery );
+							},
+							"header.js": function (exports, module, require) {
+								var base = require( '../base' );
+
+								module.exports = base.base_view.extend( {
+									el: jQuery( '#tcb-admin-header-wrapper' ),
+									template: TVE_Dash.tpl( 'header' ),
+									initialize: function ( args ) {
+										this.render( {
+											'admin_logo_url': args.url,
+											'class': ( typeof args.class !== 'undefined' ) ? args.class : ''
+										} );
+									},
+									render: function ( header_data ) {
+										this.$el.html( this.template( {header: header_data} ) );
+									}
+								} );
+							},
+							"modal-create.js": function (exports, module, require) {
+								var base = require( '../base' ),
+									SymbolModel = require( '../models/symbols' ),
+									Symbols = Symbols || {};
+
+								Symbols.views = Symbols.views || {};
+
+								module.exports = base.modal_view.extend( {
+									className: 'tvd-modal tvd-modal-fixed-footer',
+									template: TVE_Dash.tpl( 'modals/modal-create' ),
+									events: {
+										'click .tvd-modal-save': 'save',
+										'click #add_category': 'toggle_category_selection',
+										'keypress input#content-title': 'input_key_pressed'
+									},
+									afterRender: function () {
+										this.$el.attr( 'id', 'tcb-modal-save-elements' );
+										this.$el.attr( 'class', 'tvd-modal tcb-sym-modal-save-elements' );
+										this.$name = this.$( '#content-title' );
+										this.$autocomplete = this.$( '#tcb-save-template-categ-suggest' );
+									},
+									/**
+									 * Show or hide the category selection
+									 */
+									toggle_category_selection: function () {
+										var $cat_sel = this.$( '.category_selection' );
+
+										$cat_sel.toggle();
+										this.prepare_symbol_category();
+									},
+									/**
+									 * Set the categorues for the dropdown
+									 */
+									prepare_symbol_category: function () {
+										var categories_data = [];
+
+										this.categories.each( function ( category ) {
+											categories_data.push( {
+												id: category.get( 'term_id' ),
+												text: category.get( 'name' ),
+												value: category.get( 'name' )
+											} );
+										} );
+
+										this.bind_autocomplete( this.$autocomplete, {data: categories_data} );
+									},
+									/**
+									 * Save symbol at enter key pressed
+									 *
+									 * @param event
+									 */
+									input_key_pressed: function ( event ) {
+										if ( event.keyCode === 13 ) {
+											this.save( event );
+										}
+									},
+									/**
+									 * Save a category or a model
+									 * @returns {boolean}
+									 */
+									save: function ( e ) {
+										var data, term_id,
+											input_valid = this.validate_input(); //the name is required
+
+										if ( ! input_valid ) {
+											return false;
+										}
+
+										if ( this.is_symbol ) {
+
+											data = {
+												title: this.$name.val(),
+												status: 'publish'
+											};
+
+											//get the term id for the symbol, we send the taxonomy field only if the category is not uncategorized ( the rest api throws an error if the term_id is 0 )
+											term_id = this.get_category_for_symbol();
+											if ( term_id && parseInt( term_id ) !== 0 ) {
+												data['tcb_symbols_tax'] = term_id
+											}
+
+											this.save_symbol( data, e );
+										} else {
+											data = {
+												name: this.$name.val()
+											};
+											this.save_category( data );
+											e.preventDefault();
+										}
+										this.close();
+									},
+									/**
+									 * Return the category for a symbol when it's created
+									 *
+									 * @returns {*}
+									 */
+									get_category_for_symbol: function () {
+
+										if ( typeof this.category_id !== 'undefined' && parseInt( this.category_id ) !== 0 ) {
+											//this case happens when the user creates a symbol from within a certain category
+											return this.category_id;
+										}
+
+										var selected_category = this.$autocomplete.val(); //the selected category from the dropdown
+										if ( ! selected_category ) {
+											return 0;
+										}
+										return selected_category[Object.keys( selected_category )[0]]; //return the first element from the object
+									},
+									/**
+									 * Validates the input. The name is required
+									 *
+									 * @returns {boolean}
+									 */
+									validate_input: function () {
+										if ( _.isEmpty( this.$name.val().trim() ) ) {
+											var error_message = ( this.is_symbol ) ? TVE_Admin.t.symbol_name_required : TVE_Admin.t.category_name_required;
+											TVE_Dash.err( error_message );
+											return false;
+										}
+
+										return true;
+									},
+									/**
+									 * Init the select2 autocomplete
+									 *
+									 * @param $element
+									 * @param options
+									 */
+									bind_autocomplete: function ( $element, options ) {
+										var self = this,
+											autocomplete_options = this.get_autocomplete_options( options );
+
+										$element.select2( autocomplete_options ).on( 'select2:selecting', function ( e ) {
+											if ( e.params.args.data.isNew ) {
+												e.params.args.data.text = e.params.args.data.value;
+											}
+										} ).on( 'select2:select', function ( e ) {
+											var $this = jQuery( this );
+
+											if ( e.params.data.isNew ) {
+
+												self.save_category( {
+													name: e.params.data.value
+												} ).then( function ( response ) {
+													var term_id = response.id;
+													//update the dropdown accordingly
+													self.$( '#tcb-template-category-id' ).val( term_id );
+
+													$this.find( '[value="' + e.params.data.id + '"]' ).replaceWith( '<option selected value="' + term_id + '">' + e.params.data.value + '</option>' );
+													$this.val( term_id ).trigger( 'change' );
+												} );
+											} else {
+												self.$( '#tcb-template-category-id' ).val( self.$autocomplete.val() );
+											}
+										} ).on( 'select2:unselect', function ( evt ) {
+											self.$( '#tcb-template-category-id' ).val( '' );
+
+											if ( ! evt.params.originalEvent ) {
+												return;
+											}
+											evt.params.originalEvent.stopPropagation();
+										} );
+									},
+									/**
+									 * Get the options for select2
+									 * @param options
+									 */
+									get_autocomplete_options: function ( options ) {
+										var default_options = {
+											tags: true,
+											multiple: true,
+											placeholder: TVE_Admin.t.select_category, // Place holder text to place in the select
+											minimumResultsForSearch: 0,
+											maximumSelectionLength: 1,
+											data: {},
+											createTag: function ( tag ) {
+												return {
+													id: tag.term,
+													text: '"' + tag.term + '" <b style="color:#1ca6e5; float: right;; text-transform: uppercase">' + TVE_Admin.t.add_as_category + '</b>',
+													value: tag.term,
+													// add indicator:
+													isNew: true
+												};
+											},
+											escapeMarkup: function ( markup ) {
+												/**
+												 * Allow markup in text messages: ex no results
+												 */
+												return markup;
+											}
+										};
+
+										if ( typeof options === 'undefined' ) {
+											options = {};
+										}
+
+										return jQuery.extend( {}, default_options, options );
+									},
+									/**
+									 * Saves the new symbol at clik on save from within the modal
+									 * @param data
+									 */
+									save_symbol: function ( data, e ) {
+										var model_symbol = new SymbolModel( data ),
+											self = this;
+
+										model_symbol.save( null, {
+											async: false,
+											success: function ( response ) {
+												//"manareala" to open a new tab without browser permission
+												self.$el.find( 'a.tvd-modal-save' ).attr( 'href', response.get( 'link' ) + '&tve=true' );
+
+												TVE_Dash.success( TVE_Admin.t.symbol_created );
+												window.TVE_Admin.router.templatessymbols( {tab_selected: 'symbol'} );
+											},
+											error: function ( response, xhr, status ) {
+
+												/* try to get a comprehensive error message */
+												var message = '';
+												if ( xhr.responseJSON ) {
+													message = xhr.responseJSON.message;
+												} else if ( xhr.responseText ) {
+													try {
+														if ( status === 'parsererror' ) {
+															message = 'Could not parse response: ' + xhr.responseText;
+														} else {
+															var data = JSON.parse( xhr.responseText );
+															message = data.message;
+														}
+													} catch ( e ) {
+													}
+												}
+
+												if ( ! message ) {
+													message = (xhr.statusText || status) + (xhr.status ? ' (' + xhr.status + ')' : '');
+												}
+
+												TVE_Dash.err( message );
+												e.preventDefault();
+											}
+										} );
+									}
+								} );
+							},
+							"modal-delete-term.js": function (exports, module, require) {
+								var base = require( '../base' ),
+									TVE_Admin = TVE_Admin || {};
+
+								module.exports = base.modal_view.extend( {
+									template: TVE_Dash.tpl( 'modals/delete-confirmation' ),
+									events: {
+										'click .tvd-modal-submit': 'yes'
+									},
+									/**
+									 * Delete a category / symbol
+									 *
+									 * @param event
+									 */
+									yes: function ( event ) {
+										var $btn = jQuery( event.currentTarget ), self = this;
+										this.btnLoading( $btn );
+										TVE_Dash.showLoader();
+										this.model.destroy( {
+											data: {force: this.is_term}, //force true for a term and force false for a post. The terms do not have trash so we need to send force true, instead the post can be sent firstly in trash
+											processData: true,
+											wait: true,
+											success: function ( model, response ) {
+												if ( self.is_term ) {
+													self.model_view.remove_deleted_category( response );
+													window.TVE_Admin.router.templatessymbols({tab_selected: 'symbol'});
+												}
+												//remove the view from html also
+												self.model_view.remove();
+												TVE_Dash.success( self.text_deleted );
+											},
+											error: function ( model, response ) {
+												TVE_Dash.err( TVE_Admin.t.text_not_deleted );
+											},
+											complete: function () {
+												self.close();
+												TVE_Dash.hideLoader();
+											}
+										} );
+									}
+								} );
+							},
 							"modal-delete.js": function (exports, module, require) {
 								/**
 								 * Created by Ovidiu on 3/8/2017.
@@ -574,6 +1447,7 @@
 										this.extra_setting = (args.extra_setting && args.extra_setting === 1) ? 1 : 0;
 									},
 									afterRender: function () {
+										this.$el.addClass('content-templates-delete-class');
 										if ( this.extra_setting ) {
 											this.$( '.tcb-admin-extra-setting-row' ).removeClass( 'hidden' );
 										}
@@ -587,6 +1461,7 @@
 											processData: true,
 											wait: true,
 											success: function ( model, response ) {
+												window.TVE_Admin.router.templatessymbols({tab_selected: 'ct'});
 												TVE_Dash.success( response.text );
 											},
 											error: function ( model, response ) {
@@ -610,6 +1485,9 @@
 									events: {
 										'click .tvd-modal-submit': 'save'
 									},
+									afterRender: function () {
+										this.$el.addClass('template-move-tocat');
+									},
 									save: function () {
 										var self = this;
 										TVE_Dash.showLoader();
@@ -619,10 +1497,52 @@
 											wait: true,
 											success: function ( model, response ) {
 												TVE_Dash.success( response.text );
-												window.TVE_Admin.router.templates();
+												window.TVE_Admin.router.templatessymbols();
 											},
 											error: function ( model, response ) {
 												TVE_Dash.err( response.responseText );
+											},
+											complete: function () {
+												TVE_Dash.hideLoader();
+												self.close();
+											}
+										} );
+									}
+								} );
+							},
+							"modal-move-symbol.js": function (exports, module, require) {
+								var base = require( '../base' );
+
+								module.exports = base.modal_view.extend( {
+									template: TVE_Dash.tpl( 'modals/move-symbol' ),
+									events: {
+										'click .tvd-modal-submit': 'save'
+									},
+									afterRender: function () {
+										this.$el.addClass('sym-move-tocat');
+									},
+									/**
+									 * Move symbol from one category to another
+									 */
+									save: function () {
+										var self = this,
+											new_cat_id = this.$( '#tcb-admin-t-categ-combo' ).val();
+										TVE_Dash.showLoader();
+
+										/**
+										 * The rest api does not have the possibility to remove terms from post so we are adding an extra param that will be used to handle this
+										 */
+										this.model.set( 'move_symbol', new_cat_id );
+										this.model.unset('tcb_symbols_tax');
+
+										this.model.save( null, {
+											wait: true,
+											success: function ( model, response ) {
+												TVE_Dash.success( TVE_Admin.t.symbol_moved_success );
+												window.TVE_Admin.router.templatessymbols({tab_selected: 'symbol'});
+											},
+											error: function ( model, response ) {
+												TVE_Dash.error( TVE_Admin.t.symbol_moved_error );
 											},
 											complete: function () {
 												TVE_Dash.hideLoader();
@@ -639,7 +1559,7 @@
 								var base = require( '../base' );
 								module.exports = base.modal_view.extend( {
 									template: TVE_Dash.tpl( 'modals/new-category' ),
-									className: 'tvd-modal tvd-modal-fixed-footer',
+									className: 'tvd-modal',
 									events: {
 										'click #tcb-add-new-category-input': 'addNewCategoryInput',
 										'click .tcb-admin-delete-text-element': 'deleteTextElement',
@@ -649,6 +1569,7 @@
 									},
 									afterRender: function () {
 										this.addNewCategoryInput();
+										this.$el.addClass('add-new-cat-modal');
 									},
 									addNewCategoryInput: function () {
 										var $clone = this.$( '#tcb-categ-input-template' ).clone();
@@ -675,7 +1596,7 @@
 												wait: true,
 												success: function ( model, response ) {
 													TVE_Dash.success( response.text );
-													window.TVE_Admin.router.templates();
+													window.TVE_Admin.router.templatessymbols({tab_selected: 'ct'});
 												},
 												error: function ( model, response ) {
 													TVE_Dash.err( response.responseText );
@@ -693,6 +1614,635 @@
 
 									}
 								} );
+							},
+							"symbols.js": function (exports, module, require) {
+								var base = require( '../base' ),
+									SymbolsCollection = require( '../collections/symbols' ),
+									SymbolsCategoryCollection = require( '../collections/symbols-categories' ),
+									CategoryModel = require( '../models/symbol-category' ),
+									SymbolModel = require( '../models/symbols' ),
+									TextEdit = require( './text-edit' ),
+									ModalDeleteTerm = require( './modal-delete-term' ),
+									ModalCreate = require( './modal-create' ),
+									ModalMoveSymbol = require( './modal-move-symbol' ),
+									Symbols = Symbols || {};
+
+								Symbols.views = Symbols.views || {};
+								Symbols.objects = Symbols.objects || {};
+
+								(function ( $ ) {
+									/**
+									 * The main view that contains the element for the entire dashboard
+									 */
+									Symbols.views.Base = base.base_view.extend( {
+										template: TVE_Dash.tpl( 'symbols/container' ),
+										className: 'tcb-dash-symbols-wrapper',
+										initialize: function ( args ) {
+											this.dashboard_view = args.dashboard_view;
+											this.render();
+											this.fetchSymbols();
+										},
+										/**
+										 * Transforms the categories array into a category collection
+										 */
+										initCategories: function () {
+											//send the clone of the array to avoid changing the initial input
+											this.$categories = new SymbolsCategoryCollection( TVE_Admin.symbols_tax_terms.slice( 0 ), {parse: true} );
+										},
+										render: function () {
+											this.$el.html( this.template() );
+										},
+										/**
+										 * Get symbols from the website
+										 */
+										fetchSymbols: function ( args ) {
+											var default_args = {
+													tcb_symbols_tax_exclude: TVE_Admin.default_terms,
+													per_page: 100 //in rest we cannot bring more than 100 posts per request
+												},
+												extraData = jQuery.extend( {}, default_args, args );
+
+											this.initCategories();
+
+											TVE_Dash.showLoader();
+											this.$collection = new SymbolsCollection();
+
+											this.$collection.fetch( {
+												data: $.param( extraData ),
+												success: _.bind( this.fetch_success, this )
+											} );
+										},
+										fetch_success: function ( collection, response, xhr ) {
+											this.render_categories( collection );
+										},
+										/**
+										 * Render categories togheter with their symbols
+										 *
+										 * @param collection
+										 */
+										render_categories: function ( collection ) {
+											var $categories_list = this.$( '.symbols-container' ).html( '' );
+											this.$categories.each( function ( category ) {
+												var category_view = new Symbols.views.Category( {category: category, collection: collection} );
+												$categories_list.append( category_view.$el );
+											} );
+										},
+										render_symbols: function ( collection ) {
+											this.$list = new Symbols.views.List( {
+													collection: collection
+												}
+											);
+
+											this.$el.append( this.$list.$el );
+
+											return this.$symbols;
+										},
+										set_categories_from_symbols: function ( symbols ) {
+											var self = this;
+
+											symbols.each( function ( symbol ) {
+												var symbol_terms = symbol.get( TVE_Admin.symbols_tax );
+
+												if ( _.isEmpty( symbol_terms ) ) {
+													self.$categories[0] = self.default_category;
+												} else {
+													_.forEach( symbol_terms, function ( term ) {
+														if ( ! self.$categories[term.term_id] ) {
+															self.$categories[term.term_id] = term;
+														}
+													} );
+												}
+											} );
+										}
+									} );
+
+									/**
+									 * It handles all the logic from within a category view
+									 */
+									Symbols.views.Category = Symbols.views.Base.extend( {
+										template: TVE_Dash.tpl( 'symbols/category' ),
+										className: 'category-view-wrapper',
+										events: {
+											'click .edit-category-name': 'edit_category_name',
+											'click .delete-category': 'delete_category'
+										},
+										initialize: function ( args ) {
+											this.$category_item = args.category;
+											this.$collection = args.collection;
+											this.render();
+										},
+										render: function () {
+											this.$el.empty();
+											this.$el.html( this.template( {category: this.$category_item} ) );
+											this.list_items();
+											this.$category_name = this.$( '.cat-name' );
+											return this;
+										},
+										/**
+										 * Lists all the symbols from this specific category
+										 *
+										 * @returns {Symbols.views.Category}
+										 */
+										list_items: function () {
+											var collection = this.get_collection_for_category();
+											this.$list = new Symbols.views.List( {collection: collection, category_item: this.$category_item} );
+											this.$el.append( this.$list.$el );
+
+											return this;
+										},
+										/**
+										 * It filters the symbols collection and returns only the symbols from this category
+										 */
+										get_collection_for_category: function () {
+											var self = this,
+												collection_clone = this.$collection.clone(), //create a clone in order to not alter the initial collection of symbols
+												remove = [];
+
+											//first we are making an array with the symbols that need to be removed
+											collection_clone.each( function ( symbol ) {
+												var symbol_terms = symbol.get_terms();
+
+												if ( symbol_terms.indexOf( parseInt( self.$category_item.get( 'term_id' ) ) ) === - 1 ) {
+													remove.push( symbol );
+												}
+											} );
+
+											//we remove the symbols from the collection
+											collection_clone.remove( remove );
+											return collection_clone;
+
+										},
+										/**
+										 * Edit category name click
+										 *
+										 * @param event
+										 */
+										edit_category_name: function ( event ) {
+											var self = this,
+												edit_btn = $( event.currentTarget ),
+												edit_model = new Backbone.Model( {
+													value: this.$category_item.get( 'name' ),
+													label: '',
+													required: true
+												} ),
+												textEdit = new TextEdit( {
+													model: edit_model,
+													tagName: 'div'
+												} );
+
+											edit_btn.hide();
+											this.$category_name.hide().after( textEdit.render().$el );
+
+											//event triggered when the value has changed
+											edit_model.on( 'change:value', function ( event_model, value ) {
+												self.save_category( {'name': value} );
+												textEdit.remove();
+												self.$category_name.show();
+												edit_btn.show();
+											} );
+
+											//event triggered at blur on input
+											edit_model.on( 'tcb_admin_no_change', function () {
+												self.$category_name.html( self.$category_item.get( 'name' ) ).show();
+												textEdit.remove();
+												edit_btn.show();
+											} );
+											textEdit.focus();
+										},
+										delete_category: function () {
+											this.modal( ModalDeleteTerm, {
+												model: this.$category_item,
+												model_view: this,
+												is_term: true,
+												title: 'Delete category',
+												text: TVE_Admin.t.delete_category_txt.replace( '%s', this.$category_item.get( 'name' ) ),
+												text_deleted: TVE_Admin.category_deleted,
+												text_not_deleted: TVE_Admin.t.category_not_deleted,
+												'max-width': '60%',
+												width: '750px',
+												in_duration: 200,
+												out_duration: 300,
+												className: 'delete-symbol tvd-modal'
+											} );
+										},
+										/**
+										 * After a successful delete, remove the category from the initial array also
+										 *
+										 * @param response
+										 */
+										remove_deleted_category: function ( response ) {
+											if ( response.deleted ) {
+												var term_id = response.previous.id,
+													deleted_index;
+
+												_.forEach( TVE_Admin.symbols_tax_terms, function ( term, index ) {
+													if ( term.term_id === term_id ) {
+														deleted_index = index;
+													}
+												} );
+											}
+											if ( typeof deleted_index !== 'undefined' ) {
+												TVE_Admin.symbols_tax_terms.splice( deleted_index, 1 );
+											}
+										},
+										/**
+										 * Save the changed values for the category in the db
+										 *
+										 * @param category_data
+										 */
+										save_category: function ( category_data ) {
+											var self = this;
+											this.$category_item.set( category_data );
+											this.$category_item.save( null, {
+												success: function ( response ) {
+													//update the view after a successful save
+													self.$category_name.html( response.get( 'name' ) );
+													TVE_Dash.success( TVE_Admin.t.category_save );
+												},
+												error: function ( response, xhr, status ) {
+
+													/* try to get a comprehensive error message */
+													var message = '';
+													if ( xhr.responseJSON ) {
+														message = xhr.responseJSON.message;
+													} else if ( xhr.responseText ) {
+														try {
+															if ( status === 'parsererror' ) {
+																message = 'Could not parse response: ' + xhr.responseText;
+															} else {
+																var data = JSON.parse( xhr.responseText );
+																message = data.message;
+															}
+														} catch ( e ) {
+														}
+													}
+
+													if ( ! message ) {
+														message = (xhr.statusText || status) + (xhr.status ? ' (' + xhr.status + ')' : '');
+													}
+
+													TVE_Dash.err( message );
+												}
+											} );
+										},
+										change_category: function ( event ) {
+											var term_id = event.currentTarget.getAttribute( 'data-term-id' );
+											this.$el.find( '.term-item' ).each( function () {
+												var data_term_id = this.getAttribute( 'data-term-id' );
+
+												if ( data_term_id === term_id ) {
+													this.classList.add( "active" );
+												} else {
+													this.classList.remove( "active" );
+												}
+
+											} );
+											this.set_active_category( term_id );
+										},
+										set_active_category: function ( term_id ) {
+											var self = this;
+
+											if ( ! this.$categories ) {
+												return false;
+											}
+
+											//if we don't send term id, we set the first category as the active one
+											if ( ! term_id ) {
+												term_id = Object.keys( this.$categories )[0];
+											}
+
+											//we make all other categories inactive
+											_.forEach( this.$categories, function ( value, index ) {
+												self.$categories[index].active = ( index === term_id );
+											} );
+										}
+									} );
+
+									/**
+									 * The search symbols and create new symbol and category buttons
+									 */
+									Symbols.views.Search = Symbols.views.Base.extend( {
+										template: TVE_Dash.tpl( 'symbols/search' ),
+										className: 'search-container',
+										events: {
+											'click span.new-cat': 'create_category',
+											'click span.new-symbol': 'create_symbol',
+											'keyup input.search-symbols': 'search_symbols'
+										},
+										initialize: function ( args ) {
+											this.categories_collection = args.categories;
+											this.symbols_collection = args.collection;
+											this.base_view = args.base_view;
+											this.render();
+										},
+										render: function () {
+											this.$el.html( this.template() );
+											return this;
+										},
+										/**
+										 * Shows the modal for creating a category
+										 */
+										create_category: function () {
+											this.modal( ModalCreate, {
+												title: TVE_Admin.t.create_category,
+												description: TVE_Admin.t.description_category,
+												save_text: TVE_Admin.t.save_category_text,
+												placeholder: TVE_Admin.t.placeholder_category,
+												in_duration: 200,
+												is_symbol: 0,
+												out_duration: 300,
+												save_category: _.bind( this.save_category, this )
+											} );
+										},
+										create_symbol: function () {
+											this.modal( ModalCreate, {
+												title: TVE_Admin.t.create_symbol,
+												description: TVE_Admin.t.description_symbol,
+												save_text: TVE_Admin.t.save_symbol_text,
+												placeholder: TVE_Admin.t.placeholder_symbol,
+												is_symbol: 1,
+												in_duration: 200,
+												out_duration: 300,
+												show_category: 1,
+												categories: this.categories_collection,
+												save_category: _.bind( this.save_category, this )
+											} );
+										},
+										/**
+										 * Saves the new category at click on save from within the modal
+										 * @param data
+										 */
+										save_category: function ( data ) {
+											var self = this, model_cat;
+
+											data['rest_symbol_terms'] = TVE_Admin.rest_routes.symbols_terms;
+											model_cat = new CategoryModel( data );
+
+											return model_cat.save( null, {
+												success: function ( response ) {
+													//add the new category in the list after a successful save
+													//update also the categories from localize
+													new_cat = response.toJSON();
+													new_cat['term_id'] = new_cat['id'];
+													new_cat['term_taxonomy_id'] = new_cat['id'];
+													TVE_Admin.symbols_tax_terms.unshift( new_cat );
+
+													response.set( 'term_id', new_cat['id'] );
+													var category_view = new Symbols.views.Category( {category: response, collection: self.symbols_collection} ), new_cat;
+													self.base_view.$el.find( '.symbols-container' ).prepend( category_view.$el );
+													self.categories_collection.unshift( response );
+
+													TVE_Dash.success( TVE_Admin.t.category_created );
+												},
+												error: function ( response, xhr, status ) {
+
+													/* try to get a comprehensive error message */
+													var message = '';
+													if ( xhr.responseJSON ) {
+														message = xhr.responseJSON.message;
+													} else if ( xhr.responseText ) {
+														try {
+															if ( status === 'parsererror' ) {
+																message = 'Could not parse response: ' + xhr.responseText;
+															} else {
+																var data = JSON.parse( xhr.responseText );
+																message = data.message;
+															}
+														} catch ( e ) {
+														}
+													}
+
+													if ( ! message ) {
+														message = (xhr.statusText || status) + (xhr.status ? ' (' + xhr.status + ')' : '');
+													}
+
+													TVE_Dash.err( message );
+												}
+											} );
+										},
+										search_symbols: function ( event ) {
+											var args = {
+												'search': event.currentTarget.value
+											};
+											if ( _.isEmpty( event.currentTarget.value ) ) {
+												this.base_view.fetchSymbols();
+											} else {
+												this.base_view.fetchSymbols( args );
+											}
+										}
+									} );
+
+									/**
+									 * Handles the symbol list within a certain category
+									 */
+									Symbols.views.List = Symbols.views.Base.extend( {
+										template: TVE_Dash.tpl( 'symbols/list' ),
+										className: 'symbols-items',
+										events: {
+											'click .open-create-modal': 'new_symbol_modal'
+										},
+										initialize: function ( args ) {
+											this.$collection = args.collection;
+											this.$category_item = args.category_item;
+											this.render();
+										},
+										render: function () {
+											this.$el.html( this.template( {length: this.$collection.length} ) );
+											this.$collection.each( this.renderOne, this );
+											TVE_Dash.hideLoader();
+											return this;
+										},
+										/**
+										 * Render a single item ( symbol )
+										 *
+										 * @param item
+										 * @returns {Symbols.views.List}
+										 */
+										renderOne: function ( item ) {
+											var symbol_vew = new Symbols.views.Item( {
+												model: item
+											} );
+
+											this.$el.prepend( symbol_vew.render().$el );
+
+											return this;
+										},
+										new_symbol_modal: function () {
+											this.modal( ModalCreate, {
+												title: TVE_Admin.t.create_symbol,
+												description: TVE_Admin.t.description_symbol,
+												save_text: TVE_Admin.t.save_symbol_text,
+												placeholder: TVE_Admin.t.placeholder_symbol,
+												is_symbol: 1,
+												in_duration: 200,
+												out_duration: 300,
+												show_category: 0,
+												category_id: this.$category_item.get( 'term_id' )
+											} );
+										}
+									} );
+
+									/**
+									 * Handles the rendering and logic for a symbol item
+									 */
+									Symbols.views.Item = Symbols.views.Base.extend( {
+										template: TVE_Dash.tpl( 'symbols/item' ),
+										className: 'symbol-item-container',
+										events: {
+											'click .sym-pen': 'edit_symbol_name',
+											'click .sym-delete': 'delete_symbol',
+											'click .sym-duplicate': 'duplicate_symbol',
+											'click .sym-move': 'move_symbol',
+											'click .edit-symbol': 'edit_symbol'
+										},
+										initialize: function ( args ) {
+											this.model = args.model;
+										},
+										render: function () {
+											this.$el.html( this.template( {item: this.model} ) );
+											this.$symbol_name = this.$( '.symbol-title-text' );
+											return this;
+										},
+										delete_symbol: function () {
+											this.modal( ModalDeleteTerm, {
+												model: this.model,
+												model_view: this,
+												is_term: false,
+												title: 'Delete symbol',
+												text: TVE_Admin.t.delete_symbol_txt.replace( '%s', this.model.get( 'title' ).rendered ),
+												text_deleted: TVE_Admin.t.symbol_deleted,
+												text_not_deleted: TVE_Admin.t.symbol_not_deleted,
+												'max-width': '60%',
+												width: '750px',
+												in_duration: 200,
+												out_duration: 300,
+												className: 'delete-symbol tvd-modal'
+											} );
+										},
+										edit_symbol_name: function ( event ) {
+											var self = this,
+												edit_btn = $( event.currentTarget ),
+												edit_model = new Backbone.Model( {
+													value: this.model.get( 'title' ).rendered,
+													label: '',
+													required: true
+												} ),
+												textEdit = new TextEdit( {
+													model: edit_model,
+													tagName: 'div'
+												} );
+
+											edit_btn.hide();
+											this.$symbol_name.hide().after( textEdit.render().$el );
+
+											//event triggered when the value has changed
+											edit_model.on( 'change:value', function ( event_model, value ) {
+												self.save_symbol( {title: value} );
+												textEdit.remove();
+												self.$symbol_name.show();
+												edit_btn.show();
+											} );
+
+											//event triggered at blur on input
+											edit_model.on( 'tcb_admin_no_change', function () {
+												self.$symbol_name.html( self.model.get( 'title' ).rendered ).show();
+												textEdit.remove();
+												edit_btn.show();
+											} );
+											textEdit.focus();
+										},
+										save_symbol: function ( symbol_data ) {
+											var self = this;
+											this.model.set( symbol_data );
+											this.model.unset( 'tcb_symbols_tax' );
+											this.model.save( null, {
+												success: function ( response ) {
+													//update the view after a successful save
+													self.$symbol_name.html( response.get( 'title' ).rendered );
+													TVE_Dash.success( TVE_Admin.t.symbol_save );
+												},
+												error: function ( response, xhr, status ) {
+
+													/* try to get a comprehensive error message */
+													var message = '';
+													if ( xhr.responseJSON ) {
+														message = xhr.responseJSON.message;
+													} else if ( xhr.responseText ) {
+														try {
+															if ( status === 'parsererror' ) {
+																message = 'Could not parse response: ' + xhr.responseText;
+															} else {
+																var data = JSON.parse( xhr.responseText );
+																message = data.message;
+															}
+														} catch ( e ) {
+														}
+													}
+
+													if ( ! message ) {
+														message = (xhr.statusText || status) + (xhr.status ? ' (' + xhr.status + ')' : '');
+													}
+
+													TVE_Dash.err( message );
+												}
+											} );
+										},
+										duplicate_symbol: function () {
+											var self = this,
+												clone_model = this.model.clone(),
+												old_cat = clone_model.get( 'tcb_symbols_tax' ),
+												new_symbol, new_symbol_data, term_id;
+
+											term_id = _.isEmpty( old_cat ) ? old_cat : old_cat[0].term_id;
+
+											new_symbol_data = {
+												content: clone_model.get( 'content' ),
+												status: clone_model.get( 'status' ),
+												tcb_symbols_tax: term_id,
+												title: clone_model.get( 'title' ).rendered,
+												tve_custom_css: clone_model.get( 'tve_custom_css' ),
+												tve_updated_post: clone_model.get( 'tve_updated_post' )
+											};
+
+											new_symbol = new SymbolModel( new_symbol_data );
+											new_symbol.save( {old_id: clone_model.get( 'id' )}, {
+												success: function ( response ) {
+													var symbol_view = new Symbols.views.Item( {
+														model: response
+													} );
+
+													self.$el.after( symbol_view.render().$el );
+													TVE_Dash.success( TVE_Admin.t.duplicate_symbol_success );
+												},
+												error: function ( error ) {
+													TVE_Dash.err( TVE_Admin.t.cannot_duplicate_symbol );
+												}
+											} );
+										},
+										move_symbol: function () {
+											var categories = new SymbolsCategoryCollection( TVE_Admin.symbols_tax_terms.slice( 0 ), {parse: true} );
+
+											this.modal( ModalMoveSymbol, {
+												model: this.model,
+												categories: categories,
+												current_category: this.model.get_current_category(),
+												'max-width': '60%',
+												width: '750px',
+												in_duration: 200,
+												out_duration: 300
+											} );
+										},
+										edit_symbol: function () {
+											window.open( this.model.get( 'link' ) + '&tve=true', "_blank" );
+										}
+									} );
+
+								})( jQuery );
+
+								module.exports = {
+									'base': Symbols.views.Base,
+									'category': Symbols.views.Category
+								};
 							},
 							"template-c-item.js": function (exports, module, require) {
 								/**
@@ -717,14 +2267,17 @@
 										this.collection = new TplCollection( this.model.get( 'tpl' ) );
 
 										this.listenTo( this.collection, 'remove', function () {
-											window.TVE_Admin.router.templates();
+											window.TVE_Admin.router.templatessymbols();
 										} );
 										this.listenTo( this.model, 'destroy', function () {
-											window.TVE_Admin.router.templates();
+											window.TVE_Admin.router.templatessymbols();
 										} );
 									},
 									render: function () {
-										this.$el.html( this.template( {model: this.model} ) );
+										this.$el.html( this.template( {
+											model: this.model,
+											collection_length: this.collection.length
+										} ) );
 										this.$categoryTitle = this.$( '.tvd-card-title' );
 										this.collection.each( this.renderOneTemplateItem, this );
 
@@ -748,7 +2301,7 @@
 									showMoreShowLess: function () {
 										var $showHideTpls = this.$( '.tcb-admin-show-hide-tpl' ),
 											$showHideBtn = this.$( '.tcb-admin-show-more-less-btn' );
-										
+
 										if ( $showHideTpls.is( ':visible' ) ) {
 											$showHideTpls.addClass( 'hidden' );
 											$showHideBtn.html( TVE_Admin.t.show_more );
@@ -760,12 +2313,13 @@
 									deleteCategory: function () {
 										this.modal( ModalDelete, {
 											model: this.model,
+											title: 'Delete category',
 											text: TVE_Admin.t.delete_category_txt.replace( '%s', this.model.get( 'name' ) ),
 											extra_setting: 1,
 											'max-width': '60%',
 											width: '750px',
 											in_duration: 200,
-											out_duration: 0
+											out_duration: 300
 										} );
 									},
 									/**
@@ -877,7 +2431,7 @@
 									className: 'tvd-col tcb-admin-c-item-card',
 									events: {
 										'click .tcb-admin-edit-template-name': 'editTitle',
-										'click .tcb-admin-icon-move': 'moveCategory',
+										'click .tcb-admin-icon-move-symbol': 'moveCategory',
 										'click .tcb-admin-delete-template-item': 'deleteTemplate'
 									},
 									initialize: function ( args ) {
@@ -901,7 +2455,8 @@
 											'max-width': '60%',
 											width: '750px',
 											in_duration: 200,
-											out_duration: 0
+											title: 'Delete template',
+											out_duration: 300
 										} );
 									},
 									moveCategory: function () {
@@ -910,7 +2465,7 @@
 											'max-width': '60%',
 											width: '750px',
 											in_duration: 200,
-											out_duration: 0
+											out_duration: 300
 										} );
 									},
 									/**

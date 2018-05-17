@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<hr>
 			</div>
 
-			<div class="tve-control" data-view="ButtonColor"></div>
+			<div class="tve-control" data-view="MasterColor"></div>
 
 			<div class="hide-states">
 				<hr>

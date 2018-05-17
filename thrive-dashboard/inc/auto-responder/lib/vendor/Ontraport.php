@@ -39,7 +39,7 @@ class Thrive_Dash_Api_Ontraport {
 	public function getSequences() {
 		$allData = false;
 		$offset  = 0;
-		$range   = 50;
+		$range   = 1000;
 		$data    = array();
 
 		while ( $allData !== true ) {
@@ -70,6 +70,33 @@ class Thrive_Dash_Api_Ontraport {
 	}
 
 	/**
+	 * Read the campaigns list and returns it
+	 *
+	 * @return array
+	 * @throws Thrive_Dash_Api_Ontraport_Exception
+	 */
+	public function getCampaigns() {
+		$offset = 0;
+		$range  = 1000;
+		$lists  = array();
+
+		$data = $this->v2Call(
+			'1/CampaignBuilderItems',
+			array(
+				'sort'    => 'name',
+				'sortDir' => 'asc',
+				'start'   => $offset,
+				'range'   => $range
+			)
+		);
+		foreach ( $data as $item ) {
+			$lists[ $item['id'] ] = $item;
+		}
+
+		return $lists;
+	}
+
+	/**
 	 * get forms from the API
 	 *
 	 * @return array|mixed
@@ -87,7 +114,18 @@ class Thrive_Dash_Api_Ontraport {
 	 * @return true
 	 */
 	public function addContact( $list_id, $fields ) {
-		$fields['updateSequence'] = '*/*' . $list_id . '*/*';
+		$sequences = $this->getSequences();
+
+		if ( ! empty( $sequences ) ) {
+			foreach ( $sequences as $id => $sequence ) {
+				if ( $id == $list_id ) {
+					$fields['updateSequence'] = '*/*' . $list_id . '*/*';
+				}
+			}
+		} else {
+			$fields['n_campaign'] = $list_id;
+		}
+
 
 		if ( ! empty( $fields['phone'] ) && isset( $fields['phone'] ) ) {
 			$fields['cell_phone'] = $fields['phone'];
@@ -106,7 +144,25 @@ class Thrive_Dash_Api_Ontraport {
 		/**
 		 * we've had an instance where Ontraport was returning "Missing 'objectID' field" - the solution was to add this to the query string
 		 */
-		$this->v2Call( '1/objects/saveorupdate?objectID=0', $fields, 'POST' );
+		if ( isset( $fields['updateSequence'] ) ) {
+			$this->v2Call( '1/objects/saveorupdate?objectID=0', $fields, 'POST' );
+		} else {
+			$contact = $this->v2Call( '1/Contacts', $fields, 'POST' );
+
+			/**
+			 * object ID is the object type 0 means Contact
+			 */
+			$data = array(
+				'objectID' => 0,
+				'ids'      => $contact['id'],
+				'add_list' => $list_id,
+				'sub_type' => 'Campaign',
+			);
+
+			$this->v2Call( '1/objects/subscribe', $data, 'PUT' );
+
+		}
+
 
 		return true;
 	}
@@ -141,10 +197,19 @@ class Thrive_Dash_Api_Ontraport {
 			'timeout' => 45
 		);
 
+		if ( $method === 'PUT' ) {
+			$args['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
+		}
+
 		switch ( $method ) {
 			case 'POST':
 				$args['body'] = json_encode( $params );
 				$fn           = 'tve_dash_api_remote_post';
+				break;
+			case 'PUT':
+				$args['method'] = 'PUT';
+				$args['body']   = $params;
+				$fn             = 'tve_dash_api_remote_post';
 				break;
 			case 'GET':
 			default:

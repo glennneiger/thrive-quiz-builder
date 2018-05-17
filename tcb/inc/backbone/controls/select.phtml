@@ -9,7 +9,7 @@
 		<div class="layout-label col-xs-<#= this.model.config.label_col_x #>">
 			<span class="grey-text"><#= this.model.config.name #></span>
 		</div>
-		<div class="col-xs-<#= sel_input_col_width #> <#= this.model.config.extra_class #>" >
+		<div class="tve-select-arrow col-xs-<#= sel_input_col_width #> <#= this.model.config.extra_class #>" >
 			<select class="tve-select change" data-fn="changed">
 				<# _.each(this.model.config.options, function(option) { #>
 					<option class="tve-option" value="<#= option.value #>" <#= option.default? 'selected':'' #>>

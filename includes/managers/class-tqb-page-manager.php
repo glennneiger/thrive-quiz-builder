@@ -141,9 +141,34 @@ class TQB_Page_Manager {
 			$this->page->tqb_page_name        = tqb()->get_style_page_name( $this->page->post_type );
 			$this->page->tqb_page_description = tqb()->get_style_page_description( $this->page->post_type );
 			$this->page->quiz_name            = html_entity_decode( get_the_title( $this->page->post_parent ) );
+			$this->page->gdpr_user_consent    = $this->get_user_consent();
 		}
 
 		return $this->page;
+	}
+
+	/**
+	 * Update User Consent for a page
+	 *
+	 * @param $status
+	 */
+	function update_user_consent( $status ) {
+		TQB_Post_meta::update_quiz_page_gdpr_user_consent( $this->page->ID, $status );
+	}
+
+	/**
+	 * Returns user consent
+	 *
+	 * @return int
+	 */
+	function get_user_consent() {
+		$consent = TQB_Post_meta::get_quiz_page_gdpr_user_consent( $this->page->ID );
+
+		if ( is_numeric( $consent ) && intval( $consent ) === 1 || $consent === '' ) {
+			return 1;
+		}
+
+		return 0;
 	}
 
 	/**

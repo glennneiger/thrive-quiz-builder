@@ -69,8 +69,12 @@ class TCB_Postgrid_Element extends TCB_Element_Abstract {
 		$types = array();
 
 		$banned_types = array(
+			'attachment',
 			'revision',
 			'nav_menu_item',
+			'custom_css',
+			'customize_changeset',
+			'oembed_cache',
 			'project',
 			'et_pb_layout',
 			'tcb_lightbox',
@@ -84,6 +88,9 @@ class TCB_Postgrid_Element extends TCB_Element_Abstract {
 			'tve_lead_2s_lightbox',
 			'tve_form_type',
 			'tve_lead_group',
+			TCB_CT_POST_TYPE,
+			TCB_Symbols_Post_Type::SYMBOL_POST_TYPE,
+			'td_nm_notification',
 		);
 
 		/**
@@ -570,7 +577,7 @@ class TCB_Postgrid_Element extends TCB_Element_Abstract {
 					'TextStyle',
 					'TextTransform',
 					'.typography-button-toggle-controls', //Hides FontSize, LineHeight, LetterSpacing
-					'.typography-font-color-hr',
+					'.typography-button-toggle-hr',
 					'.typography-text-transform-hr',
 					'.tve-advanced-controls',
 				),

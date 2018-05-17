@@ -23,7 +23,7 @@ if ( is_ssl() ) {
 			</div>
 			<i></i>
 		</div>
-		<div class="dropdown-content">
+		<div class="dropdown-content tve-dropdown-select">
 			<div class="tve-control tve-select-menu" data-key="SelectMenu" data-initializer="selectMenu"></div>
 			<div class="tve-control tve-menu-direction margin-top-10" data-key="MenuDirection" data-initializer="menuDirection"></div>
 			<div class="tve-control margin-top-10" data-view="MakePrimary"></div>

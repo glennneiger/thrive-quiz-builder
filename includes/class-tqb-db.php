@@ -44,7 +44,7 @@ class TQB_Database {
 	/**
 	 * unserialize fields from an array
 	 *
-	 * @param array $array where to search the fields
+	 * @param array $array  where to search the fields
 	 * @param array $fields fields to be unserialized
 	 *
 	 * @return array the modified array containing the unserialized fields
@@ -153,7 +153,7 @@ class TQB_Database {
 	 * Get the running test items
 	 *
 	 * @param array $filters
-	 * @param $return_type
+	 * @param       $return_type
 	 *
 	 * @return array|null|object
 	 */
@@ -200,8 +200,8 @@ class TQB_Database {
 	/**
 	 * Gets the test for checking the auto win settings
 	 *
-	 * @param array $filters
-	 * @param bool $single
+	 * @param array  $filters
+	 * @param bool   $single
 	 * @param string $return_type
 	 *
 	 * @return array|null|object|void
@@ -241,7 +241,7 @@ class TQB_Database {
 	 *
 	 * Gets the quiz page variations
 	 *
-	 * @param array $filters
+	 * @param array  $filters
 	 * @param string $return_type
 	 *
 	 * @return array|null|object|void
@@ -344,8 +344,8 @@ class TQB_Database {
 	/**
 	 * Get test according to filters
 	 *
-	 * @param array $filters
-	 * @param bool $single
+	 * @param array  $filters
+	 * @param bool   $single
 	 * @param string $return_type
 	 *
 	 * @return array|null|object|void
@@ -1125,7 +1125,7 @@ class TQB_Database {
 	/**
 	 * Insert results into DB
 	 *
-	 * @param int $quiz_id
+	 * @param int   $quiz_id
 	 * @param array $results
 	 *
 	 * @return array
@@ -1420,6 +1420,43 @@ class TQB_Database {
 		$sql             = $this->prepare( $sql, $data );
 
 		return $this->wpdb->get_results( $sql );
+	}
+
+	/**
+	 * Returns quiz users from the database
+	 *
+	 * @param array  $filters
+	 * @param string $return_type
+	 *
+	 * @return array|null|object
+	 */
+	public function get_users( $filters = array(), $return_type = ARRAY_A ) {
+		if ( empty( $filters ) ) {
+			/**
+			 * This check was placed here to ensure that this method is called with some filters.
+			 * If there is the need to return all users from the database, with no filters, this check can be removed.
+			 */
+			return $filters;
+		}
+
+		$params = array();
+
+		$sql = 'SELECT * FROM ' . tqb_table_name( 'users' ) . ' WHERE 1 ';
+
+		if ( ! empty( $filters['email'] ) ) {
+			$sql       .= ' AND email = %s';
+			$params [] = $filters['email'];
+		}
+
+		if ( ! empty( $filters['quiz_id'] ) ) {
+			$sql       .= ' AND quiz_id = %s';
+			$params [] = $filters['quiz_id'];
+		}
+
+		$sql    = $this->prepare( $sql, $params );
+		$return = $this->wpdb->get_results( $sql, $return_type );
+
+		return $return;
 	}
 
 	/**

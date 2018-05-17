@@ -93,13 +93,14 @@ class TCB_Button_Element extends TCB_Element_Abstract {
 						),
 						'extends' => 'Checkbox',
 					),
-					'ButtonColor'   => array(
-						'config'  => array(
-							'default'   => 'f00',
-							'label'     => __( 'Button Color', 'thrive-cb' ),
-							'important' => true,
+					'MasterColor'   => array(
+						'show_empty_colors' => true,
+						'config'            => array(
+							'default'             => '000',
+							'label'               => __( 'Master Color', 'thrive-cb' ),
+							'important'           => true,
+							'affected_components' => array( 'shadow', 'background', 'borders' ),
 						),
-						'extends' => 'ColorPicker',
 					),
 					'ButtonIcon'    => array(
 						'config'  => array(
@@ -119,15 +120,56 @@ class TCB_Button_Element extends TCB_Element_Abstract {
 						'extends' => 'Checkbox',
 					),
 					'ButtonSize'    => array(
-						'config' => array(
+						'css_prefix' => '#tve_editor ',
+						'config'     => array(
 							'name'    => __( 'Size', 'thrive-cb' ),
-							'max'     => 21,
 							'buttons' => array(
-								array( 'value' => '2', 'text' => 'S', 'default' => true ),
-								array( 'value' => '5', 'text' => 'M' ),
-								array( 'value' => '8', 'text' => 'L' ),
-								array( 'value' => '10', 'text' => 'XL' ),
-								array( 'value' => '16', 'text' => 'XXL' ),
+								array(
+									'value'      => 's',
+									'properties' => array(
+										'padding'     => '12px 15px',
+										'font-size'   => '18px',
+										'line-height' => '1.2em'
+									),
+									'text'       => 'S',
+									'default'    => true
+								),
+								array(
+									'value'      => 'm',
+									'properties' => array(
+										'padding'     => '14px 22px',
+										'font-size'   => '24px',
+										'line-height' => '1.2em'
+									),
+									'text'       => 'M'
+								),
+								array(
+									'value'      => 'l',
+									'properties' => array(
+										'padding'     => '18px 30px',
+										'font-size'   => '32px',
+										'line-height' => '1.2em'
+									),
+									'text'       => 'L'
+								),
+								array(
+									'value'      => 'xl',
+									'properties' => array(
+										'padding'     => '22px 40px',
+										'font-size'   => '38px',
+										'line-height' => '1.1em'
+									),
+									'text'       => 'XL'
+								),
+								array(
+									'value'      => 'xxl',
+									'properties' => array(
+										'padding'     => '32px 50px',
+										'font-size'   => '52px',
+										'line-height' => '1.1em'
+									),
+									'text'       => 'XXL'
+								),
 							),
 						),
 					),
@@ -177,7 +219,10 @@ class TCB_Button_Element extends TCB_Element_Abstract {
 			),
 			'background' => array(
 				'config' => array(
-					'css_suffix' => ' .tcb-button-link',
+					'css_suffix'  => ' .tcb-button-link',
+					'ColorPicker' => array(
+						'show_empty_colors' => true,
+					),
 				),
 			),
 			'borders'    => array(
@@ -196,7 +241,7 @@ class TCB_Button_Element extends TCB_Element_Abstract {
 						'important'  => true,
 					),
 					'TextStyle'  => array(
-						'css_suffix' => ' .tcb-button-link',
+						'css_suffix' => ' .tcb-button-link span',
 					),
 					'LineHeight' => array(
 						'css_suffix' => ' .tcb-button-link',

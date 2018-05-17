@@ -164,7 +164,7 @@ function tcb_get_preview_url( $post_id = false ) {
  * checks whether the $post_type is editable using the TCB
  *
  * @param string $post_type
- * @param int    $post_id
+ * @param int $post_id
  *
  * @return bool true if the post type is editable
  */
@@ -233,13 +233,13 @@ function thrive_page_row_buttons( $actions, $page_object ) {
 	}
 
 	?>
-	<style type="text/css">
-		.thrive-adminbar-icon {
-			background: url('<?php echo tve_editor_css(); ?>/images/admin-bar-logo.png') no-repeat 0 0;
-			background-size: contain;
-			padding-left: 25px;
-		}
-	</style>
+    <style type="text/css">
+        .thrive-adminbar-icon {
+            background: url('<?php echo tve_editor_css(); ?>/images/admin-bar-logo.png') no-repeat 0 0;
+            background-size: contain;
+            padding-left: 25px;
+        }
+    </style>
 	<?php
 
 	$url            = tcb_get_editor_url( $page_object->ID );
@@ -313,7 +313,7 @@ function tve_load_font_css() {
 	 * Loop through font classes and display their css properties
 	 *
 	 * @var string $font_class
-	 * @var array  $rules
+	 * @var array $rules
 	 */
 	foreach ( $css as $font_class => $rules ) {
 		/** add font css rules to the page */
@@ -365,7 +365,7 @@ function tve_output_custom_font_css( $fonts ) {
 	 * Loop through font classes and display their css properties
 	 *
 	 * @var string $font_class
-	 * @var array  $rules
+	 * @var array $rules
 	 */
 	foreach ( $css as $font_class => $rules ) {
 		/** add font css rules to the page */
@@ -459,7 +459,7 @@ function tve_handle_embed_shortcode( $content ) {
 /**
  * add the editor content to $content, but at priority 101 so not affected by custom theme shortcode functions that are common with some theme developers
  *
- * @param string      $content  the post content
+ * @param string $content the post content
  * @param null|string $use_case used to control the output, e.g. it can be used to return just TCB content, not full content
  *
  * @return string
@@ -500,6 +500,7 @@ function tve_editor_content( $content, $use_case = null ) {
 		// this is an editor page
 		$tve_saved_content = tve_get_post_meta( $post_id, 'tve_updated_post', true );
 
+
 		/**
 		 * SUPP-4806 Conflict (max call stack exceeded most likely) with Yoast SEO Address / Map Widgets
 		 */
@@ -514,6 +515,7 @@ function tve_editor_content( $content, $use_case = null ) {
 			$tve_saved_content = $tcb_post->get_wp_element();
 			$tcb_post->meta( 'tcb2_ready', 1 );
 		}
+
 	} else {
 		/* SUPP-2680 - removed the custom css display from here - it's loaded from the wp_enqueue_scripts hook */
 
@@ -667,10 +669,19 @@ function tve_editor_content( $content, $use_case = null ) {
  * @return string
  */
 function tcb_remove_deprecated_strings( $content ) {
-	$content = str_replace( array( ' data-default="Your Heading Here"', ' data-default="Enter your text here..."' ), array( '', '' ), $content );
+	$content = str_replace( array(
+		' data-default="Your Heading Here"',
+		' data-default="Enter your text here..."'
+	), array( '', '' ), $content );
 	$content = str_replace( array( ' rel="noopener noreferrer"', ' rel="noreferrer noopener"' ), '', $content );
-	$content = str_replace( array( ' rel="nofollow noopener noreferrer"', ' rel="noreferrer noopener nofollow"' ), ' rel="nofollow"', $content );
-	$content = str_replace( array( ' rel="noopener nofollow noreferrer"', ' rel="noreferrer nofollow noopener"' ), ' rel="nofollow"', $content );
+	$content = str_replace( array(
+		' rel="nofollow noopener noreferrer"',
+		' rel="noreferrer noopener nofollow"'
+	), ' rel="nofollow"', $content );
+	$content = str_replace( array(
+		' rel="noopener nofollow noreferrer"',
+		' rel="noreferrer nofollow noopener"'
+	), ' rel="nofollow"', $content );
 
 	/**
 	 * Action filter - remove deprecated texts
@@ -696,12 +707,16 @@ function tve_clean_wp_editor_content( $content ) {
 
 	$tcb_post = tcb_post();
 
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	}
+
 	/**
 	 * Optimize Press Conflict With TAR
 	 * Is the page is an optimize press page, we return the page
 	 */
 	$is_optimize_press_page = get_post_meta( $tcb_post->ID, '_optimizepress_pagebuilder', true );
-	if ( ! empty( $is_optimize_press_page ) ) {
+	if ( ! empty( $is_optimize_press_page ) && is_plugin_active( 'optimizePressPlugin/optimizepress.php' ) ) {
 		return $content;
 	}
 
@@ -762,7 +777,7 @@ function tve_turn_off_get_current_screen() {
  * @param       $handle
  * @param       $src
  * @param array $deps
- * @param bool  $ver
+ * @param bool $ver
  * @param       $media
  */
 function tve_enqueue_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ) {
@@ -778,9 +793,9 @@ function tve_enqueue_style( $handle, $src, $deps = array(), $ver = false, $media
  *
  * @param        $handle
  * @param string $src
- * @param array  $deps
- * @param bool   $ver
- * @param bool   $in_footer
+ * @param array $deps
+ * @param bool $ver
+ * @param bool $in_footer
  */
 function tve_enqueue_script( $handle, $src = '', $deps = array(), $ver = false, $in_footer = false ) {
 	if ( $ver === false ) {
@@ -990,13 +1005,18 @@ function tcb_custom_editable_content() {
 		 */
 		remove_all_filters( 'template_include' );
 		add_filter( 'template_include', 'tcb_get_landing_page_template_layout' );
+
+		/**
+		 * Add template_include Filter After they were removed
+		 */
+		tve_compat_re_add_template_include_filters();
+
 		/**
 		 * make sure we'll have at least one of these fired
 		 */
 		add_filter( 'page_template', 'tcb_get_landing_page_template_layout' );
 
 	} elseif ( $post_type != 'post' && $post_type != 'page' && ! empty( $custom_post_layouts ) && is_array( $custom_post_layouts ) ) {
-
 		/**
 		 * loop through each of the post_custom_layouts files array to find the first valid one
 		 *
@@ -1574,8 +1594,8 @@ function tve_load_custom_css( $post_id = null ) {
 
 		if ( ! empty( $inline_styles ) ) {
 			?>
-			<style type="text/css"
-				   class="tve_custom_style"><?php echo $inline_styles ?></style><?php
+            <style type="text/css"
+                   class="tve_custom_style"><?php echo $inline_styles ?></style><?php
 		}
 		/* also check for user-defined custom CSS inserted via the "Custom CSS" content editor element */
 		echo $user_custom_css ? sprintf( '<style type="text/css" id="tve_head_custom_css" class="tve_user_custom_style">%s</style>', $user_custom_css ) : '';
@@ -1698,15 +1718,27 @@ function tve_leads_additional_fields_filters( $data ) {
  * these contents will get deleted if we're currently NOT in editor mode
  *
  * @param string $content
- * @param bool   $keep_config
+ * @param bool $keep_config
  */
 function tve_thrive_shortcodes( $content, $keep_config = false ) {
 	global $tve_thrive_shortcodes;
+	$not_shortcodes = array(
+		'widget',
+		'post_grid',
+		'widget_menu',
+		'leads_shortcode',
+		'post_symbol',
+		'tve_leads_additional_fields_filters',
+		'social_default',
+		'tvo_shortcode',
+		'ultimatum_shortcode',
+		'quiz_shortcode'
+	);
 
 	$shortcode_pattern = '#>__CONFIG_%s__(.+?)__CONFIG_%s__</div>#';
 
 	foreach ( $tve_thrive_shortcodes as $shortcode => $callback ) {
-		if ( ! tve_check_if_thrive_theme() && $shortcode !== 'widget' && $shortcode !== 'post_grid' && $shortcode !== 'widget_menu' && $shortcode !== 'leads_shortcode' && $shortcode !== 'tve_leads_additional_fields_filters' && $shortcode !== 'social_default' && $shortcode !== 'tvo_shortcode' && $shortcode != 'ultimatum_shortcode' && $shortcode != 'quiz_shortcode' ) {
+		if ( ! tve_check_if_thrive_theme() && ! in_array( $shortcode, $not_shortcodes ) ) {
 			continue;
 		}
 
@@ -1735,6 +1767,7 @@ function tve_thrive_shortcodes( $content, $keep_config = false ) {
 				if ( ! ( $_params = @json_decode( $json_safe, true ) ) ) {
 					$_params = array();
 				}
+
 				$replacement = call_user_func( $callback, $_params, $keep_config );
 
 				$replacement = ( $keep_config ? ">__CONFIG_{$shortcode}__{$m}__CONFIG_{$shortcode}__</div>" : '></div>' ) . $replacement;
@@ -1766,6 +1799,17 @@ function tve_do_post_grid_shortcode( $config ) {
 
 	$post_grid->output_shortcode_config = false;
 	$html                               = $post_grid->render();
+
+	return $html;
+}
+
+/**
+ * Render symbol shortcode
+ *
+ * @param array $config
+ */
+function tcb_symbol_shortcode( $config ) {
+	$html = TCB_Symbol_Template::symbol_render_shortcode( $config );
 
 	return $html;
 }
@@ -1804,6 +1848,9 @@ function tve_do_posts_list_shortcode( $attrs ) {
  * @return string
  */
 function tve_do_leads_shortcode( $attrs ) {
+	if ( is_feed() ) {
+		return '';
+	}
 	$error_content = '<div class="thrive-shortcode-html"><p>' . __( 'Thrive Leads Shortcode could not be rendered, please check it in Thrive Leads Section!', 'thrive-cb' ) . '</p></div>';
 	if ( ! function_exists( 'tve_leads_shortcode_render' ) ) {
 		return $error_content;
@@ -1879,7 +1926,7 @@ function tcb_render_wp_shortcode( $content ) {
  * raw shortcode texts are saved between 2 flags: ___TVE_SHORTCODE_RAW__ AND __TVE_SHORTCODE_RAW___
  *
  * @param string $content
- * @param bool   $is_editor_page
+ * @param bool $is_editor_page
  */
 function tve_do_wp_shortcodes( $content, $is_editor_page = false ) {
 	/**
@@ -1963,7 +2010,7 @@ function tve_post_is_landing_page( $id ) {
  * get post meta key. Also takes into account whether or not this post is a landing page
  * each regular meta key from the editor has the associated meta key for the landing page constructed by appending a "_{template_name}" after the key
  *
- * @param int    $post_id
+ * @param int $post_id
  * @param string $meta_key
  *
  * @return string
@@ -2143,8 +2190,8 @@ function tve_get_post_custom_fonts( $post_id, $include_thrive_fonts = false ) {
 /**
  * enqueue all the custom fonts used on a post (used only on frontend, not on editor page)
  *
- * @param mixed $post_id              if null -> use the global wp query; if not, load the fonts for that specific post
- * @param bool  $include_thrive_fonts by default thrive themes fonts are included by the theme. for lightboxes for example, we need to include those also
+ * @param mixed $post_id if null -> use the global wp query; if not, load the fonts for that specific post
+ * @param bool $include_thrive_fonts by default thrive themes fonts are included by the theme. for lightboxes for example, we need to include those also
  */
 function tve_enqueue_custom_fonts( $post_id = null, $include_thrive_fonts = false ) {
 	if ( $post_id === null ) {
@@ -2394,8 +2441,8 @@ function tve_menu_custom_font_family( $attrs, $menu_item ) {
  * custom call of an action hook - this will forward the call to the WP do_action function
  * it will inject parameters read from $_GET based on the filter that others might use
  *
- * @param string $hook  required. The action hook to be called
- * @param mixed  $_args arguments that will be passed on to the do_action call
+ * @param string $hook required. The action hook to be called
+ * @param mixed $_args arguments that will be passed on to the do_action call
  */
 function tve_do_action() {
 	/**
@@ -2872,6 +2919,32 @@ function tve_api_form_submit() {
 		) ) );
 	}
 
+	$consent_config = array();
+	if ( ! empty( $data['consent_config'] ) ) {
+		$consent_config = Thrive_Dash_List_Manager::decodeConnectionString( $data['consent_config'] );
+		/**
+		 * if consent_config is disabled, empty it here
+		 */
+		if ( empty( $consent_config['enabled'] ) ) {
+			$consent_config = array();
+		}
+	}
+	$data['consent_config'] = $consent_config;
+	/* make sure always_send key exists */
+	if ( ! empty( $data['consent_config']['enabled'] ) && ( ! isset( $data['consent_config']['always_send'] ) || ! is_array( $data['consent_config']['always_send'] ) ) ) {
+		$data['consent_config']['always_send'] = array();
+	}
+
+	/**
+	 * Validate user consent
+	 */
+	if ( ! empty( $consent_config['required'] ) && empty( $data['user_consent'] ) ) {
+		exit( json_encode( array(
+			'error' => __( 'User consent is required', 'thrive-cb' ),
+		) ) );
+	}
+
+
 	$post = $data;
 	unset( $post['action'], $post['__tcb_lg_fc'], $post['_back_url'] );
 
@@ -2912,6 +2985,16 @@ function tve_api_form_submit() {
 		if ( ! isset( $connections[ $key ] ) ) {
 			continue;
 		}
+		/**
+		 * Check if user gave consent for the specified services
+		 */
+		if ( ! empty( $consent_config['enabled'] ) && ! in_array( $key, $consent_config['always_send'] ) ) {
+			/* only send to API if user gave consent */
+			if ( empty( $data['user_consent'] ) ) {
+				continue;
+			}
+		}
+
 		if ( $key == 'klicktipp' && $data['_submit_option'] == 'klicktipp-redirect' ) {
 			$result['redirect'] = tve_api_add_subscriber( $connection, $connections[ $key ], $data );
 			if ( filter_var( $result['redirect'], FILTER_VALIDATE_URL ) !== false ) {
@@ -2936,9 +3019,9 @@ function tve_api_form_submit() {
  * make an api call to a subscribe a user
  *
  * @param string|Thrive_Dash_List_Connection_Abstract $connection
- * @param mixed                                       $list_identifier the list identifier
- * @param array                                       $data            submitted data
- * @param bool                                        $log_error       whether or not to log errors in a DB table
+ * @param mixed $list_identifier the list identifier
+ * @param array $data submitted data
+ * @param bool $log_error whether or not to log errors in a DB table
  *
  * @return result mixed
  */
@@ -2953,9 +3036,9 @@ function tve_api_add_subscriber( $connection, $list_identifier, $data, $log_erro
 	/**
 	 * filter - allows modifying the sent data to each individual API instance
 	 *
-	 * @param array                           $data            data to be sent to the API instance
-	 * @param Thrive_List_Connection_Abstract $connection      the connection instance
-	 * @param mixed                           $list_identifier identifier for the list which will receive the new email
+	 * @param array $data data to be sent to the API instance
+	 * @param Thrive_List_Connection_Abstract $connection the connection instance
+	 * @param mixed $list_identifier identifier for the list which will receive the new email
 	 */
 	$data = apply_filters( 'tcb_api_subscribe_data_instance', $data, $connection, $list_identifier );
 
@@ -3056,8 +3139,8 @@ function tve_get_custom_menus() {
  * include a template file from inc/views folder
  *
  * @param string $file
- * @param mixed  $data
- * @param bool   $return whether or not to return the content instead of outputting it
+ * @param mixed $data
+ * @param bool $return whether or not to return the content instead of outputting it
  *
  * @return string|null $content string when $return is non-false and void otherwise
  */
@@ -3090,10 +3173,10 @@ function tcb_template( $file, $data = null, $return = false ) {
  * Displays an icon using svg format
  *
  * @param string $icon
- * @param bool   $return      whether to return the icon as a string or to output it directly
- * @param string $namespace   (where this icon is used - for 'editor' it will add another prefix to it)
+ * @param bool $return whether to return the icon as a string or to output it directly
+ * @param string $namespace (where this icon is used - for 'editor' it will add another prefix to it)
  * @param string $extra_class classes to be added to the svg
- * @param array  $svg_attr    array with extra attributes to add to the <svg> tag
+ * @param array $svg_attr array with extra attributes to add to the <svg> tag
  *
  * @return mixed
  */
@@ -3252,11 +3335,11 @@ function tcb_interim_login_footer() {
  * Helper function to store the actual value of the loggedin cookie during the login process stared from TCB editor
  *
  * @param string $logged_in_cookie The logged-in cookie.
- * @param int    $expire           The time the login grace period expires as a UNIX timestamp.
+ * @param int $expire The time the login grace period expires as a UNIX timestamp.
  *                                 Default is 12 hours past the cookie's expiration time.
- * @param int    $expiration       The time when the logged-in authentication cookie expires as a UNIX timestamp.
+ * @param int $expiration The time when the logged-in authentication cookie expires as a UNIX timestamp.
  *                                 Default is 14 days from now.
- * @param int    $user_id          User ID.
+ * @param int $user_id User ID.
  */
 function tcb_store_interim_login_id( $logged_in_cookie, $expire, $expiration, $user_id ) {
 	global $interim_login;

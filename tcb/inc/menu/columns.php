@@ -35,13 +35,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="col-xs-12">
 					<div class="tve-control" data-view="ColumnsOrder"></div>
 				</div>
-				<div class="col-xs-12 hide-desktop hide-mobile margin-bottom-5">
+				<div class="col-xs-12 margin-bottom-5">
 					<hr>
 					<div class="">
-						<div class="tve-control" data-view="MediumWrap"></div>
+						<div class="tve-control" data-view="Wrap"></div>
+						<span class="blue-text"><?php tcb_icon( 'info' ) ?></span>
+						<span class="info-text"><?php echo __( 'If you enable wrapping, the columns will not be resizable anymore', 'thrive-cb' ) ?></span>
 					</div>
 				</div>
-				<div class="col-xs-12 hide-mobile">
+				<div class="col-xs-12">
 					<div class="tve-control" data-view="ColumnWidth"></div>
 				</div>
 				<div class="col-xs-12">

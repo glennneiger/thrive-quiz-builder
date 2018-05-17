@@ -191,10 +191,13 @@ function tve_dash_enqueue() {
 			'ajax_retry_api_log'  => 'tve_dash_api_form_retry',
 		),
 		'routes'        => array(
-			'settings'      => 'generalSettings',
-			'license'       => 'license',
-			'active_states' => 'activeState',
-			'error_log'     => 'getErrorLogs',
+			'settings'        => 'generalSettings',
+			'license'         => 'license',
+			'active_states'   => 'activeState',
+			'error_log'       => 'getErrorLogs',
+			'affiliate_links' => 'affiliateLinks',
+			'add_aff_id'      => 'saveAffiliateId',
+			'get_aff_id'      => 'getAffiliateId',
 		),
 		'translations'  => array(
 			'UnknownError'     => __( "Unknown error", TVE_DASH_TRANSLATE_DOMAIN ),

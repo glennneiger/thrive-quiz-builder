@@ -138,7 +138,14 @@ class Thrive_Dash_List_Connection_ArpReach extends Thrive_Dash_List_Connection_A
 				'email'      => $arguments['email'],
 				'phone'      => ! empty( $arguments['phone'] ) ? $arguments['phone'] : '',
 				'first_name' => $first_name,
-				'last_name'  => $last_name
+				'last_name'  => $last_name,
+				'lists'      => json_encode( array(
+					array(
+						'list'         => $list_identifier,
+						'status'       => 1,
+						'next_message' => 2
+					)
+				) )
 			);
 
 			/** @var Thrive_Dash_Api_ArpReach $api */
@@ -146,8 +153,6 @@ class Thrive_Dash_List_Connection_ArpReach extends Thrive_Dash_List_Connection_A
 
 			//add contact
 			$api->addContact( $params );
-			//add to list
-			$api->addToList( $list_identifier, $params );
 
 			return true;
 		} catch ( Thrive_Dash_Api_ArpReach_ContactException_Exists $e ) {

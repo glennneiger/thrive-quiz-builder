@@ -26,14 +26,6 @@
 		<i></i>
 	</div>
 	<div class="dropdown-content">
-		<div class="hide-states typography-button-toggle-controls">
-			<div class="tve-control" data-view="ToggleControls"></div>
-
-			<div class="tve-control tcb-typography-toggle-element tcb-typography-font-size" data-view="FontSize"></div>
-			<div class="tve-control tcb-typography-toggle-element tcb-typography-line-height" data-view="LineHeight"></div>
-			<div class="tve-control tcb-typography-toggle-element tcb-typography-letter-spacing" data-view="LetterSpacing"></div>
-			<hr class="typography-font-color-hr">
-		</div>
 		<div class="tve-control" data-view="FontColor"></div>
 		<hr class="typography-text-align-style-hr">
 		<div class="row">
@@ -44,6 +36,15 @@
 			<div class="tve-control col-xs-12" data-view="TextTransform"></div>
 		</div>
 		<hr>
+		<div class="hide-states typography-button-toggle-controls">
+			<div class="tve-control" data-view="ToggleControls"></div>
+
+			<div class="tve-control tcb-typography-toggle-element tcb-typography-font-size" data-view="FontSize"></div>
+			<div class="tve-control tcb-typography-toggle-element tcb-typography-line-height" data-view="LineHeight"></div>
+			<div class="tve-control tcb-typography-toggle-element tcb-typography-letter-spacing" data-view="LetterSpacing"></div>
+			<hr class="typography-button-toggle-hr">
+		</div>
+
 		<div class="row tve-control" data-view="FontFace">
 			<div class="col-xs-12">
 				<span class="input-label"><?php echo __( 'Font Face', 'thrive-cb' ); ?></span>
@@ -54,7 +55,7 @@
 				<?php tcb_icon( 'edit', false, 'sidebar', 'tcb-input-button click', array( 'data-fn' => 'openFonts' ) ) ?>
 			</div>
 		</div>
-		<div class="tve-advanced-controls extend-grey">
+		<div class="tve-advanced-controls extend-grey hide-states">
 			<div class="dropdown-header" data-prop="advanced">
 				<span>
 					<?php echo __( 'Advanced', 'thrive-cb' ); ?>

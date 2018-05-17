@@ -389,14 +389,34 @@ TVE_Dash.API.views = TVE_Dash.API.views || {};
 				} );
 				this.model.unset( 'new_credentials' );
 			}
+
+			if ( this.model.get( 'key' ) === 'mailchimp' ) {
+				var checked = this.$( '#tvd-show-mandrill-options' ).is( ':checked' );
+
+				if ( checked ) {
+					this.$( '.tvd-extra-options' ).removeClass( 'tvd-hide' );
+				}
+			}
+
 			return this;
 		},
 		showExtraOptions: function () {
-			this.$('.tvd-extra-options').removeClass('tvd-hide');
-			TVE_Dash.materialize(this.$el);
+			this.$( '.tvd-extra-options' ).removeClass( 'tvd-hide' );
+
+			if ( this.model.get( 'key' ) === 'mailchimp' ) {
+				var checked = this.$( '#tvd-show-mandrill-options' ).is( ':checked' );
+				this.$( '#tvd-show-mandrill-options' ).val( checked );
+				this.model.set( {show_mandrill: checked} );
+
+				if ( ! checked ) {
+					this.$( '.tvd-extra-options' ).addClass( 'tvd-hide' );
+				}
+			}
+
+			TVE_Dash.materialize( this.$el );
 		},
 		hideExtraOptions: function () {
-			this.$('.tvd-extra-options').addClass('tvd-hide');
+			this.$( '.tvd-extra-options' ).addClass( 'tvd-hide' );
 		},
 		addChip: function ( event ) {
 			if ( event.keyCode !== 13 ) {
@@ -427,7 +447,6 @@ TVE_Dash.API.views = TVE_Dash.API.views || {};
 		connect: function () {
 			var data = this.$el.find( 'form' ).serialize(),
 				data_array = {};
-
 			$.each( this.$el.find( 'form' ).serializeArray(), function ( i, field ) {
 				data_array[field.name] = field.value;
 			} );

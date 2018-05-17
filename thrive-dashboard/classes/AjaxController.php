@@ -59,7 +59,7 @@ class TVE_Dash_AjaxController {
 	 * @return array|object
 	 */
 	public function handle() {
-		$route = $this->param( 'route' );
+		$route      = $this->param( 'route' );
 		$route      = preg_replace( '#([^a-zA-Z0-9-])#', '', $route );
 		$methodName = $route . 'Action';
 
@@ -159,6 +159,23 @@ class TVE_Dash_AjaxController {
 
 		wp_send_json( $response );
 
+	}
+
+	public function affiliateLinksAction() {
+		$product_tag = $this->param( 'product_tag' );
+		$value       = $this->param( 'value' );
+
+		return tve_dash_update_product_option( $product_tag, $value );
+	}
+
+	public function saveAffiliateIdAction() {
+		$aff_id = $this->param( 'affiliate_id' );
+
+		return tve_dash_update_option( 'thrive_affiliate_id', $aff_id );
+	}
+
+	public function getAffiliateIdAction() {
+		return tve_dash_get_option( 'thrive_affiliate_id' );
 	}
 
 	public function getErrorLogsAction() {

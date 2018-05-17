@@ -39,9 +39,9 @@ if ( isset( $_GET['tve'] ) && 'true' == $_GET['tve'] ) {
 /**
  * Checks if a post / page has a shortcode in TCB content
  *
- * @param string                  $shortcode
+ * @param string $shortcode
  * @param int|string|null|WP_Post $post_id
- * @param bool                    $use_wp_shortcode_check whether or not to use has_shortcode() or strpos
+ * @param bool $use_wp_shortcode_check whether or not to use has_shortcode() or strpos
  *
  * @return bool
  */
@@ -234,6 +234,14 @@ function tve_compat_content_filters_before_shortcode( $content ) {
 	 */
 	if ( function_exists( 'quicklatex_parser' ) ) {
 		$content = quicklatex_parser( $content );
+	}
+
+	/**
+	 * if getting the excerpt, remove all shortcodes.
+	 * @see wp_trim_excerpt()
+	 */
+	if ( doing_filter( 'get_the_excerpt' ) ) {
+		$content = strip_shortcodes( $content );
 	}
 
 	return $content;
@@ -489,8 +497,8 @@ add_filter( 'em_event_output_placeholder', 'tve_em_event_output_placeholder', 10
  *
  * @param string $output
  * @param string $tag
- * @param array  $attr
- * @param array  $m
+ * @param array $attr
+ * @param array $m
  *
  * @return string
  */
@@ -509,3 +517,17 @@ function tcb_ensure_shortcode_html_structure( $output, $tag, $attr, $m ) {
 }
 
 add_filter( 'do_shortcode_tag', 'tcb_ensure_shortcode_html_structure', 10, 4 );
+
+/**
+ * Re-Add template_include filters after remove_all_filters( 'template_include' );
+ */
+function tve_compat_re_add_template_include_filters() {
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	}
+
+	if ( is_plugin_active( 'maintenance/maintenance.php' ) ) {
+		global $maintenance;
+		add_action( 'template_include', array( $maintenance, 'mt_template_include' ), 999999 );
+	}
+}

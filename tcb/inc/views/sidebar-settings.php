@@ -119,13 +119,16 @@
 
 <div class="tve-custom-code-wrapper">
     <pre id="tve-custom-css-code"></pre>
-    <div class="code-expand"><?php tcb_icon( 'a_up' ); ?></div>
-    <div class="code-close"><?php tcb_icon( 'close' ); ?></div>
+	<div class="tve-css-buttons-wrapper">
+   		<div class="code-expand"><?php tcb_icon( 'a_up' ); ?></div>
+    	<div class="code-apply"><?php tcb_icon( 'check' ); ?></div>
+    	<div class="code-close"><?php tcb_icon( 'close2' ); ?></div>
+	</div>
 </div>
 <div class="tve-editor-html-wrapper full-width">
     <pre id="tve-custom-html-code"></pre>
     <div class="tve-code-buttons-wrapper">
         <div class="code-button-check"><?php tcb_icon( 'check' ); ?></div>
-        <div class="code-button-close"><?php tcb_icon( 'close' ); ?></div>
+        <div class="code-button-close"><?php tcb_icon( 'close2' ); ?></div>
     </div>
 </div>

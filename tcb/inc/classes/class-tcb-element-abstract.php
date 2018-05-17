@@ -208,9 +208,9 @@ abstract class TCB_Element_Abstract {
 						'old_suffix' => $texts, //TODO: Remove this after some time
 						'css_prefix' => '#tve_editor ',
 						'config'     => array(
-							'default' => '000',
-							'icon'    => true,
-							'options' => array(
+							'default'    => '000',
+							'label_icon' => 'format-color-text',
+							'options'    => array(
 								'output' => 'object',
 							),
 						),

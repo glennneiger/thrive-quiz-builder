@@ -44,7 +44,7 @@ class Thrive_Dash_Api_SGAutorepondeur {
 			$decoded = json_decode($body);
 
 			if($decoded->valid == false) {
-				throw new Exception( $decoded->reponse[0] );
+				throw new Exception( $decoded->reponse );
 			}
 			return $decoded;
 		}

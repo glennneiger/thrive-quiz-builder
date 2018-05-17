@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Thrive Quiz Builder
  * Plugin URI: https://thrivethemes.com
- * Version: 2.0.30
+ * Version: 2.0.32
  * Author: <a href="https://thrivethemes.com">Thrive Themes</a>
  * Description: The plugin is built to deliver the following benefits to users: engage visitors with fun and interesting quizzes, lower bounce rate, generate more leads and gain visitor insights to find out about their interests.
  * Text Domain: thrive-quiz-builder
@@ -25,12 +25,12 @@ if ( ! class_exists( 'Thrive_Quiz_Builder' ) ) :
 		/**
 		 * Plugin version
 		 */
-		const V = '2.0.30';
+		const V = '2.0.32';
 
 		/**
 		 * Required TCB version
 		 */
-		const REQUIRED_TCB_VERSION = '2.0.29';
+		const REQUIRED_TCB_VERSION = '2.0.31';
 
 		/**
 		 * Quiz Builder Database Version
@@ -503,6 +503,7 @@ if ( ! class_exists( 'Thrive_Quiz_Builder' ) ) :
 			require_once( 'includes/class-tqb-request-handler.php' );
 			require_once( 'includes/class-tqb-template-manager.php' );
 			require_once( 'includes/class-tqb-state-manager.php' );
+			require_once( 'includes/class-tqb-privacy.php' );
 			require_once( 'includes/database/class-tqb-database-manager.php' );
 			require_once( 'includes/class-tqb-db.php' );
 			require_once( 'includes/managers/class-tqb-structure-manager.php' );

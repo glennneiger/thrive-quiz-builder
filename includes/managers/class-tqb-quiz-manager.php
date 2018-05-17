@@ -614,6 +614,12 @@ class TQB_Quiz_Manager {
 				$tqbdb->update_test_item_action_counter( $update_data );
 			}
 		}
+
+		/**
+		 * GDPR: If we have the user consent, we send the email to the database. If not, the email will not be stored.
+		 */
+		$post['email'] = ( $page_manager->get_user_consent() === 1 ) ? $post['email'] : ( ( function_exists( 'wp_privacy_anonymize_data' ) ) ? wp_privacy_anonymize_data( 'email', $post['email'] ) : '' );
+
 		$user_id = TQB_Quiz_Manager::get_quiz_user( $data['user_unique'], $page->post_parent );
 		$tqbdb->save_quiz_user( array( 'id' => $user_id, 'email' => $post['email'] ) );
 
@@ -954,5 +960,21 @@ class TQB_Quiz_Manager {
 		$structure_manager->update_quiz_structure_meta( $structure_meta );
 
 		return $reset_stats;
+	}
+
+	/**
+	 * Anonymize Quiz Results
+	 */
+	public function anonymize_quiz_results() {
+		$users = $this->tqbdb->get_users( array( 'quiz_id' => $this->quiz->ID ) );
+		if ( ! empty( $users ) ) {
+
+			foreach ( $users as $user ) {
+
+				$anonymize_email = ( function_exists( 'wp_privacy_anonymize_data' ) ) ? wp_privacy_anonymize_data( 'email', $user['email'] ) : '';
+
+				$this->tqbdb->save_quiz_user( array( 'id' => $user['id'], 'quiz_id' => $this->quiz->ID, 'email' => $anonymize_email ) );
+			}
+		}
 	}
 }
